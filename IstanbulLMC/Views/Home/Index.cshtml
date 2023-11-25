@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Transfer
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -25,8 +27,20 @@
                 <div class="tour-search-one__inputs">
                     <div class="tour-search-one__col">
                         <div class="tour-search-one__input-box">
-                            <label for="place">Where  to</label>
-                            <input type="text" placeholder="Enter keywords" name="place" id="searchInput">
+                            <label for="place">From</label>
+                            <input asp-for="FromPlaceID" type="text" placeholder="Enter keywords">
+                            @* Container for Results *@
+                            <div id="searchResults" class="search-results-container" style="display:none;">
+                                @* Results will be loaded here dynamically *@
+                            </div>
+
+                        </div><!-- /.tour-search-one__input-box -->
+                    </div><!-- /.tour-search-one__col -->
+
+                    <div class="tour-search-one__col">
+                        <div class="tour-search-one__input-box">
+                            <label for="place">To</label>
+                            <input asp-for="ToPlaceID" type="text" placeholder="Enter keywords">
                             @* Container for Results *@
                             <div id="searchResults" class="search-results-container" style="display:none;">
                                 @* Results will be loaded here dynamically *@
@@ -35,19 +49,16 @@
                         </div><!-- /.tour-search-one__input-box -->
                     </div><!-- /.tour-search-one__col -->
                     
-                    <div class="tour-search-one__input-box">
+                    @* <div class="tour-search-one__input-box">
                         <label for="when">When</label>
                         <input type="text" placeholder="September" name="when" id="when">
+                    </div><!-- /.tour-search-one__input-box --> *@
+                    
+                    <div class="tour-search-one__input-box">
+                        <label for="when">When</label>
+                        <input type="datetime-local" placeholder="September" name="when" id="when">
                     </div><!-- /.tour-search-one__input-box -->
 
-                    <div class="tour-search-one__input-box">
-                        <label for="type">Type</label>
-                        <select class="selectpicker" id="type">
-                            <option value="Adventure">Adventure</option>
-                            <option value="Wildlife">Wildlife</option>
-                            <option value="Sightseeing">Sightseeing</option>
-                        </select>
-                    </div><!-- /.tour-search-one__input-box -->
                 </div><!-- /.tour-search-one__inputs -->
                 <div class="tour-search-one__btn-wrap">
                     <button type="submit" class="thm-btn tour-search-one__btn">Find now</button>
@@ -71,11 +82,11 @@
     // Event delegation to handle clicks on search results
     $("#searchResults").on("click", ".search-result-item", function () {
         var selectedName = $(this).data("name");
-        $("#searchInput").val(selectedName);
+        $("#FromPlaceID").val(selectedName);
         $("#searchResults").hide(); // Optionally hide the results after selection
     });
 
-    $("#searchInput").on("input", function () {
+    $("#FromPlaceID").on("input", function () {
         var searchText = $(this).val();
 
         if (searchText.length > 3) {
