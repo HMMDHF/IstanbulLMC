@@ -1,4 +1,4 @@
-﻿@model Transfer
+﻿@model TransferDTO
 
 @{
     ViewData["Title"] = "Home Page";
@@ -22,7 +22,7 @@
     <div class="container">
         <h2>Find your <span>next tour</span></h2>
         <p>Where would you like to go?</p>
-        <form class="tour-search-one" action="tour-sidebar.html">
+        <form asp-action="VehicleList" asp-controller="Home" class="tour-search-one">
             <div class="tour-search-one__inner">
                 <div class="tour-search-one__inputs">
                     <div class="tour-search-one__col">
