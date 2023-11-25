@@ -1,0 +1,65 @@
+﻿@model List<SubApiResponse>
+
+    <style>
+    .search-results-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .search-result-item {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+        padding: 0;
+        height:90px;
+        align-items: center;
+    }
+
+    .search-result-icon {
+        width: 30px; /* Adjust size as needed */
+        height: 30px; /* Adjust size as needed */
+        margin-right: 15px;
+        margin-left:8px;
+    }
+
+    .search-result-text {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    #search-result-address {
+        font-size: 0.8em;
+        margin: 0;
+        padding: 0;
+        color:darkgrey;
+    }
+
+    .search-result-item {
+        /* Existing styles */
+        cursor: pointer; /* Changes the cursor to indicate the item is clickable */
+    }
+
+        .search-result-item:hover {
+            background-color: #f2f2f2; /* Background color on hover */
+            
+        }
+
+            .search-result-item:hover .search-result-icon {
+                border-color: white; /* Optional: if your icons have borders, change their color on hover */
+            }
+
+    </style>
+
+<ul class="search-results-list">
+    @foreach (var place in Model)
+    {
+        <li class="search-result-item" data-name="@place.Name">
+            <img src="@place.Icon" alt="Place Icon" class="search-result-icon" />
+            <div class="search-result-text">
+                <strong>@place.Name</strong>
+                <p id="search-result-address">@place.Address</p>
+            </div>
+        </li>
+    }
+</ul>
