@@ -6,15 +6,27 @@ namespace IstanbulLMC.Controllers
 {
     public class VehicleController : Controller
     {
+        private readonly IConfiguration _configuration;
 
-        [HttpGet]
+        public VehicleController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public IActionResult VehicleList()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> VehicleList(TransferDTO transferDTO)
         {
-            string apiKey = "YOUR_API_KEY";
+            string apiKey = _configuration["MapsKey"] ?? "";
+
             string baseUrl = "https://maps.googleapis.com/maps/api/directions/json";
 
-            string originPlaceId = "YOUR_ORIGIN_PLACE_ID";
-            string destinationPlaceId = "YOUR_DESTINATION_PLACE_ID";
+            string originPlaceId = transferDTO.FromPlaceID ?? "";
+            string destinationPlaceId = transferDTO.ToPlaceID ?? "";
 
             string url = $"{baseUrl}?origin=place_id:{originPlaceId}&destination=place_id:{destinationPlaceId}&key={apiKey}";
 
@@ -25,9 +37,9 @@ namespace IstanbulLMC.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResponse = await response.Content.ReadAsStringAsync();
-                    dynamic directions = JsonConvert.DeserializeObject(jsonResponse) ?? new object();
+                    DirectionsDTO directions = JsonConvert.DeserializeObject<DirectionsDTO>(jsonResponse) ?? new();
 
-                    string distance = directions.routes[0].legs[0].distance.text;
+                    int distance = directions.routes[0].legs[0].distance.value;
                 }
                 else
                 {

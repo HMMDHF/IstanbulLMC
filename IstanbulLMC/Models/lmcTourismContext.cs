@@ -22,7 +22,6 @@ public partial class lmcTourismContext : DbContext
     public virtual DbSet<VehicleCategory> VehicleCategory { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-
         //Scaffold-DbContext "Data Source=104.247.162.242\MSSQLSERVER2019;Initial Catalog=kadirocs_lmc_Tourism;Persist Security Info=True;TrustServerCertificate=True;User ID=kadirocs_lmc_Tourism;Password=lmc_Tourism?2023" Microsoft.EntityFrameworkCore.SqlServer -f -o Models -context "lmcTourismContext" -UseDatabaseNames -NoPluralize
 
         => optionsBuilder.UseSqlServer("Data Source=104.247.162.242\\MSSQLSERVER2019;Initial Catalog=kadirocs_lmc_Tourism;Persist Security Info=True;TrustServerCertificate=True;User ID=kadirocs_lmc_Tourism;Password=lmc_Tourism?2023");
@@ -56,9 +55,8 @@ public partial class lmcTourismContext : DbContext
             entity.ToTable("Transfer", "dbo");
 
             entity.Property(e => e.Distance).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.FromPlaceID)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.FromPlace).HasMaxLength(50);
+            entity.Property(e => e.FromPlaceID).HasMaxLength(50);
             entity.Property(e => e.InsertID)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -66,9 +64,8 @@ public partial class lmcTourismContext : DbContext
                 .IsRequired()
                 .HasDefaultValueSql("((1))");
             entity.Property(e => e.KMPrice).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.ToPlaceID)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.ToPlace).HasMaxLength(50);
+            entity.Property(e => e.ToPlaceID).HasMaxLength(50);
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdateID)
                 .HasMaxLength(50)
@@ -86,6 +83,9 @@ public partial class lmcTourismContext : DbContext
 
             entity.ToTable("VehicleCategory", "dbo");
 
+            entity.Property(e => e.Image)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.InsertID)
                 .HasMaxLength(50)
                 .IsUnicode(false);

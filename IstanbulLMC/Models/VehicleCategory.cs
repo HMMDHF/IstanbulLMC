@@ -15,6 +15,8 @@ public partial class VehicleCategory
 
     public decimal? KMPrice { get; set; }
 
+    public string? Image { get; set; }
+
     public bool? IsActive { get; set; }
 
     public string? InsertID { get; set; }
