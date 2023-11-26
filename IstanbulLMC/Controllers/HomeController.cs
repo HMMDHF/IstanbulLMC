@@ -49,34 +49,6 @@ namespace IstanbulLMC.Controllers
             return View("Error"); // Return an error view or appropriate response
         }
 
-        [HttpGet]
-        public async Task<IActionResult> VehicleList(TransferDTO transferDTO)
-        {
-            string apiKey = "AIzaSyBM3yphMQm5oDBRuAinvFILcsWI5GYD19w";
-            string baseUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json";
-
-            string location = ""; // اسم المدينة أو الإحداثيات الجغرافية للموقع المراد البحث عن الأماكن فيه
-            TransferDTO query = transferDTO; // نوع الأماكن المطلوب البحث عنها
-
-            string url = $"{baseUrl}?query={query.FromPlace}&location={location}&key={apiKey}";
-
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = await client.GetAsync(url);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    var jsonResponse = JsonConvert.DeserializeObject<ApiResponse>(responseContent);
-
-                    var topFivePlaces = jsonResponse.subApiResponses.Take(5).ToList();
-                    return PartialView("_SearchResultsPartial", topFivePlaces);
-
-                }
-            }
-            return View("Error"); // Return an error view or appropriate response
-        }
-
         public IActionResult Privacy()
         {
             return View();
