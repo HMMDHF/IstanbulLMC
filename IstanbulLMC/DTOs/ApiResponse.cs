@@ -10,6 +10,9 @@ namespace IstanbulLMC.DTOs
 
     public class SubApiResponse
     {
+        [JsonProperty("place_id")]
+        public string ID { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 

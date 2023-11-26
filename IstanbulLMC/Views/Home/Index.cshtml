@@ -28,23 +28,25 @@
                     <div class="tour-search-one__col">
                         <div class="tour-search-one__input-box">
                             <label for="place">From</label>
-                            <input asp-for="FromPlaceID" type="text" placeholder="Enter keywords">
+                            <input asp-for="FromPlace" type="text" placeholder="Enter keywords">
                             @* Container for Results *@
                             <div id="searchResults" class="search-results-container" style="display:none;">
                                 @* Results will be loaded here dynamically *@
                             </div>
-
+                            <input asp-for="FromPlaceID" type="hidden"/>
                         </div><!-- /.tour-search-one__input-box -->
                     </div><!-- /.tour-search-one__col -->
 
                     <div class="tour-search-one__col">
                         <div class="tour-search-one__input-box">
                             <label for="place">To</label>
-                            <input asp-for="ToPlaceID" type="text" placeholder="Enter keywords">
+                            <input asp-for="ToPlace" type="text" placeholder="Enter keywords">
                             @* Container for Results *@
-                            <div id="searchResults" class="search-results-container" style="display:none;">
+                            <div id="searchResults1" class="search-results-container" style="display:none;">
                                 @* Results will be loaded here dynamically *@
                             </div>
+                            <input asp-for="ToPlaceID" type="hidden" />
+
 
                         </div><!-- /.tour-search-one__input-box -->
                     </div><!-- /.tour-search-one__col -->
@@ -81,12 +83,13 @@
 <script>
     // Event delegation to handle clicks on search results
     $("#searchResults").on("click", ".search-result-item", function () {
-        var selectedName = $(this).data("name");
-        $("#FromPlaceID").val(selectedName);
+        $("#FromPlace").val($(this).data("name"));
+        $("#FromPlaceID").val($(this).data("id"));
+
         $("#searchResults").hide(); // Optionally hide the results after selection
     });
 
-    $("#FromPlaceID").on("input", function () {
+    $("#FromPlace").on("input", function () {
         var searchText = $(this).val();
 
         if (searchText.length > 3) {
@@ -104,6 +107,37 @@
             });
         } else {
             $("#searchResults").hide();
+        }
+    });
+
+
+
+    // Event delegation to handle clicks on search results
+    $("#searchResults1").on("click", ".search-result-item", function () {
+        $("#ToPlace").val($(this).data("name"));
+        $("#ToPlaceID").val($(this).data("id"));
+
+        $("#searchResults1").hide(); // Optionally hide the results after selection
+    });
+
+    $("#ToPlace").on("input", function () {
+        var searchText = $(this).val();
+
+        if (searchText.length > 3) {
+            $.ajax({
+                url: '@Url.Action("GetPlaceByName", "Home")',
+                data: { name: searchText },
+                type: 'GET',
+                success: function (data) {
+                    $("#searchResults1").html(data).show();
+                },
+                error: function () {
+                    // Handle errors here
+                    $("#searchResults1").html("<p>Error loading results.</p>").show();
+                }
+            });
+        } else {
+            $("#searchResults1").hide();
         }
     });
 </script>

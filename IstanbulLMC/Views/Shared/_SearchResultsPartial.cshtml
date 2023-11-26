@@ -54,7 +54,7 @@
 <ul class="search-results-list">
     @foreach (var place in Model)
     {
-        <li class="search-result-item" data-name="@place.Name">
+        <li class="search-result-item" data-name="@place.Name" data-id="@place.ID">
             <img src="@place.Icon" alt="Place Icon" class="search-result-icon" />
             <div class="search-result-text">
                 <strong>@place.Name</strong>
