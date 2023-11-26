@@ -56,9 +56,9 @@ namespace IstanbulLMC.Controllers
             string baseUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json";
 
             string location = ""; // اسم المدينة أو الإحداثيات الجغرافية للموقع المراد البحث عن الأماكن فيه
-            string query = name; // نوع الأماكن المطلوب البحث عنها
+            TransferDTO query = transferDTO; // نوع الأماكن المطلوب البحث عنها
 
-            string url = $"{baseUrl}?query={query}&location={location}&key={apiKey}";
+            string url = $"{baseUrl}?query={query.FromPlace}&location={location}&key={apiKey}";
 
             using (HttpClient client = new HttpClient())
             {

@@ -4,9 +4,11 @@
     {
         public int VehicleCategoryID { get; set; }
 
+        public string? FromPlace { get; set; }
         public string? FromPlaceID { get; set; }
 
         public string? ToPlaceID { get; set; }
+        public string? ToPlace { get; set; }
 
         public decimal? KMPrice { get; set; }
 
