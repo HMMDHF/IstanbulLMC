@@ -1,5 +1,7 @@
 ﻿using IstanbulLMC.DTOs;
+using IstanbulLMC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace IstanbulLMC.Controllers
@@ -7,10 +9,12 @@ namespace IstanbulLMC.Controllers
     public class VehicleController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly lmcTourismContext db;
 
         public VehicleController(IConfiguration configuration)
         {
             _configuration = configuration;
+            db = new lmcTourismContext();
         }
 
         public IActionResult VehicleList()
@@ -21,25 +25,26 @@ namespace IstanbulLMC.Controllers
         [HttpPost]
         public async Task<IActionResult> VehicleList(TransferDTO transferDTO)
         {
-            string apiKey = _configuration["MapsKey"] ?? "";
-
-            string baseUrl = "https://maps.googleapis.com/maps/api/directions/json";
-
-            string originPlaceId = transferDTO.FromPlaceID ?? "";
-            string destinationPlaceId = transferDTO.ToPlaceID ?? "";
-
-            string url = $"{baseUrl}?origin=place_id:{originPlaceId}&destination=place_id:{destinationPlaceId}&key={apiKey}";
-
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response = await client.GetAsync($"https://maps.googleapis.com/maps/api/directions/json?origin=place_id:{transferDTO.FromPlaceID ?? ""}&destination=place_id:{transferDTO.ToPlaceID ?? ""}&key={_configuration["MapsKey"] ?? ""}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResponse = await response.Content.ReadAsStringAsync();
                     DirectionsDTO directions = JsonConvert.DeserializeObject<DirectionsDTO>(jsonResponse) ?? new();
 
-                    int distance = directions.routes[0].legs[0].distance.value;
+                    decimal distance = Convert.ToDecimal(Math.Ceiling((double)directions.routes[0].legs[0].distance.value / 1000));
+
+                    VehicleCategoryDTO vehicleCategoryDTO = new VehicleCategoryDTO
+                    {
+                        Distance = distance,
+                        From = transferDTO.FromPlace,
+                        To = transferDTO.ToPlace,
+                        Duration = directions.routes[0].legs[0].duration.value,
+                        VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance).ToListAsync()
+                    };
+                    return View(vehicleCategoryDTO);
                 }
                 else
                 {

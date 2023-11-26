@@ -94,9 +94,6 @@ public partial class lmcTourismContext : DbContext
                 .HasDefaultValueSql("((1))");
             entity.Property(e => e.KMPrice).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.MaxDistance).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.SeateCount)
-                .HasMaxLength(50)
-                .IsUnicode(false);
             entity.Property(e => e.UpdateID)
                 .HasMaxLength(50)
                 .IsUnicode(false);

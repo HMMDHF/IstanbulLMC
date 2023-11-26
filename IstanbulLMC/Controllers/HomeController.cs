@@ -9,9 +9,11 @@ namespace IstanbulLMC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
+            _configuration = configuration;
             _logger = logger;
         }
         
@@ -24,7 +26,7 @@ namespace IstanbulLMC.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPlaceByName(string name)
         {
-            string apiKey = "AIzaSyBM3yphMQm5oDBRuAinvFILcsWI5GYD19w";
+            string apiKey = _configuration["MapsKey"] ?? "";
             string baseUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json";
 
             string location = ""; // اسم المدينة أو الإحداثيات الجغرافية للموقع المراد البحث عن الأماكن فيه

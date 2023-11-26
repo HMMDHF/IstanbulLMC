@@ -1,19 +1,9 @@
-﻿namespace IstanbulLMC.DTOs
+﻿using IstanbulLMC.Models;
+
+namespace IstanbulLMC.DTOs
 {
-    public class TransferDTO
+    public class TransferDTO : Transfer
     {
-        public int VehicleCategoryID { get; set; }
-
-        public string? FromPlace { get; set; }
-        public string? FromPlaceID { get; set; }
-
-        public string? ToPlaceID { get; set; }
-        public string? ToPlace { get; set; }
-
-        public decimal? KMPrice { get; set; }
-
-        public decimal? TotalPrice { get; set; }
-
-        public decimal? Distance { get; set; }
+        
     }
 }

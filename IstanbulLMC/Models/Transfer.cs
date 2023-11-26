@@ -9,19 +9,19 @@ public partial class Transfer
 
     public int VehicleCategoryID { get; set; }
 
-    public string? FromPlaceID { get; set; }
+    public string FromPlaceID { get; set; } = null!;
 
-    public string? FromPlace { get; set; }
+    public string FromPlace { get; set; } = null!;
 
-    public string? ToPlaceID { get; set; }
+    public string ToPlaceID { get; set; } = null!;
 
-    public string? ToPlace { get; set; }
+    public string ToPlace { get; set; } = null!;
 
-    public decimal? KMPrice { get; set; }
+    public decimal KMPrice { get; set; }
 
-    public decimal? TotalPrice { get; set; }
+    public decimal TotalPrice { get; set; }
 
-    public decimal? Distance { get; set; }
+    public decimal Distance { get; set; }
 
     public bool? IsActive { get; set; }
 

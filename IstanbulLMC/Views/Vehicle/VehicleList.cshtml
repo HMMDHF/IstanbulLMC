@@ -1,4 +1,5 @@
-﻿@{
+﻿@model VehicleCategoryDTO
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,7 +8,7 @@
         <h2>Tours with Sidebar</h2>
         <ul class="thm-breadcrumb list-unstyled">
             <li><a href="index.html">Home</a></li>
-            <li><span>Tours</span></li>
+            <li><span>Transfer</span></li>
         </ul><!-- /.thm-breadcrumb -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
@@ -16,38 +17,40 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                
-                <div class="tour-two__single tour-one__single">
-                    <div class="tour-two__image-wrap">
-                        <div class="tour-one__image">
-                            <img src="~/assets/images/tour/tour-2-1.jpg" alt="">
-                            <a href="tour-details.html"><i class="fa fa-heart"></i></a>
-                        </div><!-- /.tour-one__image -->
-                    </div><!-- /.tour-two__image-wrap -->
-                    <div class="tour-one__content">
-                        <div class="tour-two__top">
-                            <div class="tour-two__top-left">
-                                <div class="tour-one__stars">
-                                    <i class="fa fa-star"></i> 8.0 Superb
-                                </div><!-- /.tour-one__stars -->
-                                <h3><a href="tour-details.html">National Park 2 Days Tour</a></h3>
-                            </div><!-- /.tour-two__top-left -->
-                            <div class="tour-two__right">
-                                <p><span>$1870</span> <br> Per Person</p>
-                            </div><!-- /.tour-two__right -->
-                        </div><!-- /.tour-two__top -->
+                @foreach (var item in Model.VehicleCategories)
+                {
+                    <div class="tour-two__single tour-one__single">
+                        <div class="tour-two__image-wrap">
+                            <div class="tour-one__image">
+                                <img src="~/assets/images/@item.Image" >
+                            </div><!-- /.tour-one__image -->
+                        </div><!-- /.tour-two__image-wrap -->
 
-                        <div class="tour-two__text">
-                            <p>Lorem ipsum available isn but the majority have suffered alteratin in some or form
-                                injected semper fames.</p>
-                        </div><!-- /.tour-two__text -->
-                        <ul class="tour-one__meta list-unstyled">
-                            <li><a href="tour-details.html"><i class="far fa-clock"></i> 3 Days</a></li>
-                            <li><a href="tour-details.html"><i class="far fa-user-circle"></i> 12+</a></li>
-                            <li><a href="tour-details.html"><i class="far fa-map"></i> Los Angeles</a></li>
-                        </ul><!-- /.tour-one__meta -->
-                    </div><!-- /.tour-one__content -->
-                </div><!-- /.tour-two__single -->
+                        <div class="tour-one__content" style="width: 100%;">
+                            <div class="tour-two__top">
+                                <div class="tour-two__top-left">
+                                    <h3>@item.Name</h3>
+                                </div><!-- /.tour-two__top-left -->
+                                <div class="tour-two__right">
+                                    <p><span>@((item.KMPrice * Model.Distance).ToString("N2")) $</span></p>
+                                </div><!-- /.tour-two__right -->
+                            </div><!-- /.tour-two__top -->
+
+                            <div class="tour-two__text">
+                                <p>
+
+                                </p>
+                            </div><!-- /.tour-two__text -->
+
+                            <ul class="tour-one__meta list-unstyled">
+                                <li><a href="tour-details.html"><i class="far fa-user-circle"></i> @item.SeateCount Passenger</a></li>
+                                <li><a href="tour-details.html"><i class="fas fa-suitcase"></i> @item.SuitcaseCount Suitcase</a></li>
+                            </ul><!-- /.tour-one__meta -->
+                        </div><!-- /.tour-one__content -->
+                    </div>
+
+                    <!-- /.tour-two__single -->
+                }
 
             </div><!-- /.col-lg-8 -->
             <div class="col-lg-4">

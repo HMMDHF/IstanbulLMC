@@ -7,17 +7,19 @@ public partial class VehicleCategory
 {
     public int ID { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string? SeateCount { get; set; }
+    public int SeateCount { get; set; }
 
-    public decimal? MaxDistance { get; set; }
+    public int? SuitcaseCount { get; set; }
 
-    public decimal? KMPrice { get; set; }
+    public decimal MaxDistance { get; set; }
+
+    public decimal KMPrice { get; set; }
 
     public string? Image { get; set; }
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
 
     public string? InsertID { get; set; }
 
