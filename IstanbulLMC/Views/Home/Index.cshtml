@@ -16,13 +16,76 @@
         z-index: 1000; /* To ensure it's above other content */
     }
 
+
+
+    /* Simple Switch Style */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #FFA801;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #FFA801;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        
+
 </style>
 
 <section class="banner-one" style="background-image: url(assets/images/backgrounds/banner-1-1-bg.jpg);">
     <div class="container">
         <h2>Find your <span>next tour</span></h2>
         <p>Where would you like to go?</p>
-        <form asp-action="VehicleList" asp-controller="VehicleList" class="tour-search-one">
+        <form asp-action="VehicleList" asp-controller="Vehicle" method="post" class="tour-search-one">
             <div class="tour-search-one__inner">
                 <div class="tour-search-one__inputs">
                     <div class="tour-search-one__col">
@@ -55,11 +118,46 @@
                         <label for="when">When</label>
                         <input type="text" placeholder="September" name="when" id="when">
                     </div><!-- /.tour-search-one__input-box --> *@
-                    
+
+                    @* <div class="tour-search-one__input-box form-check">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Default checkbox</label>
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    </div><!-- /.tour-search-one__input-box --> *@
+
+                  
+
                     <div class="tour-search-one__input-box">
                         <label for="when">When</label>
                         <input type="datetime-local" placeholder="September" name="when" id="when">
                     </div><!-- /.tour-search-one__input-box -->
+
+
+
+                    <div class="tour-search-one__input-box">
+                        <span>Round trip</span>
+                        <label class="switch">
+                    
+                            <input type="checkbox" id="dateSwitch" onclick="toggleDatePicker()">
+                            <span class="slider round"></span>
+                        </label>
+                        <input  type="datetime-local" id="datePicker" style="display:none;" />
+                    </div>
+                    <div class="tour-search-one__input-box dropdown show">
+                       
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Number of passengers
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        
+                                <ul>
+                                <li class="dropdown-item">1</li>
+                                </ul>
+                            </div>
+                       
+                   </div>
+
 
                 </div><!-- /.tour-search-one__inputs -->
                 <div class="tour-search-one__btn-wrap">
@@ -140,5 +238,11 @@
             $("#searchResults1").hide();
         }
     });
+
+       function toggleDatePicker() {
+            var checkBox = document.getElementById("dateSwitch");
+            var datePicker = document.getElementById("datePicker");
+            datePicker.style.display = checkBox.checked ? "block" : "none";
+        }
 </script>
 
