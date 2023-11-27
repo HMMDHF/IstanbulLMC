@@ -66,34 +66,42 @@
                             <div class="tour-sidebar__sorter-content">
 
                                 <div class="tour-sidebar__sorter-inputs">
-                                    <p>
-                                        <input type="checkbox" id="cat-5" name="radio-group">
-                                        <label for="cat-5">
-                                            City Tours
-                                        </label>
-                                    </p>
-                                    <p>
-                                        <input type="checkbox" id="cat-4" name="radio-group">
-                                        <label for="cat-4">HostedTours
-                                        </label>
-                                    </p>
-                                    <p>
-                                        <input type="checkbox" id="cat-3" name="radio-group">
-                                        <label for="cat-3">Adventure Tours
-                                        </label>
-                                    </p>
-                                    <p>
-                                        <input type="checkbox" id="cat-2" name="radio-group">
-                                        <label for="cat-2">Group Tours
+                                    <div class="row">
+                                        <div class="col-6">
+                                            From
+                                        </div>
 
-                                        </label>
-                                    </p>
-                                    <p>
-                                        <input type="checkbox" id="cat-1" name="radio-group">
-                                        <label for="cat-1">
-                                            Couple Tours
-                                        </label>
-                                    </p>
+                                        <div class="col-6">
+                                            @Model.From
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            TO
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.To
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Distance
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Distance KM
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Duration
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Duration
+                                        </div>
+                                    </div>
                                 </div><!-- /.tour-sidebar__sorter-inputs -->
                             </div><!-- /.tour-sidebar__sorter-content -->
 
