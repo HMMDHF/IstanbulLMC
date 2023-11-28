@@ -10,16 +10,20 @@ namespace IstanbulLMC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly lmcTourismContext db;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
+
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration )
         {
             _configuration = configuration;
             _logger = logger;
+            db = new lmcTourismContext();
         }
         
 
         public IActionResult Index()
         {
+            ViewData["maxSeateCount"] = db.VehicleCategory.Max(x => x.SeateCount);
             return View();
         }
 
