@@ -6365,7 +6365,7 @@ h6 {
 .tour-search-one__input-box {
 	-webkit-box-flex: 1;
 	        flex: 1 1 33.333%;
-	max-width: 33.333%;
+	max-width:100%;
 	padding: 0px 40px;
 	padding-top: 39.5px;
 	padding-bottom: 24.5px;
