@@ -5,6 +5,16 @@
 }
 
 <style>
+
+    .btnm{
+        position:absolute;
+        justify-content:flex-end;
+        display:inline-flex;
+        border-radius:10px;
+        margin-right:20px;
+        padding:15px;
+    }
+
     .search-results-container {
         position: absolute; /* Adjust based on your layout */
         background-color: white;
@@ -84,9 +94,9 @@
         <h2>Find your <span>next tour</span></h2>
         <p>Where would you like to go?</p>
         <form asp-action="VehicleList" asp-controller="Vehicle" method="post" class="tour-search-one">
-            <div class="tour-search-one__inner">
+            <div class="tour-search-one__inner ">
                 <div class="tour-search-one__inputs">
-                    <div class="tour-search-one__col col-4">
+                    <div class="tour-search-one__col col-2">
                         <div class="tour-search-one__input-box">
                             <label for="place">From</label>
                             <input asp-for="FromPlace" type="text" placeholder="Enter keywords">
@@ -98,7 +108,7 @@
                         </div><!-- /.tour-search-one__input-box -->
                     </div><!-- /.tour-search-one__col -->
 
-                    <div class="tour-search-one__col col-4">
+                    <div class="tour-search-one__col col-2">
                         <div class="tour-search-one__input-box">
                             <label for="place">To</label>
                             <input asp-for="ToPlace" type="text" placeholder="Enter keywords">
@@ -121,29 +131,10 @@
                     Default checkbox</label>
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                     </div><!-- /.tour-search-one__input-box --> *@
-                    <div class="tour-search-one__col col-4">
-                        <div class="tour-search-one__input-box">
-                            <span>Round trip</span>
-                            <label class="switch">
-                                <input type="checkbox" id="dateSwitch" onclick="toggleDatePicker()">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="tour-search-one__col col-4">
-                        <div class="tour-search-one__input-box">
-                            <label for="when">When</label>
-                            <input type="datetime-local" placeholder="September" name="when" id="when">
-                        </div><!-- /.tour-search-one__input-box -->
-                    </div>
 
-                    <div class="tour-search-one__col col-4" id="datePicker" style="display:none;">
-                        <div class="tour-search-one__input-box">
-                            <label>Return Date</label>
-                            <input type="datetime-local"  />
-                        </div>
-                    </div>
-                    <div class="tour-search-one__col col-4">
+
+
+                    <div class="tour-search-one__col col-2">
                         <div class="tour-search-one__input-box">
 
                             <label for="passengerNo">Passengers</label>
@@ -162,12 +153,42 @@
                         </div>
                     </div>
 
+            
+                    <div class="tour-search-one__col col-2">
+                        <div class="tour-search-one__input-box">
+                            <label asp-for="InsertDate">When</label>
+                            <input type="datetime-local" placeholder="September" asp-for="InsertDate" id="when">
+                        </div><!-- /.tour-search-one__input-box -->
+                    </div>
+
+                    <div class="tour-search-one__col col-2">
+                        <div class="tour-search-one__input-box">
+                            <label>Return Date</label>
+                            <input type="datetime-local" asp-for="UpdateDate" id="datePicker" disabled />
+                        </div>
+                    </div>
+
+           
+
+
+                    <div class="tour-search-one__col col-2">
+                        <div class="tour-search-one__input-box">
+                            <span>Round trip</span>
+                            <label class="switch">
+                                <input type="checkbox" id="dateSwitch" onclick="toggleDatePicker()">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+
 
                 </div><!-- /.tour-search-one__inputs -->
-                <div class="tour-search-one__btn-wrap">
-                    <button type="submit" class="thm-btn tour-search-one__btn">Find now</button>
-                </div><!-- /.tour-search-one__btn-wrap -->
+                
             </div><!-- /.tour-search-one__inner -->
+            <div class="tour-search-one__btn-wrap">
+                <button type="submit" class="btn btn-danger btnm">Find now</button>
+            </div><!-- /.tour-search-one__btn-wrap -->
+
         </form><!-- /.tour-search-one -->
     </div><!-- /.container -->
 </section><!-- /.banner-one -->
@@ -246,7 +267,13 @@
     function toggleDatePicker() {
         var checkBox = document.getElementById("dateSwitch");
         var datePicker = document.getElementById("datePicker");
-        datePicker.style.display = checkBox.checked ? "block" : "none";
+
+        if (checkBox.checked) {
+            datePicker.disabled = false;
+        } else {
+            datePicker.disabled = true;
+        }
     }
+
 </script>
 

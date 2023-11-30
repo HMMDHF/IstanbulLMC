@@ -29,11 +29,11 @@ public partial class Transfer
 
     public string? InsertID { get; set; }
 
-    public int? InsertDate { get; set; }
+    public string? InsertDate { get; set; }
 
     public string? UpdateID { get; set; }
 
-    public int? UpdateDate { get; set; }
+    public string? UpdateDate { get; set; }
 
     public virtual ICollection<Passenger> Passenger { get; set; } = new List<Passenger>();
 

@@ -6333,12 +6333,12 @@ h6 {
 	-webkit-box-align: center;
 	        align-items: center;
 	flex-wrap: wrap;
+
 }
 
 .tour-search-one__inputs {
 	-webkit-box-flex: 1;
-	        flex: 1 1 calc(100% - 224px);
-	max-width: calc(100% - 224px);
+	        flex: 1 1 calc(100% - 250px);
 	flex-wrap: wrap;
 	display: -webkit-box;
 	display: flex;
@@ -6348,8 +6348,8 @@ h6 {
 
 .tour-search-one__btn-wrap {
 	-webkit-box-flex: 1;
-	        flex: 1 1 224px;
-	max-width: 224px;
+	        flex: 1 1 180px;
+
 	display: -webkit-box;
 	display: flex;
 	-webkit-box-pack: end;
