@@ -136,7 +136,7 @@ h6 {
 }
 
 .thm-btn:hover {
-	background-color: var(--thm-primary);
+	background-color: red;
 	color: #ffffff;
 }
 
@@ -6333,12 +6333,12 @@ h6 {
 	-webkit-box-align: center;
 	        align-items: center;
 	flex-wrap: wrap;
+
 }
 
 .tour-search-one__inputs {
 	-webkit-box-flex: 1;
-	        flex: 1 1 calc(100% - 224px);
-	max-width: calc(100% - 224px);
+	        flex: 1 1 calc(100% - 250px);
 	flex-wrap: wrap;
 	display: -webkit-box;
 	display: flex;
@@ -6348,8 +6348,7 @@ h6 {
 
 .tour-search-one__btn-wrap {
 	-webkit-box-flex: 1;
-	        flex: 1 1 224px;
-	max-width: 224px;
+	        flex: 1 1 180px;
 	display: -webkit-box;
 	display: flex;
 	-webkit-box-pack: end;
@@ -6357,16 +6356,21 @@ h6 {
 }
 
 .tour-search-one__btn {
-	padding: 43px 77.25px;
+	padding: 15px;
 	font-size: 20px;
 	font-weight: 600;
+	position: absolute;
+	justify-content: flex-end;
+	display: inline-flex;
+	border-radius: 10px;
+	margin-right: 50px;
 }
 
 .tour-search-one__input-box {
 	-webkit-box-flex: 1;
 	        flex: 1 1 33.333%;
 	max-width:100%;
-	padding: 0px 40px;
+	padding: 0px 10px;
 	padding-top: 39.5px;
 	padding-bottom: 24.5px;
 }
