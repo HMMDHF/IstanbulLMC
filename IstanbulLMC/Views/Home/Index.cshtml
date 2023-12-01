@@ -6,14 +6,7 @@
 
 <style>
 
-    .btnm{
-        position:absolute;
-        justify-content:flex-end;
-        display:inline-flex;
-        border-radius:10px;
-        margin-right:20px;
-        padding:15px;
-    }
+
 
     .search-results-container {
         position: absolute; /* Adjust based on your layout */
@@ -80,6 +73,10 @@
         transform: translateX(26px);
     }
 
+    .tour-search-one{
+        padding:20px 0px;
+    }
+   
     /* Rounded sliders */
     .slider.round {
         border-radius: 34px;
@@ -87,6 +84,10 @@
 
         .slider.round:before {
             border-radius: 50%;
+
+
+
+    
 </style>
 
 <section class="banner-one" style="background-image: url(assets/images/backgrounds/banner-1-1-bg.jpg);">
@@ -96,7 +97,7 @@
         <form asp-action="VehicleList" asp-controller="Vehicle" method="post" class="tour-search-one">
             <div class="tour-search-one__inner ">
                 <div class="tour-search-one__inputs">
-                    <div class="tour-search-one__col col-2">
+                    <div class="tour-search-one__col col-6  col-sm-4">
                         <div class="tour-search-one__input-box">
                             <label for="place">From</label>
                             <input asp-for="FromPlace" type="text" placeholder="Enter keywords">
@@ -108,7 +109,7 @@
                         </div><!-- /.tour-search-one__input-box -->
                     </div><!-- /.tour-search-one__col -->
 
-                    <div class="tour-search-one__col col-2">
+                    <div class="tour-search-one__col col-6  col-sm-4">
                         <div class="tour-search-one__input-box">
                             <label for="place">To</label>
                             <input asp-for="ToPlace" type="text" placeholder="Enter keywords">
@@ -134,7 +135,7 @@
 
 
 
-                    <div class="tour-search-one__col col-2">
+                    <div class="tour-search-one__col col-6  col-sm-4">
                         <div class="tour-search-one__input-box">
 
                             <label for="passengerNo">Passengers</label>
@@ -154,14 +155,14 @@
                     </div>
 
             
-                    <div class="tour-search-one__col col-2">
+                    <div class="tour-search-one__col col-6  col-sm-4">
                         <div class="tour-search-one__input-box">
                             <label asp-for="InsertDate">When</label>
                             <input type="datetime-local" placeholder="September" asp-for="InsertDate" id="when">
                         </div><!-- /.tour-search-one__input-box -->
                     </div>
 
-                    <div class="tour-search-one__col col-2">
+                    <div class="tour-search-one__col col-6 col-sm-4">
                         <div class="tour-search-one__input-box">
                             <label>Return Date</label>
                             <input type="datetime-local" asp-for="UpdateDate" id="datePicker" disabled />
@@ -171,7 +172,7 @@
            
 
 
-                    <div class="tour-search-one__col col-2">
+                    <div class="tour-search-one__col col-6 col-sm-4">
                         <div class="tour-search-one__input-box">
                             <span>Round trip</span>
                             <label class="switch">
@@ -186,7 +187,7 @@
                 
             </div><!-- /.tour-search-one__inner -->
             <div class="tour-search-one__btn-wrap">
-                <button type="submit" class="btn btn-danger btnm">Find now</button>
+                <button type="submit" class="thm-btn tour-search-one__btn">Find now</button>
             </div><!-- /.tour-search-one__btn-wrap -->
 
         </form><!-- /.tour-search-one -->
@@ -272,6 +273,7 @@
             datePicker.disabled = false;
         } else {
             datePicker.disabled = true;
+            datePicker.value = "";
         }
     }
 
