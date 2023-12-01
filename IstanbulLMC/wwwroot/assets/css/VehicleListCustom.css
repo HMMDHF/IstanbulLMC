@@ -1,0 +1,14 @@
+.tour-two__single {
+	height: 170px;
+}
+
+.tour-search-one__btn {
+	padding: 8px 20px;
+	margin-top: -10px;
+}
+
+@media(max-width: 767px) {
+	.tour-two__single {
+		height: auto;
+	}
+}

@@ -1,12 +1,4 @@
-﻿@model VehicleCategoryDTO
-@{
-    ViewData["Title"] = "Home Page";
-}
-@section Styles{
-    <link href="~/assets/css/vehiclelistcustom.css" rel="stylesheet" />
-}
-
-<section class="page-header" style="background-image: url(/assets/images/backgrounds/page-header-contact.jpg);">
+﻿<section class="page-header" style="background-image: url(/assets/images/backgrounds/page-header-contact.jpg);">
     <div class="container">
         <h2>Tours with Sidebar</h2>
         <ul class="thm-breadcrumb list-unstyled">
@@ -20,49 +12,45 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                @foreach (var item in Model.VehicleCategories)
-                {
-                    <div class="tour-two__single tour-one__single">
-                        <div class="tour-two__image-wrap">
-                            <div class="tour-one__image" style="height: 170px; background-image: url('/assets/images/@item.Image'); background-position: center; background-repeat: no-repeat; background-size: cover;">
-                            </div><!-- /.tour-one__image -->
-                        </div><!-- /.tour-two__image-wrap -->
+                <div class="tour-sidebar">
+                    <div class="tour-sidebar__search tour-sidebar__single">
+                        <h3>Book This Tour</h3>
+                        <form action="#" class="tour-sidebar__search-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="Your Name">
+                            </div><!-- /.input-group -->
+                            <div class="input-group">
+                                <input type="text" placeholder="Email Address">
+                            </div><!-- /.input-group -->
+                            <div class="input-group">
+                                <input type="text" placeholder="Phone"> 
+                            </div><!-- /.input-group -->
+                            <div class="input-group">
+                                <input type="text" data-provide="datepicker" placeholder="dd/mm/yy">
+                            </div><!-- /.input-group -->
+                            <div class="input-group">
+                                <select class="selectpicker">
+                                    <option value="Tickets">Tickets</option>
+                                    <option value="Children">Children</option>
+                                    <option value="Adult">Adult</option>
+                                </select>
+                            </div><!-- /.input-group -->
+                            <div class="input-group">
+                                <textarea placeholder="Message"></textarea>
+                            </div><!-- /.input-group -->
 
-                        <div class="tour-one__content" style="width: 100%;">
-                            <div class="tour-two__top">
-                                <div class="tour-two__top-left">
-                                    <h3>@item.Name</h3>
-                                </div><!-- /.tour-two__top-left -->
-                                <div class="tour-two__right">
-                                    <p><span>@((item.KMPrice * Model.Distance).ToString("N2")) $</span></p>
-                                </div><!-- /.tour-two__right -->
-                            </div><!-- /.tour-two__top -->
+                            <div class="input-group">
+                                <button type="submit" class="thm-btn">Book Now</button>
+                            </div><!-- /.input-group -->
+                        </form>
+                    </div><!-- /.tour-sidebar__search -->
+                </div><!-- /.tour-sidebar -->
+            </div><!-- /.col-lg-4 -->
 
-                            <div class="tour-two__text">
-                                <p>
-
-                                </p>
-                            </div><!-- /.tour-two__text -->
-
-                            <ul class="tour-one__meta list-unstyled">
-                                <li><i class="far fa-user-circle"></i> @item.SeateCount Passenger</li>
-                                <li><i class="fas fa-suitcase"></i> @item.SuitcaseCount Suitcase</li>
-                                <li><a href="#" class="thm-btn tour-search-one__btn">Booking Now</a></li>
-                            </ul><!-- /.tour-one__meta -->
-
-                            @* <div class="tour-search-one__btn-wrap">
-                                <button type="submit" class="thm-btn tour-search-one__btn">Find now</button>
-                            </div><!-- /.tour-search-one__btn-wrap --> *@
-
-                        </div><!-- /.tour-one__content -->
-                    </div>
-                    <!-- /.tour-two__single -->
-                }
-            </div><!-- /.col-lg-8 -->
             <div class="col-lg-4">
                 <div class="tour-sidebar">
                     <div class="tour-sidebar__sorter-wrap">
-                        
+
                         <div class="tour-sidebar__sorter-single">
                             <div class="tour-sidebar__sorter-top">
                                 <h3>Transfer Summary</h3>
@@ -78,7 +66,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            @Model.From
+                                            Model.From
                                         </div>
                                     </div>
                                     <div class="row">
@@ -87,7 +75,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            @Model.To
+                                            Model.To
                                         </div>
                                     </div>
                                     <div class="row">
@@ -96,7 +84,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            @Model.Distance KM
+                                            Model.Distance KM
                                         </div>
                                     </div>
                                     <div class="row">
@@ -105,7 +93,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            @Model.Duration
+                                            Model.Duration
                                         </div>
                                     </div>
                                 </div><!-- /.tour-sidebar__sorter-inputs -->
@@ -129,19 +117,22 @@
                                     </p>
                                     <p>
                                         <input type="checkbox" id="duration-4" name="radio-group">
-                                        <label for="duration-4">1 - 2 days
+                                        <label for="duration-4">
+                                            1 - 2 days
 
                                         </label>
                                     </p>
                                     <p>
                                         <input type="checkbox" id="duration-3" name="radio-group">
-                                        <label for="duration-3">2 - 3 days
+                                        <label for="duration-3">
+                                            2 - 3 days
 
                                         </label>
                                     </p>
                                     <p>
                                         <input type="checkbox" id="duration-2" name="radio-group">
-                                        <label for="duration-2">4 - 5 days
+                                        <label for="duration-2">
+                                            4 - 5 days
 
 
                                         </label>

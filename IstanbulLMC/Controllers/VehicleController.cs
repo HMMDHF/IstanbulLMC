@@ -42,7 +42,7 @@ namespace IstanbulLMC.Controllers
                         From = transferDTO.FromPlace,
                         To = transferDTO.ToPlace,
                         Duration = directions.routes[0].legs[0].duration.text,
-                        VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance).ToListAsync()
+                        VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance && x.SeateCount >= transferDTO.PassengersCount).ToListAsync()
                     };
                     return View(vehicleCategoryDTO);
                 }
