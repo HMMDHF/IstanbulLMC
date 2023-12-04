@@ -57,9 +57,6 @@ public partial class lmcTourismContext : DbContext
             entity.Property(e => e.Distance).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.FromPlace).HasMaxLength(50);
             entity.Property(e => e.FromPlaceID).HasMaxLength(50);
-            entity.Property(e => e.InsertID)
-                .HasMaxLength(50)
-                .IsUnicode(false);
             entity.Property(e => e.IsActive)
                 .IsRequired()
                 .HasDefaultValueSql("((1))");
@@ -67,9 +64,6 @@ public partial class lmcTourismContext : DbContext
             entity.Property(e => e.ToPlace).HasMaxLength(50);
             entity.Property(e => e.ToPlaceID).HasMaxLength(50);
             entity.Property(e => e.TotalPrice).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.UpdateID)
-                .HasMaxLength(50)
-                .IsUnicode(false);
 
             entity.HasOne(d => d.VehicleCategory).WithMany(p => p.Transfer)
                 .HasForeignKey(d => d.VehicleCategoryID)

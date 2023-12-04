@@ -47,12 +47,12 @@
                             <ul class="tour-one__meta list-unstyled">
                                 <li><i class="far fa-user-circle"></i> @item.SeateCount Passenger</li>
                                 <li><i class="fas fa-suitcase"></i> @item.SuitcaseCount Suitcase</li>
-                                <li><a href="#" class="thm-btn tour-search-one__btn">Booking Now</a></li>
-                            </ul><!-- /.tour-one__meta -->
+@*                                 <li><a href="#" class="thm-btn tour-search-one__btn">Booking Now</a></li>
+ *@                         </ul><!-- /.tour-one__meta -->
 
-                            @* <div class="tour-search-one__btn-wrap">
-                                <button type="submit" class="thm-btn tour-search-one__btn">Find now</button>
-                            </div><!-- /.tour-search-one__btn-wrap --> *@
+                            <div class="tour-search-one__btn-wrap">
+                                <button type="submit" class="thm-btn tour-search-one__btn1 btnBook" value="@item.ID">Booking Now</button>
+                            </div><!-- /.tour-search-one__btn-wrap -->
 
                         </div><!-- /.tour-one__content -->
                     </div>
@@ -77,8 +77,10 @@
                                             From
                                         </div>
 
-                                        <div class="col-6">
+                                        <div class="col-6" id="searchResults">
                                             @Model.From
+                                            <input asp-for="From" type="hidden"/>
+                                            <input asp-for="FromID" type="hidden"/>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -86,26 +88,55 @@
                                             TO
                                         </div>
 
-                                        <div class="col-6">
+                                        <div class="col-6" id="searchResults1">
                                             @Model.To
+                                            <input asp-for="To" type="hidden" />
+                                            <input asp-for="ToID" type="hidden" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
-                                            Distance
+                                            Passenger Count
                                         </div>
 
-                                        <div class="col-6">
-                                            @Model.Distance KM
+                                        <div class="col-6" id="searchResults2">
+                                            @Model.PassengersCount
+                                            <input asp-for="PassengersCount" type="hidden" />
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Date
+                                        </div>
+
+                                        <div class="col-6" id="searchResults3">
+                                            @Model.Date
+                                            <input asp-for="Date" type="hidden" />
+                                        </div>
+                                    </div>
+
+                                    @if (Model.RoundTripDate != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-6">
+                                                Return
+                                            </div>
+
+                                            <div class="col-6" id="searchResults4">
+                                                @Model.RoundTripDate
+                                                <input asp-for="RoundTripDate" type="hidden" />
+                                            </div>
+                                        </div>
+                                    }
+                                    
                                     <div class="row">
                                         <div class="col-6">
                                             Duration
                                         </div>
 
-                                        <div class="col-6">
+                                        <div class="col-6" id="searchResults5">
                                             @Model.Duration
+                                            <input asp-for="Duration" type="hidden" />
                                         </div>
                                     </div>
                                 </div><!-- /.tour-sidebar__sorter-inputs -->
@@ -163,3 +194,74 @@
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section><!-- /.tour-two -->
+
+<script>
+    $(".btnBook").on("click", function () {
+        // Set the values for the input fields based on the button's data attributes
+        $("#From").val($(this).data("from"));
+        $("#FromID").val($(this).data("fromid"));
+        $("#To").val($(this).data("to"));
+        $("#ToID").val($(this).data("toid"));
+        $("#PassengersCount").val($(this).data("passengerscount"));
+        $("#Date").val($(this).data("date"));
+        $("#RoundTripDate").val($(this).data("roundtripdate"));
+        $("#Duration").val($(this).data("duration"));
+
+        // Collect data to be sent
+        var bookingData = {
+            From: $("#From").val(),
+            FromID: $("#FromID").val(),
+            To: $("#To").val(),
+            ToID: $("#ToID").val(),
+            PassengersCount: $("#PassengersCount").val(),
+            Date: $("#Date").val(),
+            RoundTripDate: $("#RoundTripDate").val(),
+            Duration: $("#Duration").val()
+        };
+
+        // AJAX request to the customerApp action in the Customer controller
+        $.ajax({
+            url: '/Customer/CustomerApplication',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(bookingData),
+            success: function (response) {
+                // Handle success
+                console.log("Booking successful", response);
+                $(".btnBook").html(data).show();
+                //alert("Booking successful");
+            },
+            error: function (error) {
+                // Handle error
+                console.error("Error in booking", error);
+               // alert("Error in booking");
+                $(".btnBook").html("<p>Error loading results.</p>").show();
+            }
+        });
+
+        // Optionally hide the button
+        $(".btnBook").hide();
+    });
+
+   @*  $(".btnBook").on("click", function () {
+        
+
+        $("#From").val($(this).data("id"));
+        $("#FromID").val($(this).data("id"));
+
+        $("#To").val($(this).data("id"));
+        $("#ToID").val($(this).data("id"));
+
+        $("#PassengersCount").val($(this).data("id"));
+
+        $("#Date").val($(this).data("id"));
+
+        $("#RoundTripDate").val($(this).data("id"));
+
+        $("#Duration").val($(this).data("id"));
+
+        $(".btnBook").hide(); // Optionally hide the results after selection
+        alert($(this).val());
+   }) *@
+
+</script>
