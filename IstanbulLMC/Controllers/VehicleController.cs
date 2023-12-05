@@ -47,7 +47,6 @@ namespace IstanbulLMC.Controllers
                         PassengersCount = transferDTO.PassengersCount,
                         Date = transferDTO.Date,
                         RoundTripDate = transferDTO.RounTripDate,
-
                         VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance && x.SeateCount >= transferDTO.PassengersCount).ToListAsync()
                     };
                     return View(vehicleCategoryDTO);
