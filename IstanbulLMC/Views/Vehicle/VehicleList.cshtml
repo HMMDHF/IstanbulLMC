@@ -47,12 +47,29 @@
                             <ul class="tour-one__meta list-unstyled">
                                 <li><i class="far fa-user-circle"></i> @item.SeateCount Passenger</li>
                                 <li><i class="fas fa-suitcase"></i> @item.SuitcaseCount Suitcase</li>
-                                <li><a href="#" class="thm-btn tour-search-one__btn">Booking Now</a></li>
+                                @*  <li><a href="#" class="thm-btn tour-search-one__btn">Booking Now</a></li>
+                            *@
                             </ul><!-- /.tour-one__meta -->
 
-                            @* <div class="tour-search-one__btn-wrap">
-                                <button type="submit" class="thm-btn tour-search-one__btn">Find now</button>
-                            </div><!-- /.tour-search-one__btn-wrap --> *@
+                            
+                                <form  asp-action="CustomerApplication" asp-controller="Customer" method="post">
+                                    
+                                    <input  asp-for="Price" type="hidden" />
+                                    <input  asp-for="Distance" type="hidden" />
+                                    <input  asp-for="From" type="hidden" />
+                                    <input  asp-for="FromID" type="hidden" />
+                                    <input  asp-for="To" type="hidden" />
+                                    <input  asp-for="ToID" type="hidden" />
+                                    <input  asp-for="PassengersCount" type="hidden" />
+                                    <input  asp-for="Date" type="hidden" />
+                                    <input  asp-for="RoundTripDate" type="hidden" />
+                                    <input  asp-for="Duration" type="hidden" />
+                                    <input name="carId" value="@item.ID" type="hidden" />
+                                <div class="tour-search-one__btn-wrap">
+                                    <button type="submit" class="thm-btn tour-search-one__btn1">Book Now</button>
+                                </div><!-- /.tour-search-one__btn-wrap -->
+                                </form>
+                           
 
                         </div><!-- /.tour-one__content -->
                     </div>
@@ -62,7 +79,7 @@
             <div class="col-lg-4">
                 <div class="tour-sidebar">
                     <div class="tour-sidebar__sorter-wrap">
-                        
+
                         <div class="tour-sidebar__sorter-single">
                             <div class="tour-sidebar__sorter-top">
                                 <h3>Transfer Summary</h3>
@@ -70,8 +87,10 @@
                                 <!-- /.tour-sidebar__sorter-toggler -->
                             </div><!-- /.tour-sidebar__sorter-top -->
                             <div class="tour-sidebar__sorter-content">
+                                
 
                                 <div class="tour-sidebar__sorter-inputs">
+
                                     <div class="row">
                                         <div class="col-6">
                                             From
@@ -79,6 +98,7 @@
 
                                         <div class="col-6">
                                             @Model.From
+                                            
                                         </div>
                                     </div>
                                     <div class="row">
@@ -88,17 +108,41 @@
 
                                         <div class="col-6">
                                             @Model.To
+                                            
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
-                                            Distance
+                                            Passenger Count
                                         </div>
 
                                         <div class="col-6">
-                                            @Model.Distance KM
+                                            @Model.PassengersCount
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Date
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Date
+                                        </div>
+                                    </div>
+
+                                    @if (Model.RoundTripDate != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-6">
+                                                Return
+                                            </div>
+
+                                            <div class="col-6">
+                                                @Model.RoundTripDate
+                                            </div>
+                                        </div>
+                                    }
+
                                     <div class="row">
                                         <div class="col-6">
                                             Duration
@@ -129,19 +173,22 @@
                                     </p>
                                     <p>
                                         <input type="checkbox" id="duration-4" name="radio-group">
-                                        <label for="duration-4">1 - 2 days
+                                        <label for="duration-4">
+                                            1 - 2 days
 
                                         </label>
                                     </p>
                                     <p>
                                         <input type="checkbox" id="duration-3" name="radio-group">
-                                        <label for="duration-3">2 - 3 days
+                                        <label for="duration-3">
+                                            2 - 3 days
 
                                         </label>
                                     </p>
                                     <p>
                                         <input type="checkbox" id="duration-2" name="radio-group">
-                                        <label for="duration-2">4 - 5 days
+                                        <label for="duration-2">
+                                            4 - 5 days
 
 
                                         </label>

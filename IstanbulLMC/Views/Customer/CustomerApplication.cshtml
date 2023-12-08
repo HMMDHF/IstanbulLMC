@@ -1,4 +1,7 @@
-﻿<section class="page-header" style="background-image: url(/assets/images/backgrounds/page-header-contact.jpg);">
+﻿@model VehicleCategoryDTO
+
+
+<section class="page-header" style="background-image: url(/assets/images/backgrounds/page-header-contact.jpg);">
     <div class="container">
         <h2>Tours with Sidebar</h2>
         <ul class="thm-breadcrumb list-unstyled">
@@ -64,9 +67,9 @@
                                         <div class="col-6">
                                             From
                                         </div>
-
+                                        
                                         <div class="col-6">
-                                            Model.From
+                                            @Model.From
                                         </div>
                                     </div>
                                     <div class="row">
@@ -75,7 +78,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            Model.To
+                                            @Model.To
                                         </div>
                                     </div>
                                     <div class="row">
@@ -84,7 +87,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            Model.Distance KM
+                                            @Model.Distance KM
                                         </div>
                                     </div>
                                     <div class="row">
@@ -93,7 +96,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            Model.Duration
+                                            @Model.Duration
                                         </div>
                                     </div>
                                 </div><!-- /.tour-sidebar__sorter-inputs -->

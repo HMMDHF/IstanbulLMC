@@ -4626,8 +4626,8 @@ h6 {
 
 .tour-two__single .tour-one__content {
 	padding: 0;
-	padding-top: 40px;
-	padding-right: 40px;
+	padding-top: 5px;
+	padding-right: 5px;
 	padding-left: 40px;
 }
 
@@ -6353,6 +6353,18 @@ h6 {
 	display: flex;
 	-webkit-box-pack: end;
 	        justify-content: flex-end;
+}
+
+
+.tour-search-one__btn1 {
+	padding: 5px;
+	font-size: 20px;
+	font-weight: 600;
+	position: absolute;
+	justify-content: flex-end;
+	display: inline-flex;
+	border-radius: 10px;
+	margin-right: 10px;
 }
 
 .tour-search-one__btn {
