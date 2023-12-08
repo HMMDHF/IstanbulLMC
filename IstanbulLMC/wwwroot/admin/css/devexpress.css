@@ -1,0 +1,15 @@
+
+
+/* DATAGRID */
+
+
+.dx-datagrid-rowsview .dx-row-focused.dx-data-row .dx-command-edit:not(.dx-focused) .dx-link, .dx-datagrid-rowsview .dx-row-focused.dx-data-row > td:not(.dx-focused), .dx-datagrid-rowsview .dx-row-focused.dx-data-row > tr > td:not(.dx-focused) {
+    background-color: #ddd;
+    color: #000;
+}
+
+.dx-datagrid-rowsview .dx-row-focused.dx-data-row > td, .dx-datagrid-rowsview .dx-row-focused.dx-data-row > tr:last-child > td {
+    border-bottom: 1px solid #ddd;
+}
+
+/* END - DATAGRID */

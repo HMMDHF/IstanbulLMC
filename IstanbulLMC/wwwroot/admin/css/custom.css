@@ -1,0 +1,10 @@
+.form-label{
+    margin-bottom: 0;
+    color:var(--vz-gray-700);
+}
+.flex-shrink-0 button.btn-label{
+    margin-bottom: -5px;
+}
+.page-title-box h4{
+    text-transform:none;
+}
