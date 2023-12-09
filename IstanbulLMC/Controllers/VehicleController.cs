@@ -36,20 +36,25 @@ namespace IstanbulLMC.Controllers
 
                     decimal distance = Convert.ToDecimal(Math.Ceiling((double)directions.routes[0].legs[0].distance.value / 1000));
 
-                    VehicleCategoryDTO vehicleCategoryDTO = new VehicleCategoryDTO
-                    {
-                        Distance = distance,
-                        From = transferDTO.FromPlace,
-                        FromID = transferDTO.FromPlaceID,
-                        To = transferDTO.ToPlace,
-                        ToID = transferDTO.ToPlaceID,
-                        Duration = directions.routes[0].legs[0].duration.text,
-                        PassengersCount = transferDTO.PassengersCount,
-                        Date = transferDTO.Date,
-                        RoundTripDate = transferDTO.RounTripDate,
-                        VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance && x.SeateCount >= transferDTO.PassengersCount).ToListAsync()
-                    };
-                    return View(vehicleCategoryDTO);
+                    transferDTO.Distance = distance;
+                    transferDTO.Duration = directions.routes[0].legs[0].duration.text;
+                    transferDTO.VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance && x.SeateCount >= transferDTO.PassengersCount).ToListAsync();
+
+
+                    //VehicleCategoryDTO vehicleCategoryDTO = new VehicleCategoryDTO
+                    //{
+                    //    Distance = distance,
+                    //    From = transferDTO.FromPlace,
+                    //    FromID = transferDTO.FromPlaceID,
+                    //    To = transferDTO.ToPlace,
+                    //    ToID = transferDTO.ToPlaceID,
+                    //    Duration = directions.routes[0].legs[0].duration.text,
+                    //    PassengersCount = transferDTO.PassengersCount,
+                    //    Date = transferDTO.Date,
+                    //    RoundTripDate = transferDTO.RounTripDate,
+                    //    VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance && x.SeateCount >= transferDTO.PassengersCount).ToListAsync()
+                    //};
+                    return View(transferDTO);
                 }
                 else
                 {

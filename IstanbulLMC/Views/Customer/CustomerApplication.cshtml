@@ -1,4 +1,4 @@
-﻿@model VehicleCategoryDTO
+﻿@model TransferDTO
 
 
 <section class="page-header" style="background-image: url(/assets/images/backgrounds/page-header-contact.jpg);">
@@ -18,28 +18,36 @@
                 <div class="tour-sidebar">
                     <div class="tour-sidebar__search tour-sidebar__single">
                         <h3>Book This Tour</h3>
-                        <form action="#" class="tour-sidebar__search-form">
+                        <form asp-action="CustomerApplicationSave" asp-controller="Customer" method="post" class="tour-sidebar__search-form">
+                            <input asp-for="Distance" type="hidden" />
+                            <input asp-for="FromPlace" type="hidden" />
+                            <input asp-for="FromPlaceID" type="hidden" />
+                            <input asp-for="ToPlace" type="hidden" />
+                            <input asp-for="ToPlaceID" type="hidden" />
+                            <input asp-for="PassengersCount" type="hidden" />
+                            <input asp-for="Date" type="hidden" />
+                            <input asp-for="RoundTripDate" type="hidden" />
+                            <input asp-for="Duration" type="hidden" />
+                            <input asp-for="VehicleCategoryID" type="hidden" />
+
                             <div class="input-group">
-                                <input type="text" placeholder="Your Name">
+                                <input asp-for="Name" placeholder="Your Name">
                             </div><!-- /.input-group -->
+
                             <div class="input-group">
-                                <input type="text" placeholder="Email Address">
+                                <input asp-for="Tel" placeholder="Phone"> 
                             </div><!-- /.input-group -->
+
                             <div class="input-group">
-                                <input type="text" placeholder="Phone"> 
+                                <input asp-for="Tel" data-provide="datepicker" placeholder="dd/mm/yy">
                             </div><!-- /.input-group -->
+
                             <div class="input-group">
-                                <input type="text" data-provide="datepicker" placeholder="dd/mm/yy">
+                                <input asp-for="FlieghtNo" placeholder="FlieghtNo">
                             </div><!-- /.input-group -->
+
                             <div class="input-group">
-                                <select class="selectpicker">
-                                    <option value="Tickets">Tickets</option>
-                                    <option value="Children">Children</option>
-                                    <option value="Adult">Adult</option>
-                                </select>
-                            </div><!-- /.input-group -->
-                            <div class="input-group">
-                                <textarea placeholder="Message"></textarea>
+                                <textarea asp-for="Message" placeholder="Message"></textarea>
                             </div><!-- /.input-group -->
 
                             <div class="input-group">
@@ -69,7 +77,7 @@
                                         </div>
                                         
                                         <div class="col-6">
-                                            @Model.From
+                                            @Model.FromPlace
                                         </div>
                                     </div>
                                     <div class="row">
@@ -78,7 +86,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            @Model.To
+                                            @Model.ToPlace
                                         </div>
                                     </div>
                                     <div class="row">

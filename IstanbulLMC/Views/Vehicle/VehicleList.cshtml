@@ -1,4 +1,4 @@
-﻿@model VehicleCategoryDTO
+﻿@model TransferDTO
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -20,62 +20,62 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                @foreach (var item in Model.VehicleCategories)
-                {
-                    <div class="tour-two__single tour-one__single">
-                        <div class="tour-two__image-wrap">
-                            <div class="tour-one__image" style="height: 170px; background-image: url('/assets/images/@item.Image'); background-position: center; background-repeat: no-repeat; background-size: cover;">
-                            </div><!-- /.tour-one__image -->
-                        </div><!-- /.tour-two__image-wrap -->
+                <form asp-action="CustomerApplication" asp-controller="Customer" id="save" method="post">
 
-                        <div class="tour-one__content" style="width: 100%;">
-                            <div class="tour-two__top">
-                                <div class="tour-two__top-left">
-                                    <h3>@item.Name</h3>
-                                </div><!-- /.tour-two__top-left -->
-                                <div class="tour-two__right">
-                                    <p><span>@((item.KMPrice * Model.Distance).ToString("N2")) $</span></p>
-                                </div><!-- /.tour-two__right -->
-                            </div><!-- /.tour-two__top -->
+                    <input asp-for="Distance" type="hidden" />
+                    <input asp-for="FromPlace" type="hidden" />
+                    <input asp-for="FromPlaceID" type="hidden" />
+                    <input asp-for="ToPlace" type="hidden" />
+                    <input asp-for="ToPlaceID" type="hidden" />
+                    <input asp-for="PassengersCount" type="hidden" />
+                    <input asp-for="Date" type="hidden" />
+                    <input asp-for="RoundTripDate" type="hidden" />
+                    <input asp-for="Duration" type="hidden" />
+                    <input asp-for="VehicleCategoryID" type="hidden" />
 
-                            <div class="tour-two__text">
-                                <p>
+                    @foreach (var item in Model.VehicleCategories)
+                    {
+                        <div class="tour-two__single tour-one__single">
+                            <div class="tour-two__image-wrap">
+                                <div class="tour-one__image" style="height: 170px; background-image: url('/assets/images/@item.Image'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+                                </div><!-- /.tour-one__image -->
+                            </div><!-- /.tour-two__image-wrap -->
 
-                                </p>
-                            </div><!-- /.tour-two__text -->
+                            <div class="tour-one__content" style="width: 100%;">
+                                <div class="tour-two__top">
+                                    <div class="tour-two__top-left">
+                                        <h3>@item.Name</h3>
+                                    </div><!-- /.tour-two__top-left -->
+                                    <div class="tour-two__right">
+                                        <p><span>@((item.KMPrice * Model.Distance).ToString("N2")) $</span></p>
+                                    </div><!-- /.tour-two__right -->
+                                </div><!-- /.tour-two__top -->
 
-                            <ul class="tour-one__meta list-unstyled">
-                                <li><i class="far fa-user-circle"></i> @item.SeateCount Passenger</li>
-                                <li><i class="fas fa-suitcase"></i> @item.SuitcaseCount Suitcase</li>
-                                @*  <li><a href="#" class="thm-btn tour-search-one__btn">Booking Now</a></li>
-                            *@
-                            </ul><!-- /.tour-one__meta -->
+                                <div class="tour-two__text">
+                                    <p>
 
-                            
-                                <form  asp-action="CustomerApplication" asp-controller="Customer" method="post">
-                                    
-                                    <input  asp-for="Price" type="hidden" />
-                                    <input  asp-for="Distance" type="hidden" />
-                                    <input  asp-for="From" type="hidden" />
-                                    <input  asp-for="FromID" type="hidden" />
-                                    <input  asp-for="To" type="hidden" />
-                                    <input  asp-for="ToID" type="hidden" />
-                                    <input  asp-for="PassengersCount" type="hidden" />
-                                    <input  asp-for="Date" type="hidden" />
-                                    <input  asp-for="RoundTripDate" type="hidden" />
-                                    <input  asp-for="Duration" type="hidden" />
-                                    <input name="carId" value="@item.ID" type="hidden" />
+                                    </p>
+                                </div><!-- /.tour-two__text -->
+
+                                <ul class="tour-one__meta list-unstyled">
+                                    <li><i class="far fa-user-circle"></i> @item.SeateCount Passenger</li>
+                                    <li><i class="fas fa-suitcase"></i> @item.SuitcaseCount Suitcase</li>
+                                    @*  <li><a href="#" class="thm-btn tour-search-one__btn">Booking Now</a></li>
+                                *@
+                                </ul><!-- /.tour-one__meta -->
+
                                 <div class="tour-search-one__btn-wrap">
-                                    <button type="submit" class="thm-btn tour-search-one__btn1">Book Now</button>
+                                    <a href="#" data-id="@item.ID" class="thm-btn tour-search-one__btn1 Book">Book Now</a>
                                 </div><!-- /.tour-search-one__btn-wrap -->
-                                </form>
-                           
 
-                        </div><!-- /.tour-one__content -->
-                    </div>
-                    <!-- /.tour-two__single -->
-                }
+                            </div><!-- /.tour-one__content -->
+                            </div>
+                            <!-- /.tour-two__single -->
+                        }
+                    @* <button type="submit" class="thm-btn tour-search-one__btn1"></button> *@
+                </form>
             </div><!-- /.col-lg-8 -->
+
             <div class="col-lg-4">
                 <div class="tour-sidebar">
                     <div class="tour-sidebar__sorter-wrap">
@@ -87,7 +87,6 @@
                                 <!-- /.tour-sidebar__sorter-toggler -->
                             </div><!-- /.tour-sidebar__sorter-top -->
                             <div class="tour-sidebar__sorter-content">
-                                
 
                                 <div class="tour-sidebar__sorter-inputs">
 
@@ -97,8 +96,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            @Model.From
-                                            
+                                            @Model.FromPlace
                                         </div>
                                     </div>
                                     <div class="row">
@@ -107,8 +105,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            @Model.To
-                                            
+                                            @Model.ToPlace
                                         </div>
                                     </div>
                                     <div class="row">
@@ -207,6 +204,14 @@
                     </div><!-- /.tour-sidebar__sorter-wrap -->
                 </div><!-- /.tour-sidebar -->
             </div><!-- /.col-lg-4 -->
+
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section><!-- /.tour-two -->
+
+<script>
+    $(".Book").on("click", function () {
+        $("#VehicleCategoryID").val($(this).data("id"));
+        $("#save").submit();
+    });
+</script>

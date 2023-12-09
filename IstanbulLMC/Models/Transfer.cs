@@ -41,6 +41,10 @@ public partial class Transfer
 
     public string? FlieghtNo { get; set; }
 
+    public string? Message { get; set; }
+
+    public string? NO { get; set; }
+
     public virtual ICollection<Passenger> Passenger { get; set; } = new List<Passenger>();
 
     public virtual VehicleCategory VehicleCategory { get; set; } = null!;

@@ -22,7 +22,7 @@ public partial class lmcTourismContext : DbContext
     public virtual DbSet<VehicleCategory> VehicleCategory { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //Scaffold-DbContext "Data Source=104.247.162.242\MSSQLSERVER2019;Initial Catalog=kadirocs_lmc_Tourism;Persist Security Info=True;TrustServerCertificate=True;User ID=kadirocs_lmc_Tourism;Password=lmc_Tourism?2023" Microsoft.EntityFrameworkCore.SqlServer -f -o Models -context "lmcTourismContext" -UseDatabaseNames -NoPluralize
+        //PM> Scaffold-DbContext "Data Source=104.247.162.242\MSSQLSERVER2019;Initial Catalog=kadirocs_lmc_Tourism;Persist Security Info=True;TrustServerCertificate=True;User ID=kadirocs_lmc_Tourism;Password=lmc_Tourism?2023" Microsoft.EntityFrameworkCore.SqlServer -f -o Models -context "lmcTourismContext" -UseDatabaseNames -NoPluralize
 
         => optionsBuilder.UseSqlServer("Data Source=104.247.162.242\\MSSQLSERVER2019;Initial Catalog=kadirocs_lmc_Tourism;Persist Security Info=True;TrustServerCertificate=True;User ID=kadirocs_lmc_Tourism;Password=lmc_Tourism?2023");
 
