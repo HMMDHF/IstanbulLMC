@@ -11,10 +11,10 @@ namespace IstanbulLMC.Controllers
         private readonly IConfiguration _configuration;
         private readonly lmcTourismContext db;
 
-        public VehicleController(IConfiguration configuration)
+        public VehicleController(IConfiguration configuration, lmcTourismContext context)
         {
             _configuration = configuration;
-            db = new lmcTourismContext();
+            db = context;
         }
 
         public IActionResult VehicleList()

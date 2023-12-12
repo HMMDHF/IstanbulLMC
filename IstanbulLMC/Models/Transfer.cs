@@ -45,7 +45,6 @@ public partial class Transfer
 
     public string? NO { get; set; }
 
-    public virtual ICollection<Passenger> Passenger { get; set; } = new List<Passenger>();
 
     public virtual VehicleCategory VehicleCategory { get; set; } = null!;
 }

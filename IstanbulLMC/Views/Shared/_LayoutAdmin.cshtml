@@ -6,20 +6,20 @@
     <title>Travel | @ViewData["title"]</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="/admin/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="/admin/images/favicon.ico">
 
-    <script src="/admin/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="/admin/js/jquery-3.6.0.min.js"></script>
     @RenderSection("Styles", required: false)
 
-    <script src="/admin/assets/js/layout.js"></script>
-    <link href="/admin/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <script src="/admin/js/layout.js"></script>
+    <link href="/admin/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/css/icons.min.css" rel="stylesheet" type="text/css" />
 
     <link id="sync" href="/css/devextreme/dx.light.css" rel="stylesheet" />
-    <link href="/admin/assets/css/app.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/css/custom.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/css/devexpress.css" rel="stylesheet" />
+    <link href="/admin/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="/admin/css/devexpress.css" rel="stylesheet" />
 
     <script>DevExpress.localization.locale("en")</script>
 </head>
@@ -32,28 +32,28 @@
                 <div class="load-child bounce1"></div>
                 <div class="load-child bounce2"></div>
                 <div class="load-child bounce3"></div>
-                @*<img src="/admin/assets/media/wbloading.gif" width="100%" />*@
+                @*<img src="/admin/media/wbloading.gif" width="100%" />*@
             </div>
         </div>
 
-        @await Component.InvokeAsync("Header")
+        @* @await Component.InvokeAsync("Header") *@
 
         <div class="app-menu navbar-menu">
             <div class="navbar-brand-box">
                 <a href="/" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="/admin/assets/images/logo-sm.png" alt="" height="22">
+                        <img src="/admin/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="/admin/assets/images/logo-dark.png" alt="" height="17">
+                        <img src="/admin/images/logo-dark.png" alt="" height="17">
                     </span>
                 </a>
                 <a href="/" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="/admin/assets/images/logo-sm.png" alt="" height="22">
+                        <img src="/admin/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="/admin/assets/images/logo-light.png" alt="" height="17">
+                        <img src="/admin/images/logo-light.png" alt="" height="17">
                     </span>
                 </a>
                 <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
@@ -66,7 +66,7 @@
 
                     <div id="two-column-menu">
                     </div>
-                    @await Component.InvokeAsync("Menu")
+                    @* @await Component.InvokeAsync("Menu") *@
                 </div>
             </div>
             <div class="sidebar-background"></div>
@@ -87,7 +87,7 @@
                     </div>
                     @RenderBody()
 
-                    @Html.AntiForgeryToken()
+                    @* @Html.AntiForgeryToken() *@
                 </div>
             </div>
 
@@ -124,27 +124,28 @@
     </div>
 
 
-    <partial name="_themeSetting" />
+    @* <partial name="_themeSetting" /> *@
 
     @*<script src="/ajax/jquery.unobtrusive-ajax.min.js"></script>*@
-    <script src="/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/admin/assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="/admin/assets/libs/node-waves/waves.min.js"></script>
-    <script src="/admin/assets/libs/feather-icons/feather.min.js"></script>
-    <script src="/admin/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
-    <script src="/admin/assets/js/plugins.js"></script>
+    <script src="/admin/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/admin/libs/simplebar/simplebar.min.js"></script>
+    <script src="/admin/libs/node-waves/waves.min.js"></script>
+    <script src="/admin/libs/feather-icons/feather.min.js"></script>
+    <script src="/admin/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="/admin/js/plugins.js"></script>
     <script src="/bootbox/bootbox.all.min.js"></script>
-    <script src="/admin/assets/libs/sweetalert2/sweetalert2.min.js"></script>
-    <script src="/admin/assets/js/pages/sweetalerts.init.js"></script>
-    <script src="/admin/assets/js/pages/notifications.init.js"></script>
-    <script src="/admin/assets/libs/moment/min/moment.min.js"></script>
-    <script src="/admin/assets/libs/moment/min/moment-with-locales.min.js"></script>
-    <script src="/admin/assets/js/app.js"></script>
-    <script src="/admin/assets/js/scripts.js"></script>
-    <script src="/admin/assets/js/custom.js"></script>
-    <script src="/admin/assets/js/devexpress.js"></script>
+    <script src="/admin/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/admin/js/pages/sweetalerts.init.js"></script>
+    <script src="/admin/js/pages/notifications.init.js"></script>
+    <script src="/admin/libs/moment/min/moment.min.js"></script>
+    <script src="/admin/libs/moment/min/moment-with-locales.min.js"></script>
+    <script src="/admin/js/app.js"></script>
+    <script src="/admin/js/scripts.js"></script>
+    <script src="/admin/js/custom.js"></script>
+    <script src="/admin/js/devexpress.js"></script>
 
-    @RenderSection("Scripts", required: false)
+@*     @RenderSection("Scripts", required: false)
+ *@    @await RenderSectionAsync("Scripts", required: false)
 
     <script>
         moment.locale('tr');
