@@ -1,9 +1,32 @@
+using IstanbulLMC.Models;
+using IstanbulLMC.ViewModel;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+        .AddEntityFrameworkStores<lmcTourismContext>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
+builder.Services.AddDbContext<lmcTourismContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:DbConn"].ToString());
+    options.EnableSensitiveDataLogging();
+});
+
+builder.Services.AddAuthentication("admin")
+        .AddCookie("admin", options =>
+        {
+            options.LoginPath = "/Admin/Admin/Login/"; // Set the login path
+
+        });
 
 var app = builder.Build();
 
@@ -19,10 +42,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints => {
+app.UseEndpoints(endpoints =>
+{
     endpoints.MapAreaControllerRoute(
             name: "Admin",
             areaName: "Admin",
@@ -38,5 +63,8 @@ app.UseEndpoints(endpoints => {
 //app.MapControllerRoute(
 //    name: "default",
 //    pattern: "{controller=Home}/{action=Index}/{id?}");
+//Seed database
+AppDbInitializer.Seed(app);
+AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
 
 app.Run();

@@ -1,0 +1,95 @@
+﻿@using IstanbulLMC.ViewModel;
+@model RegisterVM;
+@using Microsoft.AspNetCore.Mvc.Localization
+@{
+	ViewData["Title"] = "Sign up for a new account";
+}
+
+
+	<!-- Contact Page Section -->
+
+		<div class="container">
+
+			<!-- Sec Title -->
+			<h2 style="text-align:center;margin-top:100px;margin-bottom:10px ;color:#c29d59;">Sign up for a new account</h2>
+
+			@if (TempData["Error"] != null)
+			{
+				<div class="col-md-12 alert alert-danger">
+					<span><b>Sorry!</b> - @TempData["Error"] </span>
+				</div>
+			}
+			<div class="inner-container">
+
+				<!-- Contact Form -->
+				<div class="contact-form">
+					<form asp-action="Register">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+						<div class="row clearfix">
+
+							<!-- Form Group -->
+							<div class="form-group col-lg-6 col-md-6 col-sm-12">
+								<label asp-for="FirstName" class="control-label">First Name *</label>
+								<input asp-for="FirstName" class="form-control" type="text" placeholder="First name" />
+								<span asp-validation-for="FirstName" class="text-danger"></span>
+
+							</div>
+
+							<!-- Form Group -->
+							<div class="form-group col-lg-6 col-md-6 col-sm-12">
+								<label asp-for="LastName" class="control-label">Last Name *</label>
+								<input asp-for="LastName" class="form-control" type="text" placeholder="Last name" />
+								<span asp-validation-for="LastName" class="text-danger"></span>
+
+							</div>
+
+							<!-- Form Group -->
+							<div class="form-group col-lg-6 col-md-6 col-sm-12">
+								<label asp-for="Email">Email *</label>
+								<input asp-for="Email" type="email" placeholder="Email" />
+								<span asp-validation-for="Email" class="text-danger"></span>
+							</div>
+							<!-- Form Group -->
+							<div class="form-group col-lg-6 col-md-6 col-sm-12">
+								<label asp-for="Password" class="control-label">Password *</label>
+								<input asp-for="Password" class="form-control" placeholder="Password" />
+								<span asp-validation-for="Password" class="text-danger"></span>
+							</div>
+							<!-- Form Group -->
+							<div class="form-group col-lg-6 col-md-6 col-sm-12">
+								<label asp-for="confirmPassword" class="control-label">Confirm password *</label>
+								<input asp-for="confirmPassword" class="form-control" placeholder="Confirm password" />
+								<span asp-validation-for="confirmPassword" class="text-danger"></span>
+							</div>
+
+
+							<div class="form-group col-lg-12 col-md-12 col-sm-12">
+								<button type="submit" class="btn btn-outline-warning"><span class="txt">Send</span></button>
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		
+
+		</div>
+
+
+<!-- End Contact Page Section -->
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script src="~/js/jquery.js"></script>
+	<script src="~/js/popper.min.js"></script>
+	<script src="~/js/bootstrap.min.js"></script>
+	<script src="~/js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="~/js/jquery.fancybox.js"></script>
+	<script src="~/js/appear.js"></script>
+	<script src="~/js/owl.js"></script>
+	<script src="~/js/wow.js"></script>
+	<script src="~/js/parallax.min.js"></script>
+	<script src="~/js/jquery-ui.js"></script>
+	<script src="~/js/script.js"></script>
+	}

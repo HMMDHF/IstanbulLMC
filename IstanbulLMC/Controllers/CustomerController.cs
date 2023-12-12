@@ -1,17 +1,26 @@
 ﻿using IstanbulLMC.DTOs;
 using IstanbulLMC.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace IstanbulLMC.Controllers
 {
     public class CustomerController : Controller
     {
+
+
+
         private readonly lmcTourismContext db;
 
-        public CustomerController()
+        public CustomerController(lmcTourismContext context)
         {
-            db = new lmcTourismContext();
+            db = context;
         }
+
+        //public CustomerController()
+        //{
+        //    db = new lmcTourismContext();
+        //}
 
         [HttpPost]
         public IActionResult CustomerApplication(TransferDTO transferDTO)
