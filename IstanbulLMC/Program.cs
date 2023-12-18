@@ -2,7 +2,6 @@ using IstanbulLMC.Models;
 using IstanbulLMC.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 

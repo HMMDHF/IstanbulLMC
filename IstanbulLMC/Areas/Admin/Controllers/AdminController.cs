@@ -68,7 +68,7 @@ namespace IstanbulLMC.Areas.Admin.Controllers
         public async Task<IActionResult> Logout()
         {
             await _sinInM.SignOutAsync();
-            return RedirectToAction("index", "Home");
+            return RedirectToAction("Login");
         }
 
         [CustomAuthorize]

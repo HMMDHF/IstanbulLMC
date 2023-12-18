@@ -1,0 +1,230 @@
+﻿@model GridViewModel
+
+<style>
+    .e-btn {
+        font-size: 11px !important;
+    }
+</style>
+
+
+@{
+
+    List<string> toolbar = new List<string>();
+    if (Model.AllowColumnChooser)
+    {
+        toolbar.Add("ColumnChooser");
+    }
+    if (Model.AllowSearch)
+    {
+        toolbar.Add("Search");
+    }
+    if (Model.AllowToAdd)
+    {
+        toolbar.Add("Add");
+    }
+    if (Model.AllowToEdit)
+    {
+        toolbar.Add("Edit");
+    }
+    if (Model.AllowToUpdate)
+    {
+        toolbar.Add("Update");
+    }
+    if (Model.IsAllowToDelete)
+    {
+        toolbar.Add("Delete");
+    }
+    if (Model.IsAllowToDelete || Model.AllowToEdit || Model.AllowToAdd)
+    {
+        toolbar.Add("Cancel");
+    }
+    toolbar.AddRange(Model.toolbarList);
+
+    List<object> commands = new List<object>();
+    var width = 0;
+
+    // if (@Model.AllowToEdit)
+    // {
+    //     width += 60;
+    //     commands.Add(new { type = Model.BlueButtonType, buttonOption = new { content = Model.BlueButtonName ?? "Edit", cssClass = "e-flat e-info EditBtn" } }); // custom
+    // }
+    // if (Model.IsAllowToDelete)
+    // {
+    //     width += 50;
+    //     commands.Add(new { type = Model.RedButtonType, buttonOption = new { content = Model.RedButtonName ?? "حذف", cssClass = "e-flat e-danger DeleteBtn" } }); // custom
+    // }
+    foreach (var item in Model.commands)
+    {
+        width += 40;
+        commands.Add(item);
+    }
+
+}
+
+<ejs-grid id="@Model.GridId"
+          allowExcelExport="@Model.AllowExcelExport"
+          allowPdfExport="@Model.AllowPdfExport"
+          dataSource="@Model.Model"
+          allowPaging="true"
+          gridLines="Both"
+          enablePersistence="false"
+          allowFiltering="@Model.AllowFiltering"
+          allowMultiSorting="@Model.AllowMultiSorting"
+          allowReordering="@Model.AllowReordering"
+          allowResizing="@Model.AllowResize"
+          allowSelection="@Model.AllowSelection"
+          allowSorting="@Model.AllowSorting"
+          allowGrouping="@Model.AllowGrouping"
+          commandClick="@Model.OnCommandClick"
+          toolbarClick="toolbarClick"
+          showColumnChooser="@Model.AllowColumnChooser"
+          toolbar="@toolbar"
+          actionBegin="actionBegin">
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Normal" ></e-grid-editSettings>
+    <e-grid-pagesettings pageSizes="@(new string[]{ "5","10","20","50","100","All"})" pageSize="10"></e-grid-pagesettings>
+    <e-grid-filtersettings showFilterBarStatus="true" showFilterBarOperator="@Model.IsShowFilterBarOperator" type="Excel"></e-grid-filtersettings>
+
+    <e-grid-aggregates>
+        <e-grid-aggregate>
+            <e-aggregate-columns>
+                @foreach (var col in Model.CalculateColumns)
+                {
+                    switch (col.ColumnType)
+                    {
+                        case GridViewModel.GridColumnType.Sum:
+                            <e-aggregate-column field="@col.Field" format="@col.Format" type="Sum" footerTemplate="@col.FooterTemplate"></e-aggregate-column>
+                            break;
+
+                        default:
+                            <e-grid-column disableHtmlEncode="false" visible="col.Visiable" field="@col.Field" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
+                            break;
+                    }
+                }
+            </e-aggregate-columns>
+        </e-grid-aggregate>
+    </e-grid-aggregates>
+
+    <e-grid-columns>
+
+        @foreach (var col in Model.Columns)
+        {
+            switch (col.ColumnType)
+            {
+                case GridViewModel.GridColumnType.ID:
+                    <e-grid-column visible="col.Visiable" isPrimaryKey="true" field="@col.Field" headerText="#" width="@col.Width"></e-grid-column>
+                    break;
+                    
+                case GridViewModel.GridColumnType.Boolean:
+                    <e-grid-column visible="col.Visiable" editType="booleanedit" displayAsCheckBox="true" type="boolean" field="@col.Field" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
+                    break;
+
+                case GridViewModel.GridColumnType.RateEditor:
+                    <e-grid-column Template="#rateTemplate" visible="col.Visiable" field="@col.Field" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
+                    break;
+
+                case GridViewModel.GridColumnType.Date:
+                    <e-grid-column field="@col.Field" visible="col.Visiable" customFormat="@(new { type ="date", format="dd/MM/yyyy" })" type="date" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
+                    break;
+
+                case GridViewModel.GridColumnType.Number:
+                    <e-grid-column field="@col.Field" visible="col.Visiable" format="n2" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
+                    break;
+
+                case GridViewModel.GridColumnType.DecimalNO:
+                    <e-grid-column field="@col.Field" visible="col.Visiable" format="n3" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
+                    break;
+
+                default:
+                    <e-grid-column disableHtmlEncode="false" visible="col.Visiable" field="@col.Field" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
+                    break;
+            }
+        }
+
+        <e-grid-column headerText="#" visible="@Model.IsInformationManaged" width="@width.ToString()" commands="commands" textAlign="Center"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<script src="~/js/ej2.min.js"></script>
+
+<script type="text/x-jsrender" id="rateTemplate">
+    ${Rate}
+    @*${for Rate}
+            <i class="fa-solid fa-star" style="color: yellow"></i>
+        ${/for}
+
+        ${for 5-Rate}
+            <i class="fa-regular fa-star" style="color: yellow"></i>
+        ${/for}*@
+
+</script>
+<script>
+    function toolbarClick(args) {
+        var gridObj = document.getElementById(`@Model.GridId`).ej2_instances[0];
+
+        if (args.item.id === '@Model.GridId' + '_pdfexport') {
+            //gridObj.pdfExport();
+            var filteredRecords = gridObj.getFilteredRecords();
+
+            if (filteredRecords.length == 0) {
+                filteredRecords = gridObj.dataSource;
+                console.log(filteredRecords);
+            }
+            else {
+                console.log(filteredRecords);
+            }
+            const myJSON = JSON.stringify(filteredRecords);
+
+            var url = '/FastReport/SummaryReport?myJSON=' + myJSON;
+            window.open(url, '_blank');
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/FastReport/SummaryReport",
+            //    //contentType: 'application/json',
+            //    dataType: "json",
+            //    data: { vmSummaries : filteredRecords },
+            //    success: function (data) {
+            //        fs.writeFile('test2.pdf', data, { encoding: 'base64' }, (err) => {
+            //            if (err) throw err;
+            //            console.log('The file has been saved!');
+            //        });
+            //    }
+            //});
+        }
+        if (args.item.id === '@Model.GridId' + '_excelexport') {
+            gridObj.excelExport();
+        }
+        if (args.item.id === '@Model.GridId' + '_csvexport') {
+            gridObj.csvExport();
+        }
+    }
+
+    ej.base.L10n.load({
+        'ar-AR': {
+            '@Model.GridId': {
+                'EmptyRecord': 'لا يوجد قيود',
+                'GroupDropArea': 'مساحة لترك المجموعة',
+                'UnGroup': 'حذف التصنيف',
+                'EmptyDataSourceError': 'يوجد خطأ في تحميل البيانات',
+                'Item': 'قيد',
+                'Items': 'فيود',
+            },
+            'pager': {
+                'currentPageInfo': '{0} صفحة {1} من صفحات',
+                'totalItemsInfo': '({0} قيد)',
+                'firstPageTooltip': 'الصفحة الأولى',
+                'lastPageTooltip': 'الصفحة الأخيرة',
+                'nextPageTooltip': 'التالي',
+                'previousPageTooltip': 'السابق',
+                'nextPagerTooltip': 'تلميح الصفح التالية',
+                'previousPagerTooltip': 'تلميح الصفحة السابقة',
+                'pagerDropDown': 'عدد القيود في الصفحة',
+                'Item': 'قيد'
+            },
+            'ExcelFilter': {
+                'DateFilter': 'تصنيف وفق التاريخ',
+                'SortTextAscending': 'ترتيب وفق الأبجدية'
+            }
+        }
+    });
+</script>

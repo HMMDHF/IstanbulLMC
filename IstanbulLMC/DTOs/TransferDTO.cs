@@ -11,3 +11,4 @@ namespace IstanbulLMC.DTOs
         public List<VehicleCategory> VehicleCategories { get; set; } = new List<VehicleCategory>();
     }
 }
+ 

@@ -1,0 +1,35 @@
+﻿@model List<Transfer>
+
+@{
+    Layout = "_LayoutAdmin";
+
+    GridViewModel gridModel = new GridViewModel
+    {
+        GridId = "ProjectsGrid",
+        Model = Model,
+        AllowExcelExport = true,
+        AllowGrouping = true,
+        IsAllowToDelete = false,
+        AllowToShowDetails = true,
+        Columns = new()
+        {
+            new() { Field = nameof(Transfer.ID), ColumnType = GridViewModel.GridColumnType.ID, Width = "100", Visiable = false },
+            new() { Field = nameof(Transfer.NO), HeaderText = "NO", Width = "100" },
+            new() { Field = nameof(Transfer.FromPlace), HeaderText = "From Place", Width = "100" },
+            new() { Field = nameof(Transfer.ToPlace), HeaderText = "To Place", Width = "100" },
+            new() { Field = nameof(Transfer.TotalPrice), HeaderText = "Total Price", Width = "100" },
+            new() { Field = nameof(Transfer.KMPrice), HeaderText = "KM Price", Width = "100" },
+            new() { Field = nameof(Transfer.Name), HeaderText = "Name", Width = "100" },
+            new() { Field = nameof(Transfer.IsActive), HeaderText = "Active", ColumnType = GridViewModel.GridColumnType.Boolean, Width = "100" },
+        },
+                toolbarList = new List<string>(){
+            "ExcelExport"
+        }
+    };
+
+    await Html.RenderPartialAsync("_GridView", gridModel);
+}
+
+@section Scripts {
+    <ejs-scripts></ejs-scripts>
+}

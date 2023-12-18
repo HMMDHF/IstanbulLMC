@@ -1,0 +1,76 @@
+﻿@model List<VehicleCategory>
+
+@{
+    Layout = "_LayoutAdmin";
+
+    GridViewModel gridModel = new GridViewModel
+    {
+        GridId = "VehicleCategory",
+        Model = Model,
+        AllowExcelExport = true,
+        AllowGrouping = true,
+        IsAllowToDelete = false,
+        AllowToShowDetails = true,
+        Columns = new()
+        {
+            new() { Field = nameof(VehicleCategory.ID), ColumnType = GridViewModel.GridColumnType.ID, Width = "100", Visiable = false },
+            new() { Field = nameof(VehicleCategory.Name), HeaderText = "Name", Width = "100" },
+            new() { Field = nameof(VehicleCategory.SeateCount), HeaderText = "Seate Count", Width = "100" },
+            new() { Field = nameof(VehicleCategory.SuitcaseCount), HeaderText = "Suitcase Count", Width = "100" },
+            new() { Field = nameof(VehicleCategory.MaxDistance), HeaderText = "Max Distance", Width = "100" },
+            new() { Field = nameof(VehicleCategory.KMPrice), HeaderText = "KM Price", Width = "100" },
+            new() { Field = nameof(VehicleCategory.IsActive), HeaderText = "Active", ColumnType = GridViewModel.GridColumnType.Boolean, Width = "100" },
+        },
+        toolbarList = new List<string>(){
+            "ExcelExport"
+        }
+    };
+
+    await Html.RenderPartialAsync("_GridView", gridModel);
+}
+@section Scripts {
+    <script>
+        function actionBegin(args) {
+            var grid = document.getElementById("ProjectsGrid").ej2_instances[0];
+
+            console.log(args.requestType);
+            console.log(grid.currentViewData);
+            console.log(grid);
+
+            if (args.requestType === 'save') {
+                // التأكد من أن النوع هو 'save' (حفظ)
+                // يُفترض أنه تمت إضافة سجل جديد في هذه الحالة
+                // args.selectedRowIndexes يحتوي على فهرسات الصفوف المحددة حاليًا
+
+                // تحديد السطر الجديد الذي تم إضافته بحيث يكون السطر غير محدد قبل الحفظ
+                const gridRows = grid.getRows(); // الحصول على جميع الصفوف في الجدول
+                let newlyAddedRow;
+
+                // البحث عن السطر الجديد الذي لم يكن محددًا قبل الحفظ
+                for (let i = 0; i < gridRows.length; i++) {
+                    const row = grid.getRowObjectFromUID(gridRows[i].getAttribute('data-uid'));
+                    if (row && !row.isSelected) {
+                        // إذا وُجد سطر جديد غير محدد، يتم تحديده وإيقاف البحث
+                        newlyAddedRow = i;
+                        break;
+                    }
+                }
+
+                if (newlyAddedRow !== undefined) {
+                    // إذا تم العثور على السطر الجديد غير المحدد
+                    grid.selectRow(newlyAddedRow); // تحديد السطر الجديد
+                    console.log('تم تحديد السطر الجديد:', newlyAddedRow);
+                }
+            }
+
+            // if (args.requestType === 'save') {
+            //     if (grid.pageSettings.currentPage !== 1 && grid.editSettings.newRowPosition === 'Top') {
+            //         args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - grid.pageSettings.pageSize;
+            //     } else if (grid.editSettings.newRowPosition === 'Bottom') {
+            //         args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - 1;
+            //     }
+            // }
+        }
+    </script>
+    <ejs-scripts></ejs-scripts>
+}
