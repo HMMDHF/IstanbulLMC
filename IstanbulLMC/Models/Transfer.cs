@@ -47,4 +47,5 @@ public partial class Transfer
 
 
     public virtual VehicleCategory VehicleCategory { get; set; } = null!;
+    public virtual ICollection<TransferService> TransferServices { get; set; } = new List<TransferService>();
 }

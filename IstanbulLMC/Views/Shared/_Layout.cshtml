@@ -18,10 +18,7 @@
 
     <!-- plugin scripts -->
 
-
     <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:200,300,400,400i,500,600,700,800,900%7CSatisfy&display=swap" rel="stylesheet">
-
-
 
     <link rel="stylesheet" href="~/assets/css/animate.min.css">
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
@@ -91,37 +88,7 @@
                                 <option value="AUD">TL</option>
                             </select><!-- /#currency .selectpicker -->
                             <a href="#" class="main-nav__search search-popup__toggler"><i class="tripo-icon-magnifying-glass"></i></a>
-@*                             <a href="#" class="main-nav__login"><i class="tripo-icon-avatar"></i></a>
- *@
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <button class="btn btn-outline-warning dropdown-toggle me-1" type="button" id="profile-btn" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-badge"></i>Hello @UserManager.GetUserAsync(User).Result.firstName
-                                </button>
-                                <div class="dropdown-menu">
-@*                                     <a class="dropdown-item" asp-controller="Orders" asp-action="Index">Order</a>
- *@                                    <a class="dropdown-item" asp-controller="Account" asp-action="Profile">Profile</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a>
-
-                                </div>
-
-                       
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a id="register" asp-controller="Account" asp-action="Register">Register</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="login" asp-controller="Account" asp-action="Login">Login</a>
-                                </li>
-                            }
-
-
-
-
-
+                            <a href="#" class="main-nav__login"><i class="tripo-icon-avatar"></i></a>
                         </div><!-- /.main-nav__right -->
                     </div>
                     <!-- /.container -->

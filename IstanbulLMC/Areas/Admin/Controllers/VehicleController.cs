@@ -1,4 +1,5 @@
 ﻿using IstanbulLMC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ namespace IstanbulLMC.Areas.Admin.Controllers
             _context = context;
         }
 
-        [CustomAuthorize]
+        [AllowAnonymous]
         public async Task<IActionResult> VehicleCategoryList()
         {
             return View(await _context.VehicleCategory.ToListAsync());

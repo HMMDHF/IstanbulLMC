@@ -6,11 +6,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IstanbulLMC.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class mig1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -54,6 +57,7 @@ namespace IstanbulLMC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "VehicleCategory",
+                schema: "dbo",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -183,6 +187,7 @@ namespace IstanbulLMC.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Transfer",
+                schema: "dbo",
                 columns: table => new
                 {
                     ID = table.Column<long>(type: "bigint", nullable: false)
@@ -213,7 +218,31 @@ namespace IstanbulLMC.Migrations
                     table.ForeignKey(
                         name: "FK_Transfer_VehicleCategory_VehicleCategoryID",
                         column: x => x.VehicleCategoryID,
+                        principalSchema: "dbo",
                         principalTable: "VehicleCategory",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TransferServices",
+                schema: "dbo",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ServiceID = table.Column<int>(type: "int", nullable: false),
+                    TransferID = table.Column<long>(type: "bigint", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransferServices", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_TransferServices_Transfer_TransferID",
+                        column: x => x.TransferID,
+                        principalSchema: "dbo",
+                        principalTable: "Transfer",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -259,8 +288,15 @@ namespace IstanbulLMC.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transfer_VehicleCategoryID",
+                schema: "dbo",
                 table: "Transfer",
                 column: "VehicleCategoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransferServices_TransferID",
+                schema: "dbo",
+                table: "TransferServices",
+                column: "TransferID");
         }
 
         /// <inheritdoc />
@@ -282,7 +318,8 @@ namespace IstanbulLMC.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Transfer");
+                name: "TransferServices",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -291,7 +328,12 @@ namespace IstanbulLMC.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "VehicleCategory");
+                name: "Transfer",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "VehicleCategory",
+                schema: "dbo");
         }
     }
 }

@@ -79,7 +79,7 @@
           toolbarClick="toolbarClick"
           showColumnChooser="@Model.AllowColumnChooser"
           toolbar="@toolbar"
-          actionBegin="actionBegin">
+          actionComplete="onActionComplete">
     <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Normal" ></e-grid-editSettings>
     <e-grid-pagesettings pageSizes="@(new string[]{ "5","10","20","50","100","All"})" pageSize="10"></e-grid-pagesettings>
     <e-grid-filtersettings showFilterBarStatus="true" showFilterBarOperator="@Model.IsShowFilterBarOperator" type="Excel"></e-grid-filtersettings>

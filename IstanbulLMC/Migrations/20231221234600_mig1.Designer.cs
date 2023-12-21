@@ -4,6 +4,7 @@ using IstanbulLMC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IstanbulLMC.Migrations
 {
     [DbContext(typeof(lmcTourismContext))]
-    partial class lmcTourismContextModelSnapshot : ModelSnapshot
+    [Migration("20231221234600_mig1")]
+    partial class mig1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,29 +98,6 @@ namespace IstanbulLMC.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("IstanbulLMC.Models.Service", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Service", "dbo");
-                });
-
             modelBuilder.Entity("IstanbulLMC.Models.Transfer", b =>
                 {
                     b.Property<long>("ID")
@@ -194,7 +174,7 @@ namespace IstanbulLMC.Migrations
                     b.ToTable("Transfer", "dbo");
                 });
 
-            modelBuilder.Entity("IstanbulLMC.Models.TransferService", b =>
+            modelBuilder.Entity("IstanbulLMC.Models.TransferServices", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -212,8 +192,6 @@ namespace IstanbulLMC.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ServiceID");
 
                     b.HasIndex("TransferID");
 
@@ -411,14 +389,8 @@ namespace IstanbulLMC.Migrations
                     b.Navigation("VehicleCategory");
                 });
 
-            modelBuilder.Entity("IstanbulLMC.Models.TransferService", b =>
+            modelBuilder.Entity("IstanbulLMC.Models.TransferServices", b =>
                 {
-                    b.HasOne("IstanbulLMC.Models.Service", null)
-                        .WithMany("TransferServices")
-                        .HasForeignKey("ServiceID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("IstanbulLMC.Models.Transfer", null)
                         .WithMany("TransferServices")
                         .HasForeignKey("TransferID")
@@ -475,11 +447,6 @@ namespace IstanbulLMC.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("IstanbulLMC.Models.Service", b =>
-                {
-                    b.Navigation("TransferServices");
                 });
 
             modelBuilder.Entity("IstanbulLMC.Models.Transfer", b =>

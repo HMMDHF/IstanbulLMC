@@ -1,0 +1,179 @@
+﻿@model TransferDTO
+
+<section class="page-header" style="background-image: url(/assets/images/backgrounds/page-header-contact.jpg);">
+    <div class="container">
+        <h2>Tours with Sidebar</h2>
+        <ul class="thm-breadcrumb list-unstyled">
+            <li><a href="index.html">Home</a></li>
+            <li><span>Transfer</span></li>
+        </ul><!-- /.thm-breadcrumb -->
+    </div><!-- /.container -->
+</section><!-- /.page-header -->
+
+<section class="tour-two tour-list">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                @if (!string.IsNullOrEmpty(Model.NO))
+                {
+                    <div class="tour-sidebar" style="background-color: rgba(70, 201, 76, 0.3);">
+                        <div class="tour-sidebar__sorter-wrap">
+                            <div class="tour-sidebar__sorter-single">
+                                
+                                <div class="tour-sidebar__sorter-content">
+                                    <div class="tour-sidebar__sorter-inputs">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <h3>Your Booking Is Sucsses</h3>
+                                            </div>
+                                            <div class="col-3">
+                                                Transfer NO:
+                                            </div>
+                                            <div class="col-3">
+                                                @Model.NO
+                                            </div>
+                                        </div>
+                                    </div><!-- /.tour-sidebar__sorter-inputs -->
+                                </div><!-- /.tour-sidebar__sorter-content -->
+                            </div><!-- /.tour-sidebar__sorter-single -->
+                        </div><!-- /.tour-sidebar__sorter-wrap -->
+                    </div><!-- /.tour-sidebar -->
+                }
+                else
+                {
+                    <div class="tour-sidebar" style="background-color: rgba(201, 70, 76, 0.3);">
+                        <div class="tour-sidebar__sorter-wrap">
+                            <div class="tour-sidebar__sorter-single">
+
+                                <div class="tour-sidebar__sorter-content">
+                                    <div class="tour-sidebar__sorter-inputs">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <h3>The process encountered an error. Please try agin later</h3>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.tour-sidebar__sorter-inputs -->
+                                </div><!-- /.tour-sidebar__sorter-content -->
+                            </div><!-- /.tour-sidebar__sorter-single -->
+                        </div><!-- /.tour-sidebar__sorter-wrap -->
+                    </div>
+
+                    <!-- /.tour-sidebar -->
+                }
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="tour-sidebar">
+                    <div class="tour-sidebar__sorter-wrap">
+                        <div class="tour-sidebar__sorter-single">
+                            <div class="tour-sidebar__sorter-top">
+                                <h3>Transfer Summary</h3>
+                                <button class="tour-sidebar__sorter-toggler"><i class="fa fa-angle-down"></i></button>
+                                <!-- /.tour-sidebar__sorter-toggler -->
+                            </div><!-- /.tour-sidebar__sorter-top -->
+                            <div class="tour-sidebar__sorter-content">
+
+                                <div class="tour-sidebar__sorter-inputs">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            From
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.FromPlace
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            TO
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.ToPlace
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Distance
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Distance KM
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Duration
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Duration
+                                        </div>
+                                    </div>
+                                </div><!-- /.tour-sidebar__sorter-inputs -->
+                            </div><!-- /.tour-sidebar__sorter-content -->
+                        </div><!-- /.tour-sidebar__sorter-single -->
+                    </div><!-- /.tour-sidebar__sorter-wrap -->
+                </div><!-- /.tour-sidebar -->
+            </div><!-- /.col-lg-6 -->
+
+            <div class="col-lg-6">
+                <div class="tour-sidebar">
+                    <div class="tour-sidebar__sorter-wrap">
+
+                        <div class="tour-sidebar__sorter-single">
+                            <div class="tour-sidebar__sorter-top">
+                                <h3>Transfer Summary</h3>
+                                <button class="tour-sidebar__sorter-toggler"><i class="fa fa-angle-down"></i></button>
+                                <!-- /.tour-sidebar__sorter-toggler -->
+                            </div><!-- /.tour-sidebar__sorter-top -->
+                            <div class="tour-sidebar__sorter-content">
+
+                                <div class="tour-sidebar__sorter-inputs">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Name
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Name
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Tel
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Tel
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            FlieghtNo
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.FlieghtNo
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Message
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Message
+                                        </div>
+                                    </div>
+                                </div><!-- /.tour-sidebar__sorter-inputs -->
+                            </div><!-- /.tour-sidebar__sorter-content -->
+                        </div><!-- /.tour-sidebar__sorter-single -->
+                    </div><!-- /.tour-sidebar__sorter-wrap -->
+                </div><!-- /.tour-sidebar -->
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.tour-two -->

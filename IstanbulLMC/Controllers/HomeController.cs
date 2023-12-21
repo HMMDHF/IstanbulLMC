@@ -22,7 +22,7 @@ namespace IstanbulLMC.Controllers
 
         public IActionResult Index()
         {
-            //ViewData["maxSeateCount"] = db.VehicleCategory.Max(x => x.SeateCount);
+            ViewData["maxSeateCount"] = db.VehicleCategory.Max(x => x.SeateCount);
             return View();
         }
 

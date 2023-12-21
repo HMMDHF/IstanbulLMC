@@ -31,6 +31,8 @@ namespace IstanbulLMC.Controllers
         [HttpPost]
         public async Task<IActionResult> CustomerApplicationSave(TransferDTO transferDTO)
         {
+
+            transferDTO.NO = "LMC" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + Guid.NewGuid().ToString().Substring(0, 5);
             await db.Transfer.AddAsync(new Transfer
             {
                 Distance = transferDTO.Distance,
@@ -40,15 +42,15 @@ namespace IstanbulLMC.Controllers
                 KMPrice = transferDTO.KMPrice,
                 Name = transferDTO.Name,
                 Tel = transferDTO.Tel,
-                Message = transferDTO.Message, 
+                Message = transferDTO.Message,
                 FlieghtNo = transferDTO.FlieghtNo,
                 ToPlace = transferDTO.ToPlace,
                 ToPlaceID = transferDTO.ToPlaceID,
                 VehicleCategoryID = transferDTO.VehicleCategoryID,
-                NO = "LMC" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + Guid.NewGuid().ToString().Substring(0, 5),
+                NO = transferDTO.NO,
             });
             await db.SaveChangesAsync();
-            return View();
+            return View(transferDTO);
         }
     }
 }
