@@ -35,8 +35,6 @@ namespace IstanbulLMC.Areas.Admin.Controllers
                 KMPrice = x.KMPrice,
                 MaxDistance = x.MaxDistance,
                 SeateCount = x.SeateCount,
-                UpdateDate = x.UpdateDate,
-                UpdateID = x.UpdateID,
                 SuitcaseCount = x.SuitcaseCount
             });
 

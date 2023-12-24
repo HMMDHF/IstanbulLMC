@@ -64,7 +64,6 @@
 <ejs-grid id="@Model.GridId"
           allowExcelExport="@Model.AllowExcelExport"
           allowPdfExport="@Model.AllowPdfExport"
-          dataSource="@Model.Model"
           allowPaging="true"
           gridLines="Both"
           enablePersistence="false"
@@ -80,7 +79,16 @@
           showColumnChooser="@Model.AllowColumnChooser"
           toolbar="@toolbar"
           actionComplete="onActionComplete">
-    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Normal" ></e-grid-editSettings>
+    <e-grid-editSettings allowAdding="@Model.AllowToAdd" allowDeleting="@Model.IsAllowToDelete" allowEditing="@Model.AllowToEdit" mode="Normal"></e-grid-editSettings>
+    
+    <e-data-manager
+        adaptor = "UrlAdaptor"
+        url = "@Model.Url"
+        updateUrl = "@Model.UpdateUrl"
+        insertUrl = "@Model.InsertUrl"
+        removeUrl = "@Model.RemoveUrl">
+    </e-data-manager>
+
     <e-grid-pagesettings pageSizes="@(new string[]{ "5","10","20","50","100","All"})" pageSize="10"></e-grid-pagesettings>
     <e-grid-filtersettings showFilterBarStatus="true" showFilterBarOperator="@Model.IsShowFilterBarOperator" type="Excel"></e-grid-filtersettings>
 
@@ -158,6 +166,12 @@
 
 </script>
 <script>
+    function onActionComplete(args) {
+        if (args.requestType === 'save') {
+            var gridObj = document.getElementById("@Model.GridId").ej2_instances[0];
+            gridObj.refresh();
+        }
+    }
     function toolbarClick(args) {
         var gridObj = document.getElementById(`@Model.GridId`).ej2_instances[0];
 

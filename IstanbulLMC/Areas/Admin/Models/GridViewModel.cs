@@ -3,6 +3,12 @@
     public class GridViewModel
     {
         public string GridId { get; set; } = "Grid";
+
+        public string Url { get; set; }
+        public string UpdateUrl { get; set; }
+        public string InsertUrl { get; set; }
+        public string RemoveUrl { get; set; }
+
         public dynamic Model { get; set; }
         public string OnCommandClick { get; set; } = "(e)=>commandClick(e)";
         public bool AllowSorting { get; set; } = true;
