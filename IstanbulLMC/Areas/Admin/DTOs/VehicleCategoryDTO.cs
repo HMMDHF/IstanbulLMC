@@ -1,0 +1,29 @@
+﻿namespace IstanbulLMC.Areas.Admin.DTOs
+{
+    public class VehicleCategoryDTO
+    {
+        public int ID { get; set; }
+
+        public string Name { get; set; } = null!;
+
+        public int SeateCount { get; set; }
+
+        public int? SuitcaseCount { get; set; }
+
+        public decimal MaxDistance { get; set; }
+
+        public decimal KMPrice { get; set; }
+
+        public string? Image { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public string? InsertID { get; set; }
+
+        public int? InsertDate { get; set; }
+
+        public string? UpdateID { get; set; }
+
+        public int? UpdateDate { get; set; }
+    }
+}

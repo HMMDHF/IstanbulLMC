@@ -2,7 +2,7 @@
 
 namespace IstanbulLMC.DTOs
 {
-    public class VehicleCategoryDTO
+    public class VehicleCategoryDTO : VehicleCategory
     {
         public decimal Price { get; set; }
         public decimal Distance { get; set; }
@@ -14,6 +14,5 @@ namespace IstanbulLMC.DTOs
         public int PassengersCount { get; set; }
         public DateTime Date { get; set; }
         public DateTime? RoundTripDate { get; set; }
-        public List<VehicleCategory> VehicleCategories { get; set; } = new List<VehicleCategory>();
     }
 }

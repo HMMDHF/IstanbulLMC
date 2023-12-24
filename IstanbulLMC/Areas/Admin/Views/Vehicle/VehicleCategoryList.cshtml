@@ -1,77 +1,86 @@
-﻿@model List<VehicleCategory>
+﻿@model List<VehicleCategoryDTO>
 
 @{
     Layout = "_LayoutAdmin";
 
-    GridViewModel gridModel = new GridViewModel
+    List<string> toolbar = new List<string>
     {
-        GridId = "VehicleCategory",
-        Model = Model,
-        AllowExcelExport = true,
-        AllowGrouping = true,
-        IsAllowToDelete = false,
-        AllowToShowDetails = true,
-        Columns = new()
-        {
-            new() { Field = nameof(VehicleCategory.ID), ColumnType = GridViewModel.GridColumnType.ID, Width = "100", Visiable = false },
-            new() { Field = nameof(VehicleCategory.Name), HeaderText = "Name", Width = "100" },
-            new() { Field = nameof(VehicleCategory.SeateCount), HeaderText = "Seate Count", Width = "100" },
-            new() { Field = nameof(VehicleCategory.SuitcaseCount), HeaderText = "Suitcase Count", Width = "100" },
-            new() { Field = nameof(VehicleCategory.MaxDistance), HeaderText = "Max Distance", Width = "100" },
-            new() { Field = nameof(VehicleCategory.KMPrice), HeaderText = "KM Price", Width = "100" },
-            new() { Field = nameof(VehicleCategory.IsActive), HeaderText = "Active", ColumnType = GridViewModel.GridColumnType.Boolean, Width = "100" },
-        },
-        toolbarList = new List<string>(){
-            "ExcelExport"
-        }
-    };
-
-    await Html.RenderPartialAsync("_GridView", gridModel);
+        "ColumnChooser", "Search", "Add", "Edit", "Update", "Delete"
+    }; 
 }
+
+<ejs-grid id="Grid" 
+            toolbarClick="toolbarClick"
+            actionComplete="onActionComplete"
+            allowSorting="true"
+            toolbar="@(new List<string>() { "ExcelExport", "Add", "Edit", "Cancel", "Update", "Delete" })"
+                allowGrouping="true"
+                allowPaging="true"
+                allowFiltering="true"
+                allowExcelExport="true" >
+
+    <e-grid-pagesettings
+            pageCount="5"
+            pageSizes="true">
+    </e-grid-pagesettings>
+
+    <e-data-manager
+        url="GetVehicleCategoryList"
+        adaptor="UrlAdaptor"
+        updateUrl="SaveVehicleCategory"
+        insertUrl="SaveVehicleCategory"
+        removeUrl=""
+        >
+    </e-data-manager>
+
+    <e-grid-filterSettings type="Menu"></e-grid-filterSettings>
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Normal"></e-grid-editSettings>
+    <e-grid-columns>
+        <e-grid-column field="id" isPrimaryKey="true" allowEditing="false" visible="false" headerText="ID"></e-grid-column>
+        <e-grid-column field="name" headerText="Name"></e-grid-column>
+        <e-grid-column field="seateCount" headerText="SeateCount" format="n0"></e-grid-column>
+        <e-grid-column field="suitcaseCount" headerText="Suitcase Count" format="n0"></e-grid-column>
+        <e-grid-column field="maxDistance" headerText="Max Distance" format="n2"></e-grid-column>
+        <e-grid-column field="kmPrice" headerText="KM Price" format="n2"></e-grid-column>
+        <e-grid-column field="isActive" headerText="Active" editType="booleanedit" displayAsCheckBox="true" type="boolean"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
 @section Scripts {
     <script>
         function onActionComplete(args) {
-            var grid = document.getElementById("VehicleCategory").ej2_instances[0];
-
             if (args.requestType === 'save') {
-                const gridRows = grid.getRows();
-                let newlyAddedRowData;
-
-                for (let i = 0; i < gridRows.length; i++) {
-                    const row = grid.getRowObjectFromUID(gridRows[i].getAttribute('data-uid'));
-                    if (row && !row.isSelected) {
-                        console.log(grid.currentViewData);
-                        console.log(grid.currentViewData[0]);
-                        break;
-                    }
-                }
-
-                if (newlyAddedRowData) {
-                    alert("");
-                    $.ajax({
-                        url: '/ControllerName/SaveNewRow', // استبدل ControllerName باسم الـ Controller الخاص بك
-                        method: 'POST',
-                        data: JSON.stringify(newlyAddedRowData),
-                        contentType: 'application/json',
-                        success: function (response) {
-                            // إدراج أي رمز هنا للتعامل مع الاستجابة من الـ Controller بعد الحفظ
-                            console.log('تم حفظ السطر:', response);
-                        },
-                        error: function (error) {
-                            console.error('حدث خطأ أثناء محاولة حفظ السطر:', error);
-                        }
-                    });
-                }
+                var gridObj = document.getElementById("Grid").ej2_instances[0];
+                gridObj.refresh();
             }
+        }
+        function toolbarClick(args) {
+            var gridObj = document.getElementById(`Grid`).ej2_instances[0];
 
-            // if (args.requestType === 'save') {
-            //     if (grid.pageSettings.currentPage !== 1 && grid.editSettings.newRowPosition === 'Top') {
-            //         args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - grid.pageSettings.pageSize;
-            //     } else if (grid.editSettings.newRowPosition === 'Bottom') {
-            //         args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - 1;
-            //     }
-            // }
+            if (args.item.id === 'Grid' + '_pdfexport') {
+                //gridObj.pdfExport();
+                var filteredRecords = gridObj.getFilteredRecords();
+
+                if (filteredRecords.length == 0) {
+                    filteredRecords = gridObj.dataSource;
+                    console.log(filteredRecords);
+                }
+                else {
+                    console.log(filteredRecords);
+                }
+                const myJSON = JSON.stringify(filteredRecords);
+
+                var url = '/FastReport/SummaryReport?myJSON=' + myJSON;
+                window.open(url, '_blank');
+            }
+            if (args.item.id === 'Grid' + '_excelexport') {
+                gridObj.excelExport();
+            }
+            if (args.item.id === 'Grid' + '_csvexport') {
+                gridObj.csvExport();
+            }
         }
     </script>
+
     <ejs-scripts></ejs-scripts>
 }

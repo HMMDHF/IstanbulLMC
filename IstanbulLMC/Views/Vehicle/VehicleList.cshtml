@@ -60,8 +60,6 @@
                                 <ul class="tour-one__meta list-unstyled">
                                     <li><i class="far fa-user-circle"></i> @item.SeateCount Passenger</li>
                                     <li><i class="fas fa-suitcase"></i> @item.SuitcaseCount Suitcase</li>
-                                    @*  <li><a href="#" class="thm-btn tour-search-one__btn">Booking Now</a></li>
-                                *@
                                 </ul><!-- /.tour-one__meta -->
 
                                 <div class="tour-search-one__btn-wrap">
@@ -83,8 +81,6 @@
                         <div class="tour-sidebar__sorter-single">
                             <div class="tour-sidebar__sorter-top">
                                 <h3>Transfer Summary</h3>
-                                <button class="tour-sidebar__sorter-toggler"><i class="fa fa-angle-down"></i></button>
-                                <!-- /.tour-sidebar__sorter-toggler -->
                             </div><!-- /.tour-sidebar__sorter-top -->
                             <div class="tour-sidebar__sorter-content">
 
@@ -152,50 +148,24 @@
                                 </div><!-- /.tour-sidebar__sorter-inputs -->
                             </div><!-- /.tour-sidebar__sorter-content -->
 
-                        </div><!-- /.tour-sidebar__sorter-single -->
+                        </div>
                         <div class="tour-sidebar__sorter-single">
                             <div class="tour-sidebar__sorter-top">
-                                <h3>Duration</h3>
-                                <button class="tour-sidebar__sorter-toggler"><i class="fa fa-angle-down"></i></button>
-                                <!-- /.tour-sidebar__sorter-toggler -->
-                            </div><!-- /.tour-sidebar__sorter-top -->
+                                <h3>Services</h3>
+                            </div>
+
                             <div class="tour-sidebar__sorter-content">
 
                                 <div class="tour-sidebar__sorter-inputs">
-                                    <p>
-                                        <input type="checkbox" id="duration-5" name="radio-group">
-                                        <label for="duration-5">
-                                            0 - 24 hours
-                                        </label>
-                                    </p>
-                                    <p>
-                                        <input type="checkbox" id="duration-4" name="radio-group">
-                                        <label for="duration-4">
-                                            1 - 2 days
-
-                                        </label>
-                                    </p>
-                                    <p>
-                                        <input type="checkbox" id="duration-3" name="radio-group">
-                                        <label for="duration-3">
-                                            2 - 3 days
-
-                                        </label>
-                                    </p>
-                                    <p>
-                                        <input type="checkbox" id="duration-2" name="radio-group">
-                                        <label for="duration-2">
-                                            4 - 5 days
-
-
-                                        </label>
-                                    </p>
-                                    <p>
-                                        <input type="checkbox" id="duration-1" name="radio-group">
-                                        <label for="duration-1">
-                                            5 - 10 days
-                                        </label>
-                                    </p>
+                                    @for (int i = 0; i < Model.Services.Count; i++)
+                                    {
+                                        <p>
+                                            <input type="checkbox" id="duration-5" name="radio-group">
+                                            <label>
+                                                <i class="@Model.Services[i].Icon" style="color: #9ca3a9;"></i> @Model.Services[i].Name - @Model.Services[i].Price $
+                                            </label>
+                                        </p>
+                                    }
                                 </div><!-- /.tour-sidebar__sorter-inputs -->
                             </div><!-- /.tour-sidebar__sorter-content -->
 

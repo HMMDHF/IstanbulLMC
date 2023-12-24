@@ -17,11 +17,6 @@ namespace IstanbulLMC.Controllers
             db = context;
         }
 
-        public IActionResult VehicleList()
-        {
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> VehicleList(TransferDTO transferDTO)
         {
@@ -38,22 +33,25 @@ namespace IstanbulLMC.Controllers
 
                     transferDTO.Distance = distance;
                     transferDTO.Duration = directions.routes[0].legs[0].duration.text;
-                    transferDTO.VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance && x.SeateCount >= transferDTO.PassengersCount).ToListAsync();
+                    transferDTO.VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance && x.SeateCount >= transferDTO.PassengersCount).Select(x => new VehicleCategoryDTO
+                    {
+                        ID = x.ID,
+                        Name = x.Name,
+                        KMPrice = x.KMPrice,
+                        Image = x.Image,
+                        SeateCount = x.SeateCount,
+                        SuitcaseCount = x.SeateCount,
+                    }).ToListAsync();
 
+                    transferDTO.Services = await db.Service.Where(x => x.IsActive).Select(x => new ServiceDTO
+                    {
+                        Name= x.Name,
+                        ID= x.ID,
+                        IsActive= x.IsActive,
+                        Price= x.Price,
+                        Icon= x.Icon,
+                    }).ToListAsync();
 
-                    //VehicleCategoryDTO vehicleCategoryDTO = new VehicleCategoryDTO
-                    //{
-                    //    Distance = distance,
-                    //    From = transferDTO.FromPlace,
-                    //    FromID = transferDTO.FromPlaceID,
-                    //    To = transferDTO.ToPlace,
-                    //    ToID = transferDTO.ToPlaceID,
-                    //    Duration = directions.routes[0].legs[0].duration.text,
-                    //    PassengersCount = transferDTO.PassengersCount,
-                    //    Date = transferDTO.Date,
-                    //    RoundTripDate = transferDTO.RounTripDate,
-                    //    VehicleCategories = await db.VehicleCategory.Where(x => x.IsActive && x.MaxDistance >= distance && x.SeateCount >= transferDTO.PassengersCount).ToListAsync()
-                    //};
                     return View(transferDTO);
                 }
                 else
