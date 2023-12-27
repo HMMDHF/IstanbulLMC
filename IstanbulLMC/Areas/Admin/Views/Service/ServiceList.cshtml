@@ -1,0 +1,34 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+
+    GridViewModel gridModel = new GridViewModel
+            {
+                GridId = "Service",
+                AllowExcelExport = true,
+                AllowGrouping = true,
+                IsAllowToDelete = false,
+                AllowToShowDetails = true,
+                Url = "GetServiceList",
+                UpdateUrl = "SaveService",
+                InsertUrl = "SaveService",
+                RemoveUrl = "",
+
+                Columns = new()
+        {
+            new() { Field = "id", ColumnType = GridViewModel.GridColumnType.ID, Width = "100", Visiable = false },
+            new() { Field = "name", HeaderText = "Name", Width = "100" },
+            new() { Field = "price", HeaderText = "price", Width = "100" },
+            new() { Field = "icon", HeaderText = "icon", Width = "100" },
+            new() { Field = "isActive", HeaderText = "Active", ColumnType = GridViewModel.GridColumnType.Boolean, Width = "100" },
+        },
+                toolbarList = new List<string>(){
+            "ExcelExport"
+        }
+            };
+
+    await Html.RenderPartialAsync("_GridView", gridModel);
+}
+
+@section Scripts {
+    <ejs-scripts></ejs-scripts>
+}

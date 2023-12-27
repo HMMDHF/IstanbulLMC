@@ -66,6 +66,7 @@
             Text,
             DecimalNO,
             Date,
+            DateTime,
             Number,
             Boolean,
             RateEditor,

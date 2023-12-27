@@ -12,7 +12,6 @@
         UpdateUrl = "SaveVehicleCategory",
         InsertUrl = "SaveVehicleCategory",
         RemoveUrl = "",
-
         Columns = new()
         {
             new() { Field = "id", ColumnType = GridViewModel.GridColumnType.ID, Width = "100", Visiable = false },
@@ -20,16 +19,45 @@
             new() { Field = "seateCount", HeaderText = "Seate Count", Width = "100" },
             new() { Field = "suitcaseCount", HeaderText = "Suitcase Count", Width = "100" },
             new() { Field = "maxDistance", HeaderText = "Max Distance", Width = "100" },
-            new() { Field = "kmPrice", HeaderText = "KM Price", Width = "100" },
+            new() { Field = "kmPrice", HeaderText = "KM Price", ColumnType = GridViewModel.GridColumnType.DecimalNO, Width = "100" },
             new() { Field = "isActive", HeaderText = "Active", ColumnType = GridViewModel.GridColumnType.Boolean, Width = "100" },
         },
         toolbarList = new List<string>(){
             "ExcelExport"
-        }
+        },
+        commands = new List<object>(){
+            new {
+                type = "image", buttonOption = new { content = "Image", cssClass = "btn btn-primary" }
+            }
+        },
     };
 
     await Html.RenderPartialAsync("_GridView", gridModel);
 }
+
+<div class="modal fade" id="exampleModalgrid" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-modal="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalgridLabel">Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <ejs-scripts></ejs-scripts>
+    <script>
+        function commandClick(e) {
+            if (e.commandColumn.type === "image") {
+                $.get("/admin/Vehicle/_Image?id=" + e.rowData.id, function (result) {
+                    $(".modal-body").html(result);
+                    $('#exampleModalgrid').modal("show");
+                });
+            }
+        }
+    </script>
 }
+

@@ -7,6 +7,7 @@
         public int VehicleCategoryID { get; set; }
 
         public string VehicleCategory { get; set; } = null!;
+
         public string FromPlaceID { get; set; } = null!;
 
         public string FromPlace { get; set; } = null!;
@@ -27,7 +28,7 @@
 
         public string? InsertID { get; set; }
 
-        public int? InsertDate { get; set; }
+        public DateTime? InsertDate { get; set; }
 
         public string? UpdateID { get; set; }
 
@@ -42,5 +43,7 @@
         public string? Message { get; set; }
 
         public string? NO { get; set; }
+        public DateTime Date { get; set; }
+        public DateTime? RoundTripDate { get; set; }
     }
 }

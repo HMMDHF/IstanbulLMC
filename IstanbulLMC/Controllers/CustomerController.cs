@@ -1,6 +1,7 @@
 ﻿using IstanbulLMC.DTOs;
 using IstanbulLMC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace IstanbulLMC.Controllers
@@ -33,13 +34,16 @@ namespace IstanbulLMC.Controllers
         {
 
             transferDTO.NO = "LMC" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + Guid.NewGuid().ToString().Substring(0, 5);
+            VehicleCategory vehicleCategory = await db.VehicleCategory.FirstOrDefaultAsync(x => x.ID == transferDTO.VehicleCategoryID) ?? new VehicleCategory();
+
             await db.Transfer.AddAsync(new Transfer
             {
                 Distance = transferDTO.Distance,
                 FromPlace = transferDTO.FromPlace,
                 FromPlaceID = transferDTO.FromPlaceID,
                 InsertDate = transferDTO.InsertDate,
-                KMPrice = transferDTO.KMPrice,
+                KMPrice = vehicleCategory.KMPrice,
+                TotalPrice = vehicleCategory.KMPrice * transferDTO.Distance,
                 Name = transferDTO.Name,
                 Tel = transferDTO.Tel,
                 Message = transferDTO.Message,
@@ -48,6 +52,8 @@ namespace IstanbulLMC.Controllers
                 ToPlaceID = transferDTO.ToPlaceID,
                 VehicleCategoryID = transferDTO.VehicleCategoryID,
                 NO = transferDTO.NO,
+                Date = transferDTO.Date,
+                RoundTripDate = transferDTO.RoundTripDate,
             });
             await db.SaveChangesAsync();
             return View(transferDTO);

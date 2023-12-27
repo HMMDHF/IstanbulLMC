@@ -113,7 +113,6 @@
     </e-grid-aggregates>
 
     <e-grid-columns>
-
         @foreach (var col in Model.Columns)
         {
             switch (col.ColumnType)
@@ -134,6 +133,10 @@
                     <e-grid-column field="@col.Field" visible="col.Visiable" customFormat="@(new { type ="date", format="dd/MM/yyyy" })" type="date" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
                     break;
 
+                case GridViewModel.GridColumnType.DateTime:
+                    <e-grid-column field="@col.Field" visible="col.Visiable" customFormat="@(new { type ="date", format="dd/MM/yyyy hh:mm" })" type="date" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
+                    break;
+
                 case GridViewModel.GridColumnType.Number:
                     <e-grid-column field="@col.Field" visible="col.Visiable" format="n2" headerText="@col.HeaderText" width="@col.Width"></e-grid-column>
                     break;
@@ -147,7 +150,6 @@
                     break;
             }
         }
-
         <e-grid-column headerText="#" visible="@Model.IsInformationManaged" width="@width.ToString()" commands="commands" textAlign="Center"></e-grid-column>
     </e-grid-columns>
 </ejs-grid>

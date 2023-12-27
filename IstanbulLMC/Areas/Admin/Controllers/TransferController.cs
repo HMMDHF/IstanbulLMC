@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.EJ2.Base;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace IstanbulLMC.Areas.Admin.Controllers
 {
@@ -15,12 +16,13 @@ namespace IstanbulLMC.Areas.Admin.Controllers
             _context = context;
         }
 
-        [AllowAnonymous]
+        [CustomAuthorize]
         public IActionResult TransferList()
         {
             return View();
         }
 
+        [CustomAuthorize]
         public ActionResult GetTransferList([FromBody] DataManagerRequest dm)
         {
             IQueryable<TransferDTO> DataSource = _context.Transfer.Select(x => new TransferDTO
@@ -28,9 +30,6 @@ namespace IstanbulLMC.Areas.Admin.Controllers
                 ID = x.ID,
                 IsActive = x.IsActive,
                 Name = x.Name,
-                InsertID = x.InsertID,
-                InsertDate = x.InsertDate,
-                KMPrice = x.KMPrice,
                 Distance = x.Distance,
                 FlieghtNo = x.FlieghtNo,
                 FromPlace = x.FromPlace,
@@ -42,8 +41,11 @@ namespace IstanbulLMC.Areas.Admin.Controllers
                 ToPlace = x.ToPlace,
                 ToPlaceID = x.ToPlaceID,
                 TotalPrice = x.TotalPrice,
+                KMPrice = x.KMPrice,
                 VehicleCategoryID = x.VehicleCategoryID,
-                VehicleCategory = x.VehicleCategory.Name
+                VehicleCategory = x.VehicleCategory.Name,
+                Date = x.Date,
+                RoundTripDate = x.RoundTripDate
             });
 
             QueryableOperation operation = new QueryableOperation();
@@ -75,24 +77,62 @@ namespace IstanbulLMC.Areas.Admin.Controllers
             return dm.RequiresCounts ? Json(new { result = DataSource, count = count }) : Json(DataSource);
         }
 
+        [CustomAuthorize]
         public async Task<IActionResult> SaveTransfer([FromBody] SyncfusionGridDTO<TransferDTO> updatedData)
         {
             try
             {
                 if (updatedData.value.ID == 0)
                 {
-                    //await _context.Transfer.AddAsync(updatedData.value);
+                    await _context.Transfer.AddAsync(new Transfer
+                    {
+                        Distance = updatedData.value.Distance,
+                        FlieghtNo = updatedData.value.FlieghtNo,
+                        FromPlace = updatedData.value.FromPlace,
+                        FromPlaceID = updatedData.value.FromPlaceID,
+                        IsActive = updatedData.value.IsActive,
+                        IsComplated = updatedData.value.IsComplated,
+                        KMPrice = updatedData.value.KMPrice,
+                        Message = updatedData.value.Message,
+                        Name = updatedData.value.Name,
+                        NO = updatedData.value.NO,
+                        Tel = updatedData.value.Tel,
+                        ToPlace = updatedData.value.ToPlace,
+                        ToPlaceID = updatedData.value.ToPlaceID,
+                        TotalPrice = updatedData.value.TotalPrice,
+                        VehicleCategoryID = updatedData.value.VehicleCategoryID,
+                        Date = updatedData.value.Date,
+                        RoundTripDate = updatedData.value.RoundTripDate
+                    });
                     await _context.SaveChangesAsync();
                 }
                 else
                 {
-                    var Transfer = await _context.Transfer.AsNoTracking().FirstOrDefaultAsync(x => x.ID == updatedData.value.ID);
-                    if (Transfer == null)
+                    var transfer = await _context.Transfer.AsNoTracking().FirstOrDefaultAsync(x => x.ID == updatedData.value.ID);
+                    if (transfer == null)
                     {
                         return RedirectToAction("MyTripInfo");
                     }
 
-                    //_context.Transfer.Update(updatedData.value);
+                    transfer.IsComplated = updatedData.value.IsComplated;
+                    transfer.IsActive = updatedData.value.IsActive;
+                    transfer.Distance = updatedData.value.Distance;
+                    transfer.FlieghtNo = updatedData.value.FlieghtNo;
+                    transfer.FromPlace = updatedData.value.FromPlace;
+                    transfer.FromPlaceID = updatedData.value.FromPlaceID;
+                    transfer.ToPlace = updatedData.value.ToPlace;
+                    transfer.ToPlaceID = updatedData.value.ToPlaceID;
+                    transfer.Message = updatedData.value.Message;
+                    transfer.TotalPrice = updatedData.value.TotalPrice;
+                    transfer.VehicleCategoryID = updatedData.value.VehicleCategoryID;
+                    transfer.KMPrice = updatedData.value.KMPrice;
+                    transfer.Name = updatedData.value.Name;
+                    transfer.NO = updatedData.value.NO;
+                    transfer.Tel = updatedData.value.Tel;
+                    transfer.Date = updatedData.value.Date;
+                    transfer.RoundTripDate = updatedData.value.RoundTripDate;
+
+                    _context.Transfer.Update(transfer);
                     await _context.SaveChangesAsync();
                 }
 

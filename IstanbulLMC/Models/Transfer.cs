@@ -29,7 +29,7 @@ public partial class Transfer
 
     public string? InsertID { get; set; }
 
-    public int? InsertDate { get; set; }
+    public DateTime? InsertDate { get; set; }
 
     public string? UpdateID { get; set; }
 
@@ -44,6 +44,8 @@ public partial class Transfer
     public string? Message { get; set; }
 
     public string? NO { get; set; }
+    public DateTime Date { get; set; }
+    public DateTime? RoundTripDate { get; set; }
 
 
     public virtual VehicleCategory VehicleCategory { get; set; } = null!;

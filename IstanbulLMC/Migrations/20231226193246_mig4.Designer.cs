@@ -4,6 +4,7 @@ using IstanbulLMC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IstanbulLMC.Migrations
 {
     [DbContext(typeof(lmcTourismContext))]
-    partial class lmcTourismContextModelSnapshot : ModelSnapshot
+    [Migration("20231226193246_mig4")]
+    partial class mig4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,8 +150,8 @@ namespace IstanbulLMC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("InsertDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("InsertDate")
+                        .HasColumnType("int");
 
                     b.Property<string>("InsertID")
                         .HasColumnType("nvarchar(max)");

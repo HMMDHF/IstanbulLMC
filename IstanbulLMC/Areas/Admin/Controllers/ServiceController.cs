@@ -2,47 +2,28 @@
 using IstanbulLMC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MuavinCode;
 using Syncfusion.EJ2.Base;
-using System;
-using System.Linq;
 
 namespace IstanbulLMC.Areas.Admin.Controllers
 {
-    public class VehicleController : Controller
+    public class ServiceController : Controller
     {
         private readonly lmcTourismContext _context;
-        private string anadizin;
-
-        [Obsolete]
-        public VehicleController(lmcTourismContext context, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+        public ServiceController(lmcTourismContext context)
         {
             _context = context;
-            anadizin = hostingEnvironment.WebRootPath;
         }
 
         [CustomAuthorize]
-        public IActionResult VehicleCategoryList()
+        public IActionResult ServiceList()
         {
             return View();
         }
 
         [CustomAuthorize]
-        public ActionResult GetVehicleCategoryList([FromBody] DataManagerRequest dm)
+        public ActionResult GetServiceList([FromBody] DataManagerRequest dm)
         {
-            IQueryable<VehicleCategoryDTO> DataSource = _context.VehicleCategory.Select(x => new VehicleCategoryDTO
-            {
-                ID = x.ID,
-                IsActive = x.IsActive,
-                Name = x.Name,
-                InsertID = x.InsertID,
-                Image = x.Image,
-                InsertDate = x.InsertDate,
-                KMPrice = x.KMPrice,
-                MaxDistance = x.MaxDistance,
-                SeateCount = x.SeateCount,
-                SuitcaseCount = x.SuitcaseCount
-            });
+            IQueryable<Service> DataSource = _context.Service;
 
             QueryableOperation operation = new QueryableOperation();
             if (dm.Where != null)
@@ -60,7 +41,7 @@ namespace IstanbulLMC.Areas.Admin.Controllers
             }
             if (dm.Select != null)
             {
-                DataSource = (IQueryable<VehicleCategoryDTO>)operation.PerformSelect(DataSource, dm.Select);
+                DataSource = (IQueryable<Service>)operation.PerformSelect(DataSource, dm.Select);
             }
             if (dm.Skip != 0)
             {
@@ -74,24 +55,24 @@ namespace IstanbulLMC.Areas.Admin.Controllers
         }
 
         [CustomAuthorize]
-        public async Task<IActionResult> SaveVehicleCategory([FromBody] SyncfusionGridDTO<VehicleCategory> updatedData)
+        public async Task<IActionResult> SaveService([FromBody] SyncfusionGridDTO<Service> updatedData)
         {
             try
             {
                 if (updatedData.value.ID == 0)
                 {
-                    await _context.VehicleCategory.AddAsync(updatedData.value);
+                    await _context.Service.AddAsync(updatedData.value);
                     await _context.SaveChangesAsync();
                 }
                 else
                 {
-                    var vehicleCategory = await _context.VehicleCategory.AsNoTracking().FirstOrDefaultAsync(x => x.ID == updatedData.value.ID);
+                    var vehicleCategory = await _context.Service.AsNoTracking().FirstOrDefaultAsync(x => x.ID == updatedData.value.ID);
                     if (vehicleCategory == null)
                     {
                         return RedirectToAction("MyTripInfo");
                     }
 
-                    _context.VehicleCategory.Update(updatedData.value);
+                    _context.Service.Update(updatedData.value);
                     await _context.SaveChangesAsync();
                 }
 
@@ -106,27 +87,5 @@ namespace IstanbulLMC.Areas.Admin.Controllers
             var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
             return Json(new { success = false, message = "Validation error", errors = errors });
         }
-
-        [CustomAuthorize]
-        public async Task<IActionResult> _Image(int id)
-        {
-            return PartialView(await _context.VehicleCategory.FirstOrDefaultAsync(x => x.ID == id));
-        }
-
-        [CustomAuthorize]
-        [HttpPost]
-        public async Task<IActionResult> ImageSave(int id, IFormFile img)
-        {
-            if (img != null)
-            {
-                VehicleCategory vehicleCategory = await _context.VehicleCategory.FirstOrDefaultAsync(x => x.ID == id) ?? new VehicleCategory();
-
-                vehicleCategory.Image = Muavin.ResimEkle(img.OpenReadStream(), img.ContentType.Split('/')[1], anadizin + "/assets/images/", false, 0);
-                _context.Entry(vehicleCategory).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
-            return PartialView();
-        }
-
     }
 }
