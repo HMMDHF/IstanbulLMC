@@ -12,13 +12,12 @@ namespace IstanbulLMC.Areas.Admin.Controllers
     public class VehicleController : Controller
     {
         private readonly lmcTourismContext _context;
-        private string anadizin;
+        private string path;
 
-        [Obsolete]
         public VehicleController(lmcTourismContext context, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
         {
             _context = context;
-            anadizin = hostingEnvironment.WebRootPath;
+            path = hostingEnvironment.WebRootPath;
         }
 
         [CustomAuthorize]
@@ -115,17 +114,24 @@ namespace IstanbulLMC.Areas.Admin.Controllers
 
         [CustomAuthorize]
         [HttpPost]
-        public async Task<IActionResult> ImageSave(int id, IFormFile img)
+        public async Task<JsonResult> _ImageSave(int id, IFormFile img)
         {
             if (img != null)
             {
                 VehicleCategory vehicleCategory = await _context.VehicleCategory.FirstOrDefaultAsync(x => x.ID == id) ?? new VehicleCategory();
-
-                vehicleCategory.Image = Muavin.ResimEkle(img.OpenReadStream(), img.ContentType.Split('/')[1], anadizin + "/assets/images/", false, 0);
+                if (string.IsNullOrEmpty(vehicleCategory.Image))
+                {
+                    vehicleCategory.Image = Muavin.ResimEkle(img.OpenReadStream(), img.ContentType.Split('/')[1], path + "/assets/images/", false, 0);
+                }
+                else
+                {
+                    vehicleCategory.Image = Muavin.ResimGuncelle(img.OpenReadStream(), img.ContentType.Split('/')[1], vehicleCategory.Image, path + "/assets/images/", false, 0);
+                }
+                
                 _context.Entry(vehicleCategory).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
-            return PartialView();
+            return Json("");
         }
 
     }

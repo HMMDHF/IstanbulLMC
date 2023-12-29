@@ -47,6 +47,19 @@
                             </div><!-- /.input-group -->
 
                             <div class="input-group">
+                                <ul class="tour-one__meta list-unstyled">
+                                    @for (int i = 0; i < Model.Services.Count; i++)
+                                    {
+
+                                        <li>
+                                            <input type="checkbox" id="duration-5" name="radio-group">
+                                            <i class="@Model.Services[i].Icon" style="color: #9ca3a9;"></i>  @Model.Services[i].Name - @Model.Services[i].Price $
+                                        </li>
+                                    }
+                                </ul><!-- /.tour-one__meta -->
+                            </div><!-- /.input-group -->
+
+                            <div class="input-group">
                                 <button type="submit" class="thm-btn">Book Now</button>
                             </div><!-- /.input-group -->
                         </form>

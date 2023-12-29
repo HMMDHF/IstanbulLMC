@@ -17,6 +17,11 @@ namespace IstanbulLMC.Controllers
             db = context;
         }
 
+        public IActionResult VehicleList()
+        {
+            return Redirect("/");
+        }
+
         [HttpPost]
         public async Task<IActionResult> VehicleList(TransferDTO transferDTO)
         {
@@ -41,15 +46,6 @@ namespace IstanbulLMC.Controllers
                         Image = x.Image,
                         SeateCount = x.SeateCount,
                         SuitcaseCount = x.SeateCount,
-                    }).ToListAsync();
-
-                    transferDTO.Services = await db.Service.Where(x => x.IsActive).Select(x => new ServiceDTO
-                    {
-                        Name= x.Name,
-                        ID= x.ID,
-                        IsActive= x.IsActive,
-                        Price= x.Price,
-                        Icon= x.Icon,
                     }).ToListAsync();
 
                     return View(transferDTO);

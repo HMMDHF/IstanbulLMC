@@ -8,9 +8,6 @@ namespace IstanbulLMC.Controllers
 {
     public class CustomerController : Controller
     {
-
-
-
         private readonly lmcTourismContext db;
 
         public CustomerController(lmcTourismContext context)
@@ -18,14 +15,23 @@ namespace IstanbulLMC.Controllers
             db = context;
         }
 
-        //public CustomerController()
-        //{
-        //    db = new lmcTourismContext();
-        //}
+        public IActionResult CustomerApplication()
+        {
+            return Redirect("/");
+        }   
 
         [HttpPost]
-        public IActionResult CustomerApplication(TransferDTO transferDTO)
+        public async Task<IActionResult> CustomerApplication(TransferDTO transferDTO)
         {
+
+            transferDTO.Services = await db.Service.Where(x => x.IsActive).Select(x => new ServiceDTO
+            {
+                Name = x.Name,
+                ID = x.ID,
+                IsActive = x.IsActive,
+                Price = x.Price,
+                Icon = x.Icon,
+            }).ToListAsync();
             return View(transferDTO);
         }
 
@@ -55,7 +61,9 @@ namespace IstanbulLMC.Controllers
                 Date = transferDTO.Date,
                 RoundTripDate = transferDTO.RoundTripDate,
             });
+
             await db.SaveChangesAsync();
+
             return View(transferDTO);
         }
     }
