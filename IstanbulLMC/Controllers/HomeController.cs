@@ -32,10 +32,15 @@ namespace IstanbulLMC.Controllers
             string apiKey = _configuration["MapsKey"] ?? "";
             string baseUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json";
 
-            string location = ""; // اسم المدينة أو الإحداثيات الجغرافية للموقع المراد البحث عن الأماكن فيه
-            string query = name; // نوع الأماكن المطلوب البحث عنها
+            string location = "Istanbul"; // اسم المدينة أو الإحداثيات الجغرافية للموقع المراد البحث عن الأماكن فيه
+            string keyword = name; // الاسم الذي تريد البحث عنه
+            string type = "Hotel"; // نوع المكان (هنا: فنادق)
 
-            string url = $"{baseUrl}?query={query}&location={location}&key={apiKey}";
+            // استخدم URLEncoder لترميز النص إذا كان يحتوي على مسافات أو رموز خاصة
+            string encodedKeyword = Uri.EscapeDataString(keyword);
+
+            string url = $"{baseUrl}?query={encodedKeyword}&location={location}&type={type}&key={apiKey}";
+
 
             using (HttpClient client = new HttpClient())
             {
@@ -48,7 +53,6 @@ namespace IstanbulLMC.Controllers
 
                     var topFivePlaces = jsonResponse.subApiResponses.Take(5).ToList();
                     return PartialView("_SearchResultsPartial", topFivePlaces);
-
                 }
             }
             return View("Error"); // Return an error view or appropriate response

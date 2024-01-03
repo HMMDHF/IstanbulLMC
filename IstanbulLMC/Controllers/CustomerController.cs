@@ -23,6 +23,9 @@ namespace IstanbulLMC.Controllers
         [HttpPost]
         public async Task<IActionResult> CustomerApplication(TransferDTO transferDTO)
         {
+            VehicleCategory vehicleCategory = await db.VehicleCategory.FirstOrDefaultAsync(x => x.ID == transferDTO.VehicleCategoryID) ?? new VehicleCategory();
+
+            transferDTO.Vehicle = vehicleCategory.Name;
 
             transferDTO.Services = await db.Service.Where(x => x.IsActive).Select(x => new ServiceDTO
             {
@@ -38,9 +41,9 @@ namespace IstanbulLMC.Controllers
         [HttpPost]
         public async Task<IActionResult> CustomerApplicationSave(TransferDTO transferDTO)
         {
+            VehicleCategory vehicleCategory = await db.VehicleCategory.FirstOrDefaultAsync(x => x.ID == transferDTO.VehicleCategoryID) ?? new VehicleCategory();
 
             transferDTO.NO = "LMC" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + Guid.NewGuid().ToString().Substring(0, 5);
-            VehicleCategory vehicleCategory = await db.VehicleCategory.FirstOrDefaultAsync(x => x.ID == transferDTO.VehicleCategoryID) ?? new VehicleCategory();
 
             await db.Transfer.AddAsync(new Transfer
             {
