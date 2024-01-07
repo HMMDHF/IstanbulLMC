@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         @* <form asp-action="_ImageSave" asp-controller="Vehicle" asp-area="admin" data-ajax="true" data-ajax-method="POST" data-ajax-begin="FormBegin" data-ajax-success="FormSuccess" method="post" enctype="multipart/form-data"> *@
 
-        <form asp-action="_ImageSave" asp-controller="Vehicle" asp-area="admin" data-ajax="true" data-ajax-method="POST" data-ajax-success="FormSuccess" method="post">
+        <form asp-action="_ImageSave" asp-controller="Vehicle" asp-area="admin" data-ajax="true" data-ajax-method="POST" data-ajax-success="FormSuccess" method="post" enctype="multipart/form-data">
             <input asp-for="ID" type="hidden"/>
             <div class="card">
                 <div class="card-body">

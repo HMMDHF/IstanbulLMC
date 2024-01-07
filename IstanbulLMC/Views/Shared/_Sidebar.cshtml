@@ -1,125 +1,111 @@
 ﻿@model TransferDTO
 
-<div class="col-lg-4">
-    <div class="tour-sidebar">
-        <div class="tour-sidebar__sorter-wrap">
+<div class="tour-sidebar">
+    <div class="tour-sidebar__sorter-wrap">
 
-            <div class="tour-sidebar__sorter-single">
-                <div class="tour-sidebar__sorter-top">
-                    <h3>Transfer Summary</h3>
-                </div><!-- /.tour-sidebar__sorter-top -->
-                <div class="tour-sidebar__sorter-content">
-
-                    <div class="tour-sidebar__sorter-inputs">
-
-                        <div class="row">
-                            <div class="col-6">
-                                From
-                            </div>
-
-                            <div class="col-6">
-                                @Model.FromPlace
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                TO
-                            </div>
-
-                            <div class="col-6">
-                                @Model.ToPlace
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                Passenger Count
-                            </div>
-
-                            <div class="col-6">
-                                @Model.PassengersCount
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                Date
-                            </div>
-
-                            <div class="col-6">
-                                @Model.Date
-                            </div>
-                        </div>
-
-                        @if (Model.RoundTripDate != null)
-                        {
-                            <div class="row">
-                                <div class="col-6">
-                                    Return
-                                </div>
-
-                                <div class="col-6">
-                                    @Model.RoundTripDate
-                                </div>
-                            </div>
-                        }
-
-                        <div class="row">
-                            <div class="col-6">
-                                Distance
-                            </div>
-
-                            <div class="col-6">
-                                @Model.Distance KM
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                                Duration
-                            </div>
-
-                            <div class="col-6">
-                                @Model.Duration
-                            </div>
-                        </div>
-                        @if (!string.IsNullOrEmpty(Model.Vehicle))
-                        {
-                            <div class="row">
-                                <div class="col-6">
-                                    Vehicle
-                                </div>
-
-                                <div class="col-6">
-                                    @Model.Vehicle
-                                </div>
-                            </div>
-                        }
-                        
-                    </div><!-- /.tour-sidebar__sorter-inputs -->
-                </div><!-- /.tour-sidebar__sorter-content -->
-
-            </div>
-            @* <div class="tour-sidebar__sorter-single">
+        <div class="tour-sidebar__sorter-single">
             <div class="tour-sidebar__sorter-top">
-            <h3>Services</h3>
-            </div>
-
+                <h3>Transfer Summary</h3>
+            </div><!-- /.tour-sidebar__sorter-top -->
             <div class="tour-sidebar__sorter-content">
 
-            <div class="tour-sidebar__sorter-inputs">
-            @for (int i = 0; i < Model.Services.Count; i++)
-            {
-            <p>
-            <input type="checkbox" id="duration-5" name="radio-group">
-            <label>
-            <i class="@Model.Services[i].Icon" style="color: #9ca3a9;"></i> @Model.Services[i].Name - @Model.Services[i].Price $
-            </label>
-            </p>
-            }
-            </div><!-- /.tour-sidebar__sorter-inputs -->
+                <div class="tour-sidebar__sorter-inputs">
+
+                    <div class="row">
+                        <div class="col-6">
+                            From
+                        </div>
+
+                        <div class="col-6">
+                            @Model.FromPlace
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            TO
+                        </div>
+
+                        <div class="col-6">
+                            @Model.ToPlace
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            Passenger Count
+                        </div>
+
+                        <div class="col-6">
+                            @Model.PassengersCount
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            Date
+                        </div>
+
+                        <div class="col-6">
+                            @Model.Date
+                        </div>
+                    </div>
+
+                    @if (Model.RoundTripDate != null)
+                    {
+                        <div class="row">
+                            <div class="col-6">
+                                Return
+                            </div>
+
+                            <div class="col-6">
+                                @Model.RoundTripDate
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col-6">
+                            Distance
+                        </div>
+
+                        <div class="col-6">
+                            @Model.Distance KM
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            Duration
+                        </div>
+
+                        <div class="col-6">
+                            @Model.Duration
+                        </div>
+                    </div>
+                        
+                </div><!-- /.tour-sidebar__sorter-inputs -->
             </div><!-- /.tour-sidebar__sorter-content -->
 
-            </div><!-- /.tour-sidebar__sorter-single --> *@
+        </div>
+        @* <div class="tour-sidebar__sorter-single">
+        <div class="tour-sidebar__sorter-top">
+        <h3>Services</h3>
+        </div>
 
-        </div><!-- /.tour-sidebar__sorter-wrap -->
-    </div><!-- /.tour-sidebar -->
-</div><!-- /.col-lg-4 -->
+        <div class="tour-sidebar__sorter-content">
+
+        <div class="tour-sidebar__sorter-inputs">
+        @for (int i = 0; i < Model.Services.Count; i++)
+        {
+        <p>
+        <input type="checkbox" id="duration-5" name="radio-group">
+        <label>
+        <i class="@Model.Services[i].Icon" style="color: #9ca3a9;"></i> @Model.Services[i].Name - @Model.Services[i].Price $
+        </label>
+        </p>
+        }
+        </div><!-- /.tour-sidebar__sorter-inputs -->
+        </div><!-- /.tour-sidebar__sorter-content -->
+
+        </div><!-- /.tour-sidebar__sorter-single --> *@
+
+    </div><!-- /.tour-sidebar__sorter-wrap -->
+</div><!-- /.tour-sidebar -->

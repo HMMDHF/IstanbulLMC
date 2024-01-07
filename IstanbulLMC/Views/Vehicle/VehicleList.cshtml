@@ -19,7 +19,7 @@
 <section class="tour-two tour-list">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-7">
                 <form asp-action="CustomerApplication" asp-controller="Customer" id="save" method="post">
 
                     <input asp-for="Distance" type="hidden" />
@@ -96,8 +96,9 @@
                 </form>
             </div><!-- /.col-lg-8 -->
 
+        <div class="col-lg-5">
             <partial name="_Sidebar" model="@Model" />
-
+        </div>
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section><!-- /.tour-two -->

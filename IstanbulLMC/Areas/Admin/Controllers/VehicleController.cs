@@ -116,22 +116,30 @@ namespace IstanbulLMC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<JsonResult> _ImageSave(int id, IFormFile img)
         {
-            if (img != null)
+            try
             {
-                VehicleCategory vehicleCategory = await _context.VehicleCategory.FirstOrDefaultAsync(x => x.ID == id) ?? new VehicleCategory();
-                if (string.IsNullOrEmpty(vehicleCategory.Image))
+                if (img != null)
                 {
-                    vehicleCategory.Image = Muavin.ResimEkle(img.OpenReadStream(), img.ContentType.Split('/')[1], path + "/assets/images/", false, 0);
+                    VehicleCategory vehicleCategory = await _context.VehicleCategory.FirstOrDefaultAsync(x => x.ID == id) ?? new VehicleCategory();
+                    if (string.IsNullOrEmpty(vehicleCategory.Image))
+                    {
+                        vehicleCategory.Image = Muavin.ResimEkle(img.OpenReadStream(), img.ContentType.Split('/')[1], path + "/assets/images/", false, 0);
+                    }
+                    else
+                    {
+                        vehicleCategory.Image = Muavin.ResimGuncelle(img.OpenReadStream(), img.ContentType.Split('/')[1], path + "/assets/images/", vehicleCategory.Image, false, 0);
+                    }
+
+                    _context.Entry(vehicleCategory).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
                 }
-                else
-                {
-                    vehicleCategory.Image = Muavin.ResimGuncelle(img.OpenReadStream(), img.ContentType.Split('/')[1], vehicleCategory.Image, path + "/assets/images/", false, 0);
-                }
-                
-                _context.Entry(vehicleCategory).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                return Json("");
             }
-            return Json("");
+            catch (Exception ex)
+            {
+                return Json("");
+            }
+            
         }
 
     }

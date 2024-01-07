@@ -131,7 +131,21 @@
     <script src="~/assets/js/isotope.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
     <!-- template scripts -->
     <script src="~/assets/js/theme.js"></script>
+    <script>
+        $(".onSubmit").on("click", function () {
+            var form = document.querySelector('.needs-validation');
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                form.classList.add('was-validated');
+            }
+        });
+    </script>
 </body>
 </html>

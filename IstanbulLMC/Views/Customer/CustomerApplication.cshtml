@@ -14,11 +14,11 @@
 <section class="tour-two tour-list">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-7">
                 <div class="tour-sidebar">
                     <div class="tour-sidebar__search tour-sidebar__single">
                         <h3>Book This Tour</h3>
-                        <form asp-action="CustomerApplicationSave" asp-controller="Customer" method="post" class="tour-sidebar__search-form">
+                        <form asp-action="CustomerApplicationSave" asp-controller="Customer" method="post" class="tour-sidebar__search-form needs-validation">
                             <input asp-for="Distance" type="hidden" />
                             <input asp-for="FromPlace" type="hidden" />
                             <input asp-for="FromPlaceID" type="hidden" />
@@ -31,11 +31,11 @@
                             <input asp-for="VehicleCategoryID" type="hidden" />
 
                             <div class="input-group">
-                                <input asp-for="Name" placeholder="Your Name">
+                                <input asp-for="Name" placeholder="Your Name" class="form-control" required>
                             </div><!-- /.input-group -->
 
                             <div class="input-group">
-                                <input asp-for="Tel" placeholder="Phone"> 
+                                <input asp-for="Tel" placeholder="Phone" class="form-control" required>
                             </div><!-- /.input-group -->
 
                             <div class="input-group">
@@ -50,9 +50,9 @@
                                 <ul class="tour-one__meta list-unstyled">
                                     @for (int i = 0; i < Model.Services.Count; i++)
                                     {
-
                                         <li>
-                                            <input type="checkbox" id="duration-5" name="radio-group">
+                                            <input asp-for="@Model.Services[i].IsSelected" type="checkbox">
+                                            <input asp-for="@Model.Services[i].ID" type="hidden">
                                             <i class="@Model.Services[i].Icon" style="color: #9ca3a9;"></i>  @Model.Services[i].Name - @Model.Services[i].Price $
                                         </li>
                                     }
@@ -60,14 +60,105 @@
                             </div><!-- /.input-group -->
 
                             <div class="input-group">
-                                <button type="submit" class="thm-btn">Book Now</button>
+                                <input asp-for="DriverTrip" placeholder="DriverTrip">
+                            </div><!-- /.input-group -->
+
+                            <div class="input-group">
+                                <button type="submit" class="thm-btn onSubmit">Book Now</button>
                             </div><!-- /.input-group -->
                         </form>
                     </div><!-- /.tour-sidebar__search -->
                 </div><!-- /.tour-sidebar -->
             </div><!-- /.col-lg-4 -->
 
-            <partial name="_Sidebar" model="@Model" />
+            <div class="col-lg-5">
+                <partial name="_Sidebar" model="@Model" />
+
+                <div class="tour-sidebar">
+                    <div class="tour-sidebar__sorter-wrap">
+
+                        <div class="tour-sidebar__sorter-single">
+                            <div class="tour-sidebar__sorter-top">
+                                <h3>Payment Details</h3>
+                            </div><!-- /.tour-sidebar__sorter-top -->
+                            <div class="tour-sidebar__sorter-content">
+
+                                <div class="tour-sidebar__sorter-inputs">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            @Model.Vehicle
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.TotalPrice
+                                        </div>
+                                    </div>
+
+                                    @if (Model.RoundTripDate != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-6">
+                                                Return
+                                            </div>
+
+                                            <div class="col-6">
+                                                @Model.RoundTripDate
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Distance
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Distance KM
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            Duration
+                                        </div>
+
+                                        <div class="col-6">
+                                            @Model.Duration
+                                        </div>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(Model.Vehicle))
+                                    {
+                                        <div class="row">
+                                            <div class="col-6">
+                                                Vehicle
+                                            </div>
+
+                                            <div class="col-6">
+                                                @Model.Vehicle
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div><!-- /.tour-sidebar__sorter-inputs -->
+                            </div><!-- /.tour-sidebar__sorter-content -->
+
+                            <div class="tour-sidebar__sorter-content list-unstyled" style="border-top: 1px solid rgb(236, 238, 239);">
+                                <div class="row">
+                                    <div class="col-6">
+                                        Total
+                                    </div>
+
+                                    <div class="col-6">
+                                        @Model.TotalPrice
+                                    </div>
+                                </div>
+                            </div><!-- /.tour-sidebar__sorter-top -->
+
+                        </div>
+
+                    </div><!-- /.tour-sidebar__sorter-wrap -->
+                </div><!-- /.tour-sidebar -->
+            </div><!-- /.col-lg-4 -->
 
         </div><!-- /.row -->
     </div><!-- /.container -->

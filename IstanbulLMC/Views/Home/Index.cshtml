@@ -94,13 +94,14 @@
     <div class="container">
         <h2>Find your <span>next tour</span></h2>
         <p>Where would you like to go?</p>
-        <form asp-action="VehicleList" asp-controller="Vehicle" method="post" class="tour-search-one">
+        <form asp-action="VehicleList" asp-controller="Vehicle" method="post" class="tour-search-one needs-validation">
             <div class="tour-search-one__inner ">
                 <div class="tour-search-one__inputs">
-                    <div class="tour-search-one__col col-6  col-sm-4">
+                    <div class="tour-search-one__col col-2 col-sm-2">
                         <div class="tour-search-one__input-box">
                             <label for="place">From</label>
-                            <input asp-for="FromPlace" type="text" placeholder="Enter keywords">
+                            <input asp-for="FromPlace" type="text" placeholder="Enter keywords" class="form-control" required>
+                            <span asp-validation-for="FromPlace" class="text-danger"></span>
                             @* Container for Results *@
                             <div id="searchResults" class="search-results-container" style="display:none;">
                                 @* Results will be loaded here dynamically *@
@@ -109,36 +110,23 @@
                         </div><!-- /.tour-search-one__input-box -->
                     </div><!-- /.tour-search-one__col -->
 
-                    <div class="tour-search-one__col col-6  col-sm-4">
+                    <div class="tour-search-one__col col-2 col-sm-2">
                         <div class="tour-search-one__input-box">
                             <label for="place">To</label>
-                            <input asp-for="ToPlace" type="text" placeholder="Enter keywords">
+                            <input asp-for="ToPlace" type="text" placeholder="Enter keywords" class="form-control" required>
+                            <span asp-validation-for="ToPlace" class="text-danger"></span>
                             @* Container for Results *@
                             <div id="searchResults1" class="search-results-container" style="display:none;">
                                 @* Results will be loaded here dynamically *@
                             </div>
                             <input asp-for="ToPlaceID" type="hidden" />
-
-
                         </div><!-- /.tour-search-one__input-box -->
                     </div><!-- /.tour-search-one__col -->
-                    @* <div class="tour-search-one__input-box">
-                    <label for="when">When</label>
-                    <input type="text" placeholder="September" name="when" id="when">
-                    </div><!-- /.tour-search-one__input-box --> *@
 
-                    @* <div class="tour-search-one__input-box form-check">
-                    <label class="form-check-label" for="flexCheckDefault">
-                    Default checkbox</label>
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    </div><!-- /.tour-search-one__input-box --> *@
-
-                    <div class="tour-search-one__col col-6  col-sm-4">
+                    <div class="tour-search-one__col col-2 col-sm-2">
                         <div class="tour-search-one__input-box">
-
                             <label for="passengerNo">Passengers</label>
-                            <select asp-for="PassengersCount" class="selectpicker" id="type">
-                                <option style="display: none;" selected>Select an option</option>
+                            <select asp-for="PassengersCount" class="selectpicker" id="type" class="form-control" required>
                                 @if (ViewData["maxSeateCount"] is int maxSeatCount)
                                 {
                                     @for (int i = 1; i <= maxSeatCount; i++)
@@ -146,31 +134,20 @@
                                         <option value="@i">@i</option>
                                     }
                                 }
-
                             </select>
-
+                            <span asp-validation-for="PassengersCount" class="text-danger"></span>
                         </div>
-                    </div>
-
+                    </div><!-- /.tour-search-one__col -->
             
-                    <div class="tour-search-one__col col-6  col-sm-4">
+                    <div class="tour-search-one__col col-2 col-sm-2">
                         <div class="tour-search-one__input-box">
                             <label asp-for="Date">When</label>
-                            <input type="datetime-local" placeholder="September" asp-for="Date" id="when">
+                            <input asp-for="Date" type="datetime-local" min="@(DateTime.Now.AddHours(6).ToString("s").Substring(0, 16))" class="form-control" required>
+                            <span asp-validation-for="Date" class="text-danger"></span>
                         </div><!-- /.tour-search-one__input-box -->
-                    </div>
+                    </div><!-- /.tour-search-one__col -->
 
-                    <div class="tour-search-one__col col-6 col-sm-4">
-                        <div class="tour-search-one__input-box">
-                            <label>Return Date</label>
-                            <input type="datetime-local" asp-for="RoundTripDate" id="datePicker" disabled />
-                        </div>
-                    </div>
-
-           
-
-
-                    <div class="tour-search-one__col col-6 col-sm-4">
+                    <div class="tour-search-one__col col-2 col-sm-2">
                         <div class="tour-search-one__input-box">
                             <span>Round trip</span>
                             <label class="switch">
@@ -178,14 +155,20 @@
                                 <span class="slider round"></span>
                             </label>
                         </div>
-                    </div>
+                    </div><!-- /.tour-search-one__col -->
 
+                    <div class="tour-search-one__col col-2 col-sm-2">
+                        <div class="tour-search-one__input-box">
+                            <label>Return Date</label>
+                            <input type="datetime-local" asp-for="RoundTripDate" disabled min="@(DateTime.Now.AddHours(6).ToString("s").Substring(0, 16))" />
+                        </div>
+                    </div><!-- /.tour-search-one__col -->
 
                 </div><!-- /.tour-search-one__inputs -->
-                
             </div><!-- /.tour-search-one__inner -->
+
             <div class="tour-search-one__btn-wrap">
-                <button type="submit" class="thm-btn tour-search-one__btn">Find now</button>
+                <button type="submit" class="thm-btn tour-search-one__btn onSubmit">Find now</button>
             </div><!-- /.tour-search-one__btn-wrap -->
 
         </form><!-- /.tour-search-one -->
@@ -202,78 +185,81 @@
     </div><!-- /.container -->
 </section><!-- /.features-one__title -->
 
-<script>
-    // Event delegation to handle clicks on search results
-    $("#searchResults").on("click", ".search-result-item", function () {
-        $("#FromPlace").val($(this).data("name"));
-        $("#FromPlaceID").val($(this).data("id"));
 
-        $("#searchResults").hide(); // Optionally hide the results after selection
-    });
+@section Scripts{
+    <script>
+        // Event delegation to handle clicks on search results
+        $("#searchResults").on("click", ".search-result-item", function () {
+            $("#FromPlace").val($(this).data("name"));
+            $("#FromPlaceID").val($(this).data("id"));
 
-    $("#FromPlace").on("input", function () {
-        var searchText = $(this).val();
+            $("#searchResults").hide(); // Optionally hide the results after selection
+        });
 
-        if (searchText.length >= 3) {
-            $.ajax({
-                url: '@Url.Action("GetPlaceByName", "Home")',
-                data: { name: searchText },
-                type: 'GET',
-                success: function (data) {
-                    $("#searchResults").html(data).show();
-                },
-                error: function () {
-                    // Handle errors here
-                    $("#searchResults").html("<p>Error loading results.</p>").show();
-                }
-            });
-        } else {
-            $("#searchResults").hide();
+        $("#FromPlace").on("input", function () {
+            var searchText = $(this).val();
+
+            if (searchText.length >= 3) {
+                $.ajax({
+                    url: '@Url.Action("GetPlaceByName", "Home")',
+                    data: { name: searchText },
+                    type: 'GET',
+                    success: function (data) {
+                        $("#searchResults").html(data).show();
+                    },
+                    error: function () {
+                        // Handle errors here
+                        $("#searchResults").html("<p>Error loading results.</p>").show();
+                    }
+                });
+            } else {
+                $("#searchResults").hide();
+            }
+        });
+
+
+
+        // Event delegation to handle clicks on search results
+        $("#searchResults1").on("click", ".search-result-item", function () {
+            $("#ToPlace").val($(this).data("name"));
+            $("#ToPlaceID").val($(this).data("id"));
+
+            $("#searchResults1").hide(); // Optionally hide the results after selection
+        });
+
+        $("#ToPlace").on("input", function () {
+            var searchText = $(this).val();
+
+            if (searchText.length >= 3) {
+                $.ajax({
+                    url: '@Url.Action("GetPlaceByName", "Home")',
+                    data: { name: searchText },
+                    type: 'GET',
+                    success: function (data) {
+                        $("#searchResults1").html(data).show();
+                    },
+                    error: function () {
+                        // Handle errors here
+                        $("#searchResults1").html("<p>Error loading results.</p>").show();
+                    }
+                });
+            } else {
+                $("#searchResults1").hide();
+            }
+        });
+
+        function toggleDatePicker() {
+            var checkBox = document.getElementById("dateSwitch");
+            var datePicker = document.getElementById("RoundTripDate");
+
+            if (checkBox.checked) {
+                datePicker.disabled = false;
+            } else {
+                datePicker.disabled = true;
+                datePicker.value = "";
+            }
         }
-    });
 
-
-
-    // Event delegation to handle clicks on search results
-    $("#searchResults1").on("click", ".search-result-item", function () {
-        $("#ToPlace").val($(this).data("name"));
-        $("#ToPlaceID").val($(this).data("id"));
-
-        $("#searchResults1").hide(); // Optionally hide the results after selection
-    });
-
-    $("#ToPlace").on("input", function () {
-        var searchText = $(this).val();
-
-        if (searchText.length >= 3) {
-            $.ajax({
-                url: '@Url.Action("GetPlaceByName", "Home")',
-                data: { name: searchText },
-                type: 'GET',
-                success: function (data) {
-                    $("#searchResults1").html(data).show();
-                },
-                error: function () {
-                    // Handle errors here
-                    $("#searchResults1").html("<p>Error loading results.</p>").show();
-                }
-            });
-        } else {
-            $("#searchResults1").hide();
-        }
-    });
-
-    function toggleDatePicker() {
-        var checkBox = document.getElementById("dateSwitch");
-        var datePicker = document.getElementById("datePicker");
-
-        if (checkBox.checked) {
-            datePicker.disabled = false;
-        } else {
-            datePicker.disabled = true;
-            datePicker.value = "";
-        }
-    }
-
-</script>
+    </script>
+}
 

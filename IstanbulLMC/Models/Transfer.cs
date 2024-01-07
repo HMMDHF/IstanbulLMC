@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace IstanbulLMC.Models;
 
@@ -9,12 +10,16 @@ public partial class Transfer
 
     public int VehicleCategoryID { get; set; }
 
+    [Required(ErrorMessage = " ")]
     public string FromPlaceID { get; set; } = null!;
 
+    [Required(ErrorMessage = " ")]
     public string FromPlace { get; set; } = null!;
 
+    [Required(ErrorMessage = " ")]
     public string ToPlaceID { get; set; } = null!;
 
+    [Required(ErrorMessage = " ")]
     public string ToPlace { get; set; } = null!;
 
     public decimal KMPrice { get; set; }
@@ -35,8 +40,10 @@ public partial class Transfer
 
     public int? UpdateDate { get; set; }
 
+    [Required]
     public string? Name { get; set; }
 
+    [Required]
     public string? Tel { get; set; }
 
     public string? FlieghtNo { get; set; }
@@ -44,8 +51,14 @@ public partial class Transfer
     public string? Message { get; set; }
 
     public string? NO { get; set; }
+
+    [Required(ErrorMessage = " ")]
     public DateTime Date { get; set; }
+
     public DateTime? RoundTripDate { get; set; }
+
+    public decimal? DriverTrip { get; set; }
+
 
 
     public virtual VehicleCategory VehicleCategory { get; set; } = null!;

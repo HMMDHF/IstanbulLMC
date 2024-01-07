@@ -26,6 +26,7 @@ namespace IstanbulLMC.Controllers
             VehicleCategory vehicleCategory = await db.VehicleCategory.FirstOrDefaultAsync(x => x.ID == transferDTO.VehicleCategoryID) ?? new VehicleCategory();
 
             transferDTO.Vehicle = vehicleCategory.Name;
+            transferDTO.TotalPrice = (vehicleCategory.KMPrice * transferDTO.Distance);
 
             transferDTO.Services = await db.Service.Where(x => x.IsActive).Select(x => new ServiceDTO
             {
@@ -45,7 +46,7 @@ namespace IstanbulLMC.Controllers
 
             transferDTO.NO = "LMC" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + Guid.NewGuid().ToString().Substring(0, 5);
 
-            await db.Transfer.AddAsync(new Transfer
+            Transfer transfer = new Transfer
             {
                 Distance = transferDTO.Distance,
                 FromPlace = transferDTO.FromPlace,
@@ -63,7 +64,26 @@ namespace IstanbulLMC.Controllers
                 NO = transferDTO.NO,
                 Date = transferDTO.Date,
                 RoundTripDate = transferDTO.RoundTripDate,
-            });
+            };
+
+            await db.Transfer.AddAsync(transfer);
+
+            await db.SaveChangesAsync();
+
+            foreach (var service in transferDTO.Services)
+            {
+                if (service.IsSelected)
+                {
+                    await db.TransferService.AddAsync(
+                        new TransferService
+                        {
+                            ServiceID = service.ID,
+                            TransferID = transfer.ID,
+                            Price = service.Price,
+                        }
+                    );
+                }
+            }
 
             await db.SaveChangesAsync();
 
