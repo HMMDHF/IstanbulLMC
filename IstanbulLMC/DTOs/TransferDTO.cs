@@ -10,6 +10,8 @@ namespace IstanbulLMC.DTOs
 
         public string Duration { get; set; }
 
+        public string GoogleCaptchToken { get; set; }
+
         public string NO { get; set; }
 
         public string Vehicle { get; set; }

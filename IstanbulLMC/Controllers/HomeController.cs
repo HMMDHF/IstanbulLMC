@@ -1,4 +1,5 @@
-﻿using IstanbulLMC.DTOs;
+﻿using IstanbulLMC.Areas.Admin.DTOs;
+using IstanbulLMC.DTOs;
 using IstanbulLMC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -27,32 +28,35 @@ namespace IstanbulLMC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPlaceByName(string name)
+        public async Task<IActionResult> GetPlaceByName(string name, string GoogleCaptchToken)
         {
-            string apiKey = _configuration["MapsKey"] ?? "";
-            string baseUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json";
-
-            string location = "Istanbul"; // اسم المدينة أو الإحداثيات الجغرافية للموقع المراد البحث عن الأماكن فيه
-            string keyword = name; // الاسم الذي تريد البحث عنه
-            string type = "Hotel"; // نوع المكان (هنا: فنادق)
-
-            // استخدم URLEncoder لترميز النص إذا كان يحتوي على مسافات أو رموز خاصة
-            string encodedKeyword = Uri.EscapeDataString(keyword);
-
-            string url = $"{baseUrl}?query={encodedKeyword}&location={location}&type={type}&key={apiKey}";
-
-
-            using (HttpClient client = new HttpClient())
+            if (await RecaptchaService.IsCapchaValid(GoogleCaptchToken, this.HttpContext.Connection.RemoteIpAddress.ToString()))
             {
-                HttpResponseMessage response = await client.GetAsync(url);
+                string apiKey = _configuration["MapsKey"] ?? "";
+                string baseUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json";
 
-                if (response.IsSuccessStatusCode)
+                string location = "Istanbul"; // اسم المدينة أو الإحداثيات الجغرافية للموقع المراد البحث عن الأماكن فيه
+                string keyword = name; // الاسم الذي تريد البحث عنه
+                string type = "Hotel"; // نوع المكان (هنا: فنادق)
+
+                // استخدم URLEncoder لترميز النص إذا كان يحتوي على مسافات أو رموز خاصة
+                string encodedKeyword = Uri.EscapeDataString(keyword);
+
+                string url = $"{baseUrl}?query={encodedKeyword}&location={location}&type={type}&key={apiKey}";
+
+
+                using (HttpClient client = new HttpClient())
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    var jsonResponse = JsonConvert.DeserializeObject<ApiResponse>(responseContent);
+                    HttpResponseMessage response = await client.GetAsync(url);
 
-                    var topFivePlaces = jsonResponse.subApiResponses.Take(5).ToList();
-                    return PartialView("_SearchResultsPartial", topFivePlaces);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseContent = await response.Content.ReadAsStringAsync();
+                        var jsonResponse = JsonConvert.DeserializeObject<ApiResponse>(responseContent);
+
+                        var topFivePlaces = jsonResponse.subApiResponses.Take(5).ToList();
+                        return PartialView("_SearchResultsPartial", topFivePlaces);
+                    }
                 }
             }
             return View("Error"); // Return an error view or appropriate response

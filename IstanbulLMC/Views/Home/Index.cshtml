@@ -95,6 +95,8 @@
         <h2>Find your <span>next tour</span></h2>
         <p>Where would you like to go?</p>
         <form asp-action="VehicleList" asp-controller="Vehicle" method="post" class="tour-search-one needs-validation">
+            <input asp-for="GoogleCaptchToken" type="hidden">
+
             <div class="tour-search-one__inner ">
                 <div class="tour-search-one__inputs">
                     <div class="tour-search-one__col col-2 col-sm-2">
@@ -202,9 +204,14 @@
             if (searchText.length >= 3) {
                 $.ajax({
                     url: '@Url.Action("GetPlaceByName", "Home")',
-                    data: { name: searchText },
+                    data: { name: searchText, googleCaptchToken: $("#GoogleCaptchToken").val() },
                     type: 'GET',
                     success: function (data) {
+                        grecaptcha.ready(function () {
+                            grecaptcha.execute("6LcU9k8pAAAAACffrKh7yeqhthDlgY5ysMbeXDlI", { action: 'Sparis' }).then(function (token) {
+                                $("#GoogleCaptchToken").val(token);
+                            });
+                        });
                         $("#searchResults").html(data).show();
                     },
                     error: function () {
@@ -233,9 +240,14 @@
             if (searchText.length >= 3) {
                 $.ajax({
                     url: '@Url.Action("GetPlaceByName", "Home")',
-                    data: { name: searchText },
+                    data: { name: searchText, GoogleCaptchToken: $("#GoogleCaptchToken").val() },
                     type: 'GET',
                     success: function (data) {
+                        grecaptcha.ready(function () {
+                            grecaptcha.execute("6LcU9k8pAAAAACffrKh7yeqhthDlgY5ysMbeXDlI", { action: 'Sparis' }).then(function (token) {
+                                $("#GoogleCaptchToken").val(token);
+                            });
+                        });
                         $("#searchResults1").html(data).show();
                     },
                     error: function () {

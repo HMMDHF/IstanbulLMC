@@ -40,8 +40,19 @@
     <!-- template styles -->
     <link rel="stylesheet" href="~/assets/css/style.css">
     <link rel="stylesheet" href="~/assets/css/responsive.css">
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcU9k8pAAAAACffrKh7yeqhthDlgY5ysMbeXDlI"></script>
+    
 </head>
 <body>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute("6LcU9k8pAAAAACffrKh7yeqhthDlgY5ysMbeXDlI", { action: 'Sparis' }).then(function (token) {
+                $("#GoogleCaptchToken").val(token);
+            });
+        });
+    </script>
+
     <div class="preloader">
         <img src="~/assets/images/loader.png" class="preloader__image" alt="">
     </div><!-- /.preloader -->
