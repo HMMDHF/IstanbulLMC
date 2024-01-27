@@ -4,6 +4,7 @@ using IstanbulLMC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 
 namespace IstanbulLMC.Controllers
 {
@@ -37,13 +38,12 @@ namespace IstanbulLMC.Controllers
 
                 string location = "Istanbul"; // اسم المدينة أو الإحداثيات الجغرافية للموقع المراد البحث عن الأماكن فيه
                 string keyword = name; // الاسم الذي تريد البحث عنه
-                string type = "Hotel"; // نوع المكان (هنا: فنادق)
+                
+                string types = "airport|hotel|tourist_attraction|square"; // قائمة أنواع الأماكن المفصولة بعلامة الخطوط الرأسية "|"
+                
+                string encodedKeyword = Uri.EscapeDataString(keyword);// استخدم URLEncoder لترميز النص إذا كان يحتوي على مسافات أو رموز خاصة
 
-                // استخدم URLEncoder لترميز النص إذا كان يحتوي على مسافات أو رموز خاصة
-                string encodedKeyword = Uri.EscapeDataString(keyword);
-
-                string url = $"{baseUrl}?query={encodedKeyword}&location={location}&type={type}&key={apiKey}";
-
+                string url = $"{baseUrl}?query={encodedKeyword}&types={types}&components=country:TR&key={apiKey}";
 
                 using (HttpClient client = new HttpClient())
                 {
@@ -54,12 +54,12 @@ namespace IstanbulLMC.Controllers
                         string responseContent = await response.Content.ReadAsStringAsync();
                         var jsonResponse = JsonConvert.DeserializeObject<ApiResponse>(responseContent);
 
-                        var topFivePlaces = jsonResponse.subApiResponses.Take(5).ToList();
+                        var topFivePlaces = jsonResponse.subApiResponses.ToList();
                         return PartialView("_SearchResultsPartial", topFivePlaces);
                     }
                 }
             }
-            return View("Error"); // Return an error view or appropriate response
+            return PartialView("_SearchResultsPartial", new List<SubApiResponse>()); // Return an error view or appropriate response
         }
 
         public IActionResult Privacy()
