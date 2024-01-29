@@ -10,7 +10,73 @@
         </ul><!-- /.thm-breadcrumb -->
     </div><!-- /.container -->
 </section><!-- /.page-header -->
+<style>
+    .switch {
+        position:relative;  
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        margin-left: auto;
+    }
 
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        justify-content:left;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+    input:checked + .slider {
+        background-color: #ffa801;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #ffa801;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+    .hizmetler {
+        display: none;
+    }
+
+    .hizmet {
+        background-color: #ffffff;
+        padding: 10px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+</style>
 <section class="tour-two tour-list">
     <div class="container">
         <div class="row">
@@ -50,6 +116,34 @@
                                 <textarea asp-for="Message" placeholder="Message"></textarea>
                             </div><!-- /.input-group -->
 
+
+                            <div class="input-group">   
+                                <h3>Ek Hizmetler</h3>
+                                <label class="switch">
+                                    <input type="checkbox" id="toggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div id="hizmetler" class="hizmetler">
+                                <div class="hizmet" data-hizmet-adi="karsilama">
+                                    <label>
+                                        <input type="radio" name="hizmet-secenek" value="karsilama">
+                                        <span>Karşılama Hizmeti</span>
+                                    </label>
+                                    <span>60₺</span>
+                                </div>
+                                <!-- Diğer hizmet div'leri benzer şekilde düzenlenecek -->
+                                <div class="hizmet" data-hizmet-adi="karsilama">
+                                    <label>
+                                        <input type="checkbox" name="hizmet-secenek" value="karsilama2">
+                                        <span>Karşılama Hizmeti </span>
+                                    </label>
+                                    <span>60₺</span>
+                                </div>
+                                <!-- Daha fazla hizmet ekleyebilirsiniz -->
+                            </div>
+
+                          
                             <div class="input-group">
                                 <button type="submit" class="thm-btn">Book Now</button>
                             </div><!-- /.input-group -->
@@ -165,3 +259,33 @@
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section><!-- /.tour-two -->
+<script>
+    // scripts.js dosyasına kaydedilecek
+    document.addEventListener('DOMContentLoaded', function () {
+        var toggle = document.getElementById('toggle');
+        var hizmetler = document.getElementById('hizmetler');
+
+        toggle.addEventListener('change', function () {
+            if (this.checked) {
+                hizmetler.style.display = 'block';
+            } else {
+                hizmetler.style.display = 'none';
+            }
+        });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var hizmetSecenekleri = document.querySelectorAll('input[name="hizmet-secenek"]');
+
+        hizmetSecenekleri.forEach(function (secenek) {
+            secenek.addEventListener('change', function () {
+                if (this.checked) {
+                    console.log(this.value + ' hizmeti seçildi.');
+                }
+            });
+        });
+    });
+
+
+</script>

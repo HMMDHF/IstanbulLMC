@@ -16,6 +16,52 @@
     </div><!-- /.container -->
 </section><!-- /.page-header -->
 
+<style>
+    /* styles.css dosyasına kaydedilecek */
+    .currency-selector {
+        display: flex;
+   
+        
+    }
+
+    .currency-option {
+        display: flex;
+        align-items: center;
+        padding: 4px;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .currency-option.selected {
+            border-color: green;
+            background-color: #eaffea;
+        }
+
+    .currency-symbol {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .currency-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: green;
+    }
+
+    .currency-original {
+        text-decoration: line-through;
+        color: #999;
+        margin-left: 5px;
+    }
+
+    .currency-option:hover {
+        background-color: #f0f0f0;
+    }
+
+</style>
 <section class="tour-two tour-list">
     <div class="container">
         <div class="row">
@@ -51,11 +97,11 @@
                                     </div><!-- /.tour-two__right -->
                                 </div><!-- /.tour-two__top -->
 
-                                <div class="tour-two__text">
+@*                                 <div class="tour-two__text">
                                     <p>
 
                                     </p>
-                                </div><!-- /.tour-two__text -->
+                                </div><!-- /.tour-two__text --> *@
 
                                 <ul class="tour-one__meta list-unstyled">
                                     <li><i class="far fa-user-circle"></i> @item.SeateCount Passenger</li>
@@ -63,6 +109,26 @@
                                     @*  <li><a href="#" class="thm-btn tour-search-one__btn">Booking Now</a></li>
                                 *@
                                 </ul><!-- /.tour-one__meta -->
+
+                                <div class="currency-selector">
+                                    <div class="currency-option selected" data-currency="TRY" data-rate="">
+                                        <span class="currency-symbol">₺</span>
+                                        <span class="currency-value">@((item.KMPrice * Model.Distance*30).ToString("N2"))</span>
+                                        
+                                    </div>
+                                    <div class="currency-option" data-currency="EUR" data-rate="">
+                                        <span class="currency-symbol">€</span>
+                                        <span class="currency-value">@((item.KMPrice * Model.Distance).ToString("N2"))</span>
+                                    </div>
+                                    @* <div class="currency-option" data-currency="USD" data-rate="33">
+                                        <span class="currency-symbol">$</span>
+                                        <span class="currency-value">33</span>
+                                    </div> *@
+                                    <div class="currency-option" data-currency="GBP" data-rate="26">
+                                        <span class="currency-symbol">£</span>
+                                        <span class="currency-value">26</span>
+                                    </div>
+                                </div>
 
                                 <div class="tour-search-one__btn-wrap">
                                     <a href="#" data-id="@item.ID" class="thm-btn tour-search-one__btn1 Book">Book Now</a>
@@ -214,4 +280,29 @@
         $("#VehicleCategoryID").val($(this).data("id"));
         $("#save").submit();
     });
+
+
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        var currencyOptions = document.querySelectorAll('.currency-option');
+
+        currencyOptions.forEach(function (option) {
+            option.addEventListener('click', function () {
+                // Önceki seçimi kaldır
+                currencyOptions.forEach(function (opt) {
+                    opt.classList.remove('selected');
+                });
+
+                // Yeni seçimi işaretle
+                this.classList.add('selected');
+
+                // Burada para birimi değerini kullanarak ek işlemler yapabilirsiniz.
+                // Örneğin, bir fiyat hesaplaması veya sunucuya gönderme işlemi
+                var currency = this.getAttribute('data-currency');
+                var rate = this.getAttribute('data-rate');
+                console.log('Seçilen Para Birimi:', currency, 'Kur:', rate);
+            });
+        });
+    });
+
 </script>
