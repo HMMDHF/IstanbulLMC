@@ -1,10 +1,14 @@
-﻿using IstanbulLMC.Areas.Admin.DTOs;
+﻿using Azure;
+using IstanbulLMC.Areas.Admin.DTOs;
 using IstanbulLMC.DTOs;
 using IstanbulLMC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Net;
 
 namespace IstanbulLMC.Controllers
 {
@@ -33,31 +37,23 @@ namespace IstanbulLMC.Controllers
         {
             if (await RecaptchaService.IsCapchaValid(GoogleCaptchToken, this.HttpContext.Connection.RemoteIpAddress.ToString()))
             {
-                string apiKey = _configuration["MapsKey"] ?? "";
-                string baseUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json";
+                string apiKey = "80305a30-48dc-49f7-9397-d5a45d5347c0"; // يجب عليك استبداله بمفتاح API الخاص بك
 
-                string location = "Istanbul"; // اسم المدينة أو الإحداثيات الجغرافية للموقع المراد البحث عن الأماكن فيه
-                string keyword = name; // الاسم الذي تريد البحث عنه
+                string apiUrl = $"https://search-maps.yandex.ru/v1/?text={WebUtility.UrlEncode(name)}&type=geo&lang=en_US&apikey={apiKey}";
+
+                WebClient client = new WebClient();
+                string response = client.DownloadString(apiUrl);
+
+                //JObject jsonResponse = JObject.Parse(response);
+
+                YandexApiResponse yandexApiResponse = JsonConvert.DeserializeObject<YandexApiResponse>(response);
+
+                List<SubApiResponse> topFivePlaces = yandexApiResponse.features.Select(x => new SubApiResponse {
+                    Name = x.properties.name,
+                }).ToList();
+
+                return PartialView("_SearchResultsPartial", topFivePlaces);
                 
-                string types = "airport|hotel|tourist_attraction|square"; // قائمة أنواع الأماكن المفصولة بعلامة الخطوط الرأسية "|"
-                
-                string encodedKeyword = Uri.EscapeDataString(keyword);// استخدم URLEncoder لترميز النص إذا كان يحتوي على مسافات أو رموز خاصة
-
-                string url = $"{baseUrl}?query={encodedKeyword}&types={types}&components=country:TR&key={apiKey}";
-
-                using (HttpClient client = new HttpClient())
-                {
-                    HttpResponseMessage response = await client.GetAsync(url);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string responseContent = await response.Content.ReadAsStringAsync();
-                        var jsonResponse = JsonConvert.DeserializeObject<ApiResponse>(responseContent);
-
-                        var topFivePlaces = jsonResponse.subApiResponses.ToList();
-                        return PartialView("_SearchResultsPartial", topFivePlaces);
-                    }
-                }
             }
             return PartialView("_SearchResultsPartial", new List<SubApiResponse>()); // Return an error view or appropriate response
         }

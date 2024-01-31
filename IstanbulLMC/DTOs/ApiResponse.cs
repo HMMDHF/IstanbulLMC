@@ -21,5 +21,6 @@ namespace IstanbulLMC.DTOs
 
         [JsonProperty("icon")]
         public string Icon { get; set; }
+        public List<double> coordinates { get; set; }
     }
 }
