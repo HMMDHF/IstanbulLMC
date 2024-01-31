@@ -34,6 +34,9 @@ namespace IstanbulLMC.Controllers
         [HttpPost]
         public async Task<IActionResult> VehicleList(TransferDTO transferDTO)
         {
+            ViewData["TlUnit"] = db.Currency.FirstOrDefault()?.TlUnit;
+            ViewData["UsdUnit"] = db.Currency.FirstOrDefault()?.UsdUnit;
+            ViewData["EuroUnit"] = db.Currency.FirstOrDefault()?.EuroUnit;
             if (await RecaptchaService.IsCapchaValid(transferDTO.GoogleCaptchToken, this.HttpContext.Connection.RemoteIpAddress.ToString()))
             {
                 using (HttpClient client = new HttpClient())
@@ -58,7 +61,7 @@ namespace IstanbulLMC.Controllers
                             SeateCount = x.SeateCount,
                             SuitcaseCount = x.SeateCount,
                         }).ToListAsync();
-
+                        
                         _sessionService.SetTransferSession(transferDTO);
                         return View(transferDTO);
                     }

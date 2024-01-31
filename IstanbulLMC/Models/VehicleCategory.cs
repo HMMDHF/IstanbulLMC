@@ -30,4 +30,5 @@ public partial class VehicleCategory
     public int? UpdateDate { get; set; }
 
     public virtual ICollection<Transfer> Transfer { get; set; } = new List<Transfer>();
+
 }

@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+    GridViewModel gridModel = new GridViewModel
+            {
+                GridId = "Currency",
+                AllowExcelExport = true,
+                AllowGrouping = true,
+                IsAllowToDelete = false,
+                AllowToShowDetails = true,
+                Url = "GetCurrencyList",
+                UpdateUrl = "SaveCurrency",
+                InsertUrl = "SaveCurrency",
+                RemoveUrl = "",
+
+                Columns = new()
+        {
+            new() { Field = "id", ColumnType = GridViewModel.GridColumnType.ID, Width = "100", Visiable = false },
+            new() { Field = "tlUnit", HeaderText = "TL Unit", Width = "100" },
+            new() { Field = "usdUnit", HeaderText = "USD Unit", Width = "100" },
+            new() { Field = "euroUnit", HeaderText = "Euro Unit", Width = "100" },
+        },
+                toolbarList = new List<string>(){
+            "ExcelExport"
+        }
+            };
+
+    await Html.RenderPartialAsync("_GridView", gridModel);
+}
+
+@section Scripts {
+    <ejs-scripts></ejs-scripts>
+}

@@ -1,11 +1,70 @@
 ﻿@model TransferDTO
 @{
     ViewData["Title"] = "Home Page";
+    double tlUnitValue = 0;
+    double usdUnitValue = 0;
+    double euroUnitValue = 0;
+
+    if (ViewData["TlUnit"] is double)
+    {
+        tlUnitValue = (double)ViewData["TlUnit"];
+    }
+    if (ViewData["UsdUnit"] is double)
+    {
+        usdUnitValue = (double)ViewData["UsdUnit"];
+    }
+    if (ViewData["EuroUnit"] is double)
+    {
+        euroUnitValue = (double)ViewData["EuroUnit"];
+    }
+
 }
 @section Styles{
     <link href="~/assets/css/vehiclelistcustom.css" rel="stylesheet" />
 }
+<style>
+    /* styles.css dosyasına kaydedilecek */
+    .currency-selector {
+        display: flex;
+    }
 
+    .currency-option {
+        display: flex;
+        align-items: center;
+        padding: 4px;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .currency-option.selected {
+            border-color: green;
+            background-color: #eaffea;
+        }
+
+    .currency-symbol {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .currency-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: green;
+    }
+
+    .currency-original {
+        text-decoration: line-through;
+        color: #999;
+        margin-left: 5px;
+    }
+
+    .currency-option:hover {
+        background-color: #f0f0f0;
+    }
+</style>
 <section class="page-header" style="background-image: url(/assets/images/backgrounds/page-header-contact.jpg);">
     <div class="container">
         <h2>Tours with Sidebar</h2>
@@ -22,27 +81,27 @@
             <div class="col-lg-7">
                 <form asp-action="CustomerApplication" asp-controller="Customer" id="save" method="post">
 
-                    
+
 
                     @* <div class="tour-two__single tour-one__single">
-                        <div class="tour-two__image-wrap">
-                            <div class="tour-one__image">
-                            </div><!-- /.tour-one__image -->
-                        </div><!-- /.tour-two__image-wrap -->
+                    <div class="tour-two__image-wrap">
+                    <div class="tour-one__image">
+                    </div><!-- /.tour-one__image -->
+                    </div><!-- /.tour-two__image-wrap -->
 
-                        <div class="tour-one__content" style="width: 100%;">
-                            <ul class="tour-one__meta list-unstyled">
-                                @for (int i = 0; i < Model.Services.Count; i++)
-                                {
-                                    <li>
-                                        <input type="checkbox" id="duration-5" name="radio-group">
-                                        <i class="@Model.Services[i].Icon" style="color: #9ca3a9;"></i>  @Model.Services[i].Name - @Model.Services[i].Price $
-                                    </li>
-                                }
-                            </ul><!-- /.tour-one__meta -->*-
+                    <div class="tour-one__content" style="width: 100%;">
+                    <ul class="tour-one__meta list-unstyled">
+                    @for (int i = 0; i < Model.Services.Count; i++)
+                    {
+                    <li>
+                    <input type="checkbox" id="duration-5" name="radio-group">
+                    <i class="@Model.Services[i].Icon" style="color: #9ca3a9;"></i>  @Model.Services[i].Name - @Model.Services[i].Price $
+                    </li>
+                    }
+                    </ul><!-- /.tour-one__meta -->*-
 
 
-                        </div><!-- /.tour-one__content -->
+                    </div><!-- /.tour-one__content -->
                     </div>
                     <!-- /.tour-two__single --> *@
 
@@ -59,9 +118,9 @@
                                     <div class="tour-two__top-left">
                                         <h3>@item.Name</h3>
                                     </div><!-- /.tour-two__top-left -->
-                                    <div class="tour-two__right">
-                                        <p><span>@((item.KMPrice * Model.Distance).ToString("N2")) $</span></p>
-                                    </div><!-- /.tour-two__right -->
+                                    @*  <div class="tour-two__right">
+                                <p><span>@((item.KMPrice * Model.Distance).ToString("N2")) $</span></p>
+                                </div><!-- /.tour-two__right --> *@
                                 </div><!-- /.tour-two__top -->
 
                                 <div class="tour-two__text">
@@ -75,8 +134,29 @@
                                     <li><i class="fas fa-suitcase"></i> @item.SuitcaseCount Suitcase</li>
                                 </ul><!-- /.tour-one__meta -->
 
+                                <div class="currency-selector">
+                                    <div class="currency-option selected" data-currency="TRY" data-rate="@((item.KMPrice * Model.Distance * (decimal)tlUnitValue))">
+                                        <span class="currency-symbol">₺</span>
+                                        <span class="currency-value">@((item.KMPrice * Model.Distance * (decimal)tlUnitValue).ToString("N2"))</span>
+
+                                    </div>
+                                    <div class="currency-option" data-currency="EUR" data-rate="@((item.KMPrice * Model.Distance * (decimal)euroUnitValue))">
+                                        <span class="currency-symbol">€</span>
+                                        <span class="currency-value">@((item.KMPrice * Model.Distance * (decimal)euroUnitValue).ToString("N2"))</span>
+                                    </div>
+                                    <div class="currency-option" data-currency="USD" data-rate="@((item.KMPrice * Model.Distance * (decimal)usdUnitValue))">
+                                        <span class="currency-symbol">$</span>
+                                        <span class="currency-value">@((item.KMPrice * Model.Distance * (decimal)usdUnitValue).ToString("N2"))</span>
+                                    </div>
+                                    @* <div class="currency-option" data-currency="GBP" data-rate="26">
+                                <span class="currency-symbol">£</span>
+                                <span class="currency-value">26</span>
+                                </div> *@
+                                </div>
+
+
                                 <div class="tour-search-one__btn-wrap">
-                                    <a href="#" data-id="@item.ID" class="thm-btn tour-search-one__btn1 Book">Book Now</a>
+                                    <a href="" data-id="@item.ID" class="thm-btn tour-search-one__btn1 Book">Book Now</a>
                                 </div><!-- /.tour-search-one__btn-wrap -->
 
                             </div><!-- /.tour-one__content -->
@@ -87,9 +167,9 @@
                 </form>
             </div><!-- /.col-lg-8 -->
 
-        <div class="col-lg-5">
-            <partial name="_Sidebar" model="@Model" />
-        </div>
+            <div class="col-lg-5">
+                <partial name="_Sidebar" model="@Model" />
+            </div>
         </div><!-- /.row -->
     </div><!-- /.container -->
 </section><!-- /.tour-two -->
@@ -99,4 +179,50 @@
         $("#VehicleCategoryID").val($(this).data("id"));
         $("#save").submit();
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var currencyOptions = document.querySelectorAll('.currency-option');
+        var bookNowButton = document.getElementById('bookNowButton');
+
+        // Function to handle currency option selection
+        function selectCurrencyOption() {
+            currencyOptions.forEach(function (opt) {
+                opt.classList.remove('selected');
+            });
+            this.classList.add('selected');
+
+            // Log the selected currency and rate
+            var selectedCurrency = this.getAttribute('data-currency');
+            var selectedRate = this.getAttribute('data-rate');
+            console.log('New selection:', selectedCurrency, 'Rate:', selectedRate);
+        }
+
+        // Attach event listeners to currency options
+        currencyOptions.forEach(function (option) {
+            option.addEventListener('click', selectCurrencyOption);
+            var selectedOption = document.querySelector('.currency-option.selected');
+
+        });
+
+        // Handle "Book Now" button click
+        bookNowButton.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            var selectedOption = document.querySelector('.currency-option.selected');
+            if (selectedOption) {
+                var selectedCurrency = selectedOption.getAttribute('data-currency');
+                var selectedRate = selectedOption.getAttribute('data-rate');
+                var itemId = this.getAttribute('data-id');
+
+                console.log('Booking Item ID:', itemId, 'Currency:', selectedCurrency, 'Rate:', selectedRate);
+
+                // Here you can implement the logic to send this data to your server
+                // For example, using an AJAX request or form submission
+            } else {
+                console.log('No currency selected');
+            }
+        });
+    });
+
+
 </script>

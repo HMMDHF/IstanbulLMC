@@ -14,5 +14,6 @@ namespace IstanbulLMC.DTOs
         public int PassengersCount { get; set; }
         public DateTime Date { get; set; }
         public DateTime? RoundTripDate { get; set; }
+
     }
 }
