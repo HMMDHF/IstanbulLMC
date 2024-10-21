@@ -34,8 +34,8 @@ namespace IstanbulLMC.Controllers
         [HttpPost]
         public async Task<IActionResult> CustomerApplication(TransferDTO transferDTO)
         {
-            if (await RecaptchaService.IsCapchaValid(transferDTO.GoogleCaptchToken, this.HttpContext.Connection.RemoteIpAddress.ToString()))
-            {
+            //if (await RecaptchaService.IsCapchaValid(transferDTO.GoogleCaptchToken, this.HttpContext.Connection.RemoteIpAddress.ToString()))
+            //{
                 TransferDTO sessiontransferDTO = _sessionService.GetTransferDTO();
 
                 if (sessiontransferDTO == null)
@@ -69,15 +69,15 @@ namespace IstanbulLMC.Controllers
                 }).ToListAsync();
                 _sessionService.SetTransferSession(transferDTO);
                 return View(transferDTO);
-            }
+            //}
             return Redirect("/");
         }
 
         [HttpPost]
         public async Task<IActionResult> CustomerApplicationSave(TransferDTO transferDTO)
         {
-            if (await RecaptchaService.IsCapchaValid(transferDTO.GoogleCaptchToken, this.HttpContext.Connection.RemoteIpAddress.ToString()))
-            {
+            //if (await RecaptchaService.IsCapchaValid(transferDTO.GoogleCaptchToken, this.HttpContext.Connection.RemoteIpAddress.ToString()))
+            //{
                 TransferDTO sessiontransferDTO = _sessionService.GetTransferDTO();
 
                 transferDTO.NO = "LMC" + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + Guid.NewGuid().ToString().Substring(0, 5);
@@ -134,7 +134,7 @@ namespace IstanbulLMC.Controllers
 
 
                 return View(transferDTO);
-            }
+            //}
             return Redirect("/");
         }
     }

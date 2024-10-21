@@ -43,7 +43,7 @@ namespace IstanbulLMC.Controllers
                 
                 string encodedKeyword = Uri.EscapeDataString(keyword);// استخدم URLEncoder لترميز النص إذا كان يحتوي على مسافات أو رموز خاصة
 
-                string url = $"{baseUrl}?query={encodedKeyword}&types={types}&components=country:TR&key={apiKey}";
+                string url = $"{baseUrl}?query={encodedKeyword}&components=country:TR&key={apiKey}";
 
                 using (HttpClient client = new HttpClient())
                 {
